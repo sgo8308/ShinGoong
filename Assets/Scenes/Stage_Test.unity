@@ -447,8 +447,8 @@ GameObject:
   m_Component:
   - component: {fileID: 583059193}
   - component: {fileID: 583059192}
-  - component: {fileID: 583059191}
   - component: {fileID: 583059194}
+  - component: {fileID: 583059191}
   - component: {fileID: 583059195}
   m_Layer: 8
   m_Name: SunBee
@@ -980,7 +980,6 @@ MonoBehaviour:
   player: {fileID: 583059193}
   arrow_speed: 50
   arrow_maxPower: 0.5
-  power_gage: {fileID: 1876645277}
 --- !u!114 &1681886818
 MonoBehaviour:
   m_ObjectHideFlags: 0

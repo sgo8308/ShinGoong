@@ -15,7 +15,7 @@ public class Fire : MonoBehaviour
     Camera m_cam = null; //카메라 변수
 
     float power = 0.0f;
-    public GameObject power_gage; //삭제 요망
+    //public GameObject power_gage; //삭제 요망
 
     public static float arrowPowerSpeed;
 
@@ -23,7 +23,7 @@ public class Fire : MonoBehaviour
     {
         m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
 
-        power_gage = GameObject.FindGameObjectWithTag("power");  //삭제 요망
+        //power_gage = GameObject.FindGameObjectWithTag("power");  //삭제 요망
     }
 
     void LookAtMouse()
@@ -40,6 +40,7 @@ public class Fire : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             GameObject t_arrow = Instantiate(m_goPrefab, m_tfArrow.position, m_tfArrow.rotation); //화살 생성
+            t_arrow.SetActive(true);
             t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
             arrowPowerSpeed = power * arrow_speed;
 
@@ -49,7 +50,7 @@ public class Fire : MonoBehaviour
             }
             
             power = 0.0f;
-            power_gage.GetComponent<Text>().text = power.ToString(); //삭제 요망
+            //power_gage.GetComponent<Text>().text = power.ToString(); //삭제 요망
         }
 
         if (Input.GetMouseButton(0))
@@ -61,7 +62,7 @@ public class Fire : MonoBehaviour
                 power = arrow_maxPower;
             }
 
-            power_gage.GetComponent<Text>().text = power.ToString(); //삭제 요망
+            //power_gage.GetComponent<Text>().text = power.ToString(); //삭제 요망
         }
     }
 
