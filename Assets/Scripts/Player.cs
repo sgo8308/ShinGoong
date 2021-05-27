@@ -51,9 +51,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         //Jump
-        if (Input.GetButtonDown("Jump")) //&& !anim.GetBool(isJumping")추가하기
+        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))   //&& !anim.GetBool(isJumping")추가하기
+        { 
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-
+            anim.SetBool("isJumping", true);
+        }
         //Stop Speed
         if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
         {            
@@ -77,9 +79,17 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Move By Key Control
-        float h = Input.GetAxisRaw("Horizontal");  //GetAxisRaw 함수를 이용해 Horizontal 값을 가져옴(-1,0,1) [Edit] -> [Project Settings] -> Input
-        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+        //GetAxisRaw 함수를 이용해 Horizontal 값을 가져옴(-1,0,1) [Edit] -> [Project Settings] -> Input
+
+        if (Input.GetAxisRaw("Horizontal")==1){
+            spriteRenderer.flipX = false;                         //Turn right
+            rigid.AddForce(Vector2.right , ForceMode2D.Impulse);  //Move right
+        }
+        if (Input.GetAxisRaw("Horizontal")==-1){
+            spriteRenderer.flipX = true;                          //Turn left
+            rigid.AddForce(Vector2.left , ForceMode2D.Impulse);   //Move left
+        }
+
 
         if (rigid.velocity.x > maxSpeed)  //Right Mas Speed
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
@@ -88,9 +98,9 @@ public class Player : MonoBehaviour
     }
 
 
-    void DistanceFromArrow()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        anim.SetBool("isJumping", false);
     }
 }
 
