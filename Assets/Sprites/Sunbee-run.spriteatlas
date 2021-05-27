@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sunbee-run
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: d11f7952a11fed04286907266f0749d4, type: 3}
+    - {fileID: 2800000, guid: 7dca6988326456443acd354f37bf62c8, type: 3}
+    - {fileID: 2800000, guid: 62ea9dd2f416f574ca82d856d38b572d, type: 3}
+    - {fileID: 2800000, guid: 3fe5853b71b0ca04abe211fecdcac635, type: 3}
+    - {fileID: 2800000, guid: ca787b1d5c74c914b927606d470dcecb, type: 3}
+    - {fileID: 2800000, guid: 4dc01ec3d30b87742a08b3a3c93268e4, type: 3}
+    - {fileID: 2800000, guid: 70e44903cf18983488e30f93c147b091, type: 3}
+    - {fileID: 2800000, guid: 1afcec846ff717d40a5e615594291128, type: 3}
+    - {fileID: 2800000, guid: 769cd3dce6a6ab048a285038ec2c54a9, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: d11f7952a11fed04286907266f0749d4, type: 3}
+  - {fileID: 21300000, guid: 62ea9dd2f416f574ca82d856d38b572d, type: 3}
+  - {fileID: 21300000, guid: 70e44903cf18983488e30f93c147b091, type: 3}
+  - {fileID: 21300000, guid: 4dc01ec3d30b87742a08b3a3c93268e4, type: 3}
+  - {fileID: 21300000, guid: 1afcec846ff717d40a5e615594291128, type: 3}
+  - {fileID: 21300000, guid: 7dca6988326456443acd354f37bf62c8, type: 3}
+  - {fileID: 21300000, guid: 3fe5853b71b0ca04abe211fecdcac635, type: 3}
+  - {fileID: 21300000, guid: 769cd3dce6a6ab048a285038ec2c54a9, type: 3}
+  - {fileID: 21300000, guid: ca787b1d5c74c914b927606d470dcecb, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - sunbee-run1
+  - sunbee-run3
+  - sunbee-run7
+  - sunbee-run6
+  - sunbee-run8
+  - sunbee-run2
+  - sunbee-run4
+  - sunbee-run9
+  - sunbee-run5
+  m_Tag: Sunbee-run
+  m_IsVariant: 0
