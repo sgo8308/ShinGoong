@@ -75,6 +75,8 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("isRunning", true);
         }
+
+      
     }
 
     private void FixedUpdate()
@@ -91,15 +93,16 @@ public class Player : MonoBehaviour
         }
 
 
-        if (rigid.velocity.x > maxSpeed)  //Right Mas Speed
+        if (rigid.velocity.x > maxSpeed)  //Right Max Speed
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        else if (rigid.velocity.x < maxSpeed * (-1))  //Left Mas Speed
+        else if (rigid.velocity.x < maxSpeed * (-1))  //Left Max Speed
             rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
     }
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        print("충돌");
         anim.SetBool("isJumping", false);
     }
 }
