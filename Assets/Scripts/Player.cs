@@ -13,10 +13,13 @@ public class Player : MonoBehaviour
     Vector2 MousePosition;
     Camera m_cam = null; //카메라 변수
 
+    Animator anim;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();  //초기화
         spriteRenderer = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     void Start()
@@ -61,6 +64,15 @@ public class Player : MonoBehaviour
 
 
         P_directionSet();
+        
+        //Animation
+        if (Mathf.Abs(rigid.velocity.x) < 0.4)
+        {
+            anim.SetBool("isRunning", false);
+        }else 
+        {
+            anim.SetBool("isRunning", true);
+        }
     }
 
     private void FixedUpdate()
@@ -73,6 +85,12 @@ public class Player : MonoBehaviour
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
         else if (rigid.velocity.x < maxSpeed * (-1))  //Left Mas Speed
             rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
+    }
+
+
+    void DistanceFromArrow()
+    {
+
     }
 }
 

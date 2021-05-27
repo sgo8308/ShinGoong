@@ -22,7 +22,7 @@ public class CameraCtrl : MonoBehaviour
     private void FollowPlayer()
     {
         Vector3 position = m_Player.position;
-        position.Set(m_Player.position.x, m_Player.position.y, transform.position.z);
+        position.Set(m_Player.position.x, m_Player.position.y + 5, transform.position.z);
 
         m_Camera.transform.SetPositionAndRotation(position, Quaternion.identity);
     }

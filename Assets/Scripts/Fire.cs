@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,18 +13,25 @@ public class Fire : MonoBehaviour
     [SerializeField] float arrow_maxPower = 3f;    //화살 Max Power
 
 
+    public static int arrowCount_int;
+
     Camera m_cam = null; //카메라 변수
 
     float power = 0.0f;
-    public GameObject power_gage; //삭제 요망
+    public GameObject arrowCount; 
+
+    public GameObject power_gage; 
 
     public static float arrowPowerSpeed;
 
     void Start()
     {
         m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
+        arrowCount = GameObject.FindGameObjectWithTag("arrowcount");
+        power_gage = GameObject.FindGameObjectWithTag("power");  
 
-        power_gage = GameObject.FindGameObjectWithTag("power");  //삭제 요망
+        arrowCount.GetComponent<Text>().text = "5";
+        arrowCount_int = Convert.ToInt32(arrowCount.GetComponent<Text>().text);
     }
 
     void LookAtMouse()
@@ -39,17 +47,26 @@ public class Fire : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            GameObject t_arrow = Instantiate(m_goPrefab, m_tfArrow.position, m_tfArrow.rotation); //화살 생성
-            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
-            arrowPowerSpeed = power * arrow_speed;
-
-            if (power >= arrow_maxPower)
+            if (arrowCount_int > 0)
             {
-                t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
+                GameObject t_arrow = Instantiate(m_goPrefab, m_tfArrow.position, m_tfArrow.rotation); //화살 생성
+                t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+                arrowPowerSpeed = power * arrow_speed;
+
+                if (power >= arrow_maxPower)
+                {
+                    t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
+                }
+
+                power = 0.0f;
+                power_gage.GetComponent<Text>().text = power.ToString(); 
+
+                arrowCount_int -= 1;
+                
+            }else if (arrowCount_int == 0) {
+                power = 0.0f;
+                power_gage.GetComponent<Text>().text = power.ToString(); 
             }
-            
-            power = 0.0f;
-            power_gage.GetComponent<Text>().text = power.ToString(); //삭제 요망
         }
 
         if (Input.GetMouseButton(0))
@@ -61,9 +78,13 @@ public class Fire : MonoBehaviour
                 power = arrow_maxPower;
             }
 
-            power_gage.GetComponent<Text>().text = power.ToString(); //삭제 요망
+            power_gage.GetComponent<Text>().text = power.ToString(); 
         }
+
+        arrowCount.GetComponent<Text>().text = arrowCount_int.ToString(); 
     }
+
+   
 
 
     // Update is called once per frame
@@ -71,6 +92,8 @@ public class Fire : MonoBehaviour
     {
         LookAtMouse();
         TryFire();
-        m_tfArrow.transform.position = player.transform.position;  //화살의 위치 = 플레이어의 위치
+        m_tfArrow.transform.position = player.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
+
+       
     }
 }
