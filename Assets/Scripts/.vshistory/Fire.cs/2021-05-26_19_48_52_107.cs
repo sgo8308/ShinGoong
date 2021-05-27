@@ -40,7 +40,7 @@ public class Fire : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             GameObject t_arrow = Instantiate(m_goPrefab, m_tfArrow.position, m_tfArrow.rotation); //화살 생성
-            //t_arrow.SetActive(true);
+            t_arrow.SetActive(true);
             t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
             arrowPowerSpeed = power * arrow_speed;
 

@@ -40,27 +40,17 @@ public class CameraCtrl : MonoBehaviour
         }
         //카메라 최대 Y좌표 제한두기
 
-        //왼쪽만 제한
+
         //왼쪽 제한, 아래 제한
         //왼쪽 제한, 위에 제한
-        //오른쪽만 제한
+        //왼쪽만 제한
         //오른쪽 제한, 아래 제한
         //오른쪽 제한, 위에 제한
-        if (m_Player.position.x < camPosXLimitLeft && (m_Player.position.y >= camPosYLimitBot && m_Player.position.y <= camPosYLimitTop))
+        //오른쪽만 제한
+        if (m_Player.position.y < camPosYLimitBot)
         {
             position.Set(camPosXLimitLeft, m_Player.position.y, transform.position.z);
         }
-        else if (m_Player.position.x < camPosXLimitLeft && m_Player.position.y < camPosYLimitBot)
-        {
-            position.Set(camPosXLimitLeft, camPosYLimitBot, transform.position.z);
-        }
-        else if (m_Player.position.x < camPosXLimitLeft && m_Player.position.y < camPosYLimitBot)
-        {
-            position.Set(camPosXLimitLeft, camPosYLimitBot, transform.position.z);
-        }
-
-
-
         else if (camPosXLimitLeft <= m_Player.position.x && m_Player.position.x <= camPosXLimitRight)
         {
             position.Set(m_Player.position.x, m_Player.position.y, transform.position.z);
