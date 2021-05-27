@@ -28,11 +28,11 @@ public class Fire : MonoBehaviour
     void Start()
     {
         m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
-        arrowCount = GameObject.FindGameObjectWithTag("arrowcount");
+        //arrowCount = GameObject.FindGameObjectWithTag("arrowcount");
         power_gage = GameObject.FindGameObjectWithTag("power");
 
-        arrowCount.GetComponent<TextMeshProUGUI>().text = "100";
-        arrowCount_int = Convert.ToInt32(arrowCount.GetComponent<TextMeshProUGUI>().text);
+        arrowCount.GetComponent<TextMeshPro>().text = "5";
+        arrowCount_int = Convert.ToInt32(arrowCount.GetComponent<Text>().text);
     }
 
     void LookAtMouse()
@@ -82,7 +82,7 @@ public class Fire : MonoBehaviour
             power_gage.GetComponent<Text>().text = power.ToString(); 
         }
 
-        arrowCount.GetComponent<TextMeshProUGUI>().text = arrowCount_int.ToString();
+        arrowCount.GetComponent<TextMeshPro>().text = arrowCount_int.ToString();
     }
 
    

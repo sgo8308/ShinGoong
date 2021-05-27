@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class Fire : MonoBehaviour
 {
@@ -29,10 +28,10 @@ public class Fire : MonoBehaviour
     {
         m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         arrowCount = GameObject.FindGameObjectWithTag("arrowcount");
-        power_gage = GameObject.FindGameObjectWithTag("power");
+        power_gage = GameObject.FindGameObjectWithTag("power");  
 
-        arrowCount.GetComponent<TextMeshProUGUI>().text = "100";
-        arrowCount_int = Convert.ToInt32(arrowCount.GetComponent<TextMeshProUGUI>().text);
+        arrowCount.GetComponent<Text>().text = "5";
+        arrowCount_int = Convert.ToInt32(arrowCount.GetComponent<Text>().text);
     }
 
     void LookAtMouse()
@@ -82,7 +81,7 @@ public class Fire : MonoBehaviour
             power_gage.GetComponent<Text>().text = power.ToString(); 
         }
 
-        arrowCount.GetComponent<TextMeshProUGUI>().text = arrowCount_int.ToString();
+        arrowCount.GetComponent<Text>().text = arrowCount_int.ToString(); 
     }
 
    

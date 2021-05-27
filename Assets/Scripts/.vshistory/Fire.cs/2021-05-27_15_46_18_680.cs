@@ -31,8 +31,8 @@ public class Fire : MonoBehaviour
         arrowCount = GameObject.FindGameObjectWithTag("arrowcount");
         power_gage = GameObject.FindGameObjectWithTag("power");
 
-        arrowCount.GetComponent<TextMeshProUGUI>().text = "100";
-        arrowCount_int = Convert.ToInt32(arrowCount.GetComponent<TextMeshProUGUI>().text);
+        arrowCount.GetComponent<TextMeshProUGUI>().text = "5";
+        arrowCount_int = Convert.ToInt32(arrowCount.GetComponent<Text>().text);
     }
 
     void LookAtMouse()
