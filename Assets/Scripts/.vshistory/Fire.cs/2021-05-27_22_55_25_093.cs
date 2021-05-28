@@ -23,14 +23,12 @@ public class Fire : MonoBehaviour
 
     public static float arrowPowerSpeed;
 
-    public string arrowMaxCount;
-
     void Start()
     {
         m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         arrowCount = GameObject.FindGameObjectWithTag("arrowcount");
 
-        arrowCount.GetComponent<TextMeshProUGUI>().text = arrowMaxCount;
+        arrowCount.GetComponent<TextMeshProUGUI>().text = "100";
         arrowCount_int = Convert.ToInt32(arrowCount.GetComponent<TextMeshProUGUI>().text);
     }
 
@@ -56,7 +54,6 @@ public class Fire : MonoBehaviour
                 if (power >= arrow_maxPower)
                 {
                     t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-                    t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
                 }
 
                 power = 0.0f;
@@ -68,7 +65,7 @@ public class Fire : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0) && arrowCount_int != 0)
+        if (Input.GetMouseButton(0))
         {
             power += Time.deltaTime;
             gaugeBar.fillAmount = power / arrow_maxPower;
