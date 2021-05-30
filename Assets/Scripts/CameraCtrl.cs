@@ -1,29 +1,45 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraCtrl : MonoBehaviour
 {
 
-    public Camera m_Camera;
-    public Transform m_Player;
+
 
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        FollowPlayer();
+   
+        ZoomOut();        //왼쪽 shift키를 누르고 있으면 카메라 줌 아웃이 된다.
+        
     }
 
-    private void FollowPlayer()
-    {
-        Vector3 position = m_Player.position;
-        position.Set(m_Player.position.x, m_Player.position.y + 5, transform.position.z);
 
-        m_Camera.transform.SetPositionAndRotation(position, Quaternion.identity);
+
+    private void ZoomOut()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+
+        {            
+
+            GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 9;
+
+        }
+
+        else
+
+        {           
+
+            GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 6;
+
+        }
+
     }
 }

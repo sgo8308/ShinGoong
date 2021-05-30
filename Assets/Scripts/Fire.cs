@@ -12,6 +12,9 @@ public class Fire : MonoBehaviour
     [SerializeField] Transform player = null;
     [SerializeField] float arrow_speed = 5f;    //화살 속도
     [SerializeField] float arrow_maxPower = 3f;    //화살 Max Power
+    
+
+
     public Image gaugeBar;
 
     public static int arrowCount_int;
@@ -25,6 +28,8 @@ public class Fire : MonoBehaviour
 
     public string arrowMaxCount;
 
+    
+    
     void Start()
     {
         m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
@@ -32,6 +37,8 @@ public class Fire : MonoBehaviour
 
         arrowCount.GetComponent<TextMeshProUGUI>().text = arrowMaxCount;
         arrowCount_int = Convert.ToInt32(arrowCount.GetComponent<TextMeshProUGUI>().text);
+
+        
     }
 
     void LookAtMouse()
@@ -45,40 +52,46 @@ public class Fire : MonoBehaviour
 
     void TryFire()
     {
-        if (Input.GetMouseButtonUp(0))
+        
+        if (Input.GetAxisRaw("Horizontal") == 0 && !Player.jumpingState )  //플레이어가 움직이지 않을때에만 화살이 발사된다.
         {
-            if (arrowCount_int > 0)
+            if (Input.GetMouseButtonUp(0))
             {
-                GameObject t_arrow = Instantiate(m_goPrefab, m_tfArrow.position, m_tfArrow.rotation); //화살 생성
-                t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed * 1/2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
-                arrowPowerSpeed = power * arrow_speed;
-
-                if (power >= arrow_maxPower)
+                if (arrowCount_int > 0)
                 {
-                    t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-                    t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+                    GameObject t_arrow = Instantiate(m_goPrefab, m_tfArrow.position, m_tfArrow.rotation); //화살 생성
+                    t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed * 1 / 2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+                    arrowPowerSpeed = power * arrow_speed;
+
+                    if (power >= arrow_maxPower)
+                    {
+                        t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
+                        t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+                    }
+
+                    power = 0.0f;
+
+                    arrowCount_int -= 1;
+
                 }
-
-                power = 0.0f;
-
-                arrowCount_int -= 1;
-                
-            }else if (arrowCount_int == 0) {
-                power = 0.0f;
+                else if (arrowCount_int == 0)
+                {
+                    power = 0.0f;
+                }
             }
-        }
 
-        if (Input.GetMouseButton(0) && arrowCount_int != 0)
-        {
-            power += Time.deltaTime;
-            gaugeBar.fillAmount = power / arrow_maxPower;
-            if (power > arrow_maxPower)
+            if (Input.GetMouseButton(0) && arrowCount_int != 0)
             {
-                power = arrow_maxPower;
+                power += Time.deltaTime;
+                gaugeBar.fillAmount = power / arrow_maxPower;
+                if (power > arrow_maxPower)
+                {
+                    power = arrow_maxPower;
+                }
             }
-        }
 
-        arrowCount.GetComponent<TextMeshProUGUI>().text = arrowCount_int.ToString();
+            arrowCount.GetComponent<TextMeshProUGUI>().text = arrowCount_int.ToString();
+        }
     }
 
    
