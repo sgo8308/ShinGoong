@@ -22,13 +22,14 @@ public class Fire : MonoBehaviour
     Camera m_cam = null; //카메라 변수
 
     float power = 0.0f;
-        
     public GameObject arrowCount; 
 
     public static float arrowPowerSpeed;
 
     public string arrowMaxCount;
 
+    
+    
     void Start()
     {
         m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.

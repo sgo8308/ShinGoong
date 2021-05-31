@@ -29,6 +29,8 @@ public class Fire : MonoBehaviour
 
     public string arrowMaxCount;
 
+    
+    
     void Start()
     {
         m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
