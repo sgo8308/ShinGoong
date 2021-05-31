@@ -18,13 +18,20 @@ public class CameraCtrl : MonoBehaviour
     private void ZoomOut()
     {
         if (Input.GetKey(KeyCode.LeftShift))
+
         {            
+
             GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 9;
+
         }
 
         else
+
         {           
+
             GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 6;
+
         }
+
     }
 }
