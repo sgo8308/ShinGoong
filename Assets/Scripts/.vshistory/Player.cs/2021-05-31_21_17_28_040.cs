@@ -142,7 +142,7 @@ public class Player : MonoBehaviour
 
     void PlayerDead()
     {
-        Debug.Log("플레이어 죽었다");
+        Debug.log("플레이어 죽었다")
     }
 }
 

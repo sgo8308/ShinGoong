@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
         {
             Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
 
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("UI"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
 
             if (rayHit.collider != null)  //레이와 충돌한 오브젝트가 있다면
             {

@@ -139,10 +139,5 @@ public class Player : MonoBehaviour
   //      print("충돌");
   //      anim.SetBool("isJumping", false);
     }
-
-    void PlayerDead()
-    {
-        Debug.Log("플레이어 죽었다");
-    }
 }
 
