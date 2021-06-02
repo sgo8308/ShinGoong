@@ -133,20 +133,18 @@ public class Player : MonoBehaviour
 
     }
 
-    #region Dead
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "bullet")
-        {
-            PlayerDead();
-        }
-    }
+
+    //private void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    if (col.gameObject.tag == "radar")
+    //    {
+    //        Debug.Log("트리거함");
+    //    }
+    //}
 
     void PlayerDead()
     {
-        anim.SetBool("isHit", true);
-        this.gameObject.tag = "Untagged";
-    } 
-    #endregion
+        Debug.Log("플레이어 죽었다");
+    }
 }
 

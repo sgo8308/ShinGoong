@@ -6,7 +6,6 @@ TagManager:
   tags:
   - power
   - arrowcount
-  - radar
   layers:
   - Default
   - TransparentFX

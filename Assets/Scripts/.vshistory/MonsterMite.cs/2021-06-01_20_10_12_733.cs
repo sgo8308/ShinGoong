@@ -91,7 +91,6 @@ public class MonsterMite : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-
         if (col.gameObject.tag == "Player")
         {
             attack();
@@ -100,7 +99,7 @@ public class MonsterMite : MonoBehaviour
 
     void attack()
     {
-        GameObject child = Instantiate(bullet, bulletPocket.position,
-                                        transform.rotation, bulletPocket);
+        GameObject child = Instantiate(bullet, bulletPocket.position, transform.rotation, bulletPocket);
+        //child.transform.parent = bulletPocket;
     }
 }

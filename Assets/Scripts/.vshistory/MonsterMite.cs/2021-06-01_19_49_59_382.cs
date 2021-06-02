@@ -9,13 +9,13 @@ public class MonsterMite : MonoBehaviour
     SpriteRenderer _spriteRenderer;
     RectTransform _radarRectTranform;
     int _nextMove; // -1 , 0 , 1 -> left, stop, right
+    public GameObject bullet;
 
-    #region Move
     void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();  
         _radarRectTranform = this.transform
                                 .Find("MonsterCanvas").transform
                                 .Find("RadarImage").GetComponent<RectTransform>();
@@ -32,9 +32,9 @@ public class MonsterMite : MonoBehaviour
         Vector2 frontVec = new Vector2(_rigid.position.x + _nextMove, _rigid.position.y);
         Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0), 10.0f, false);
 
-        RaycastHit2D rayHit = Physics2D.Raycast(frontVec,
+        RaycastHit2D rayHit = Physics2D.Raycast(frontVec, 
                                 Vector3.down, 1, LayerMask.GetMask("Platform"));
-
+        
         if (rayHit.collider == null)
         {
             Turn();
@@ -84,23 +84,17 @@ public class MonsterMite : MonoBehaviour
             }
         }
     }
-    #endregion
-
-    public GameObject bullet;
-    public Transform bulletPocket;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-
         if (col.gameObject.tag == "Player")
         {
-            attack();
+            Debug.Log("트리거함");
         }
     }
 
     void attack()
     {
-        GameObject child = Instantiate(bullet, bulletPocket.position,
-                                        transform.rotation, bulletPocket);
+
     }
 }

@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
     void PlayerDead()
     {
         anim.SetBool("isHit", true);
-        this.gameObject.tag = "Untagged";
+        //this.gameObject.tag = "Untagged";
     } 
     #endregion
 }

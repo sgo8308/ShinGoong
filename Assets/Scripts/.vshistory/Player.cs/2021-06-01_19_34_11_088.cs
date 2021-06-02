@@ -133,20 +133,9 @@ public class Player : MonoBehaviour
 
     }
 
-    #region Dead
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "bullet")
-        {
-            PlayerDead();
-        }
-    }
-
     void PlayerDead()
     {
-        anim.SetBool("isHit", true);
-        this.gameObject.tag = "Untagged";
-    } 
-    #endregion
+        Debug.Log("플레이어 죽었다");
+    }
 }
 

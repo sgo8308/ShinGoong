@@ -3266,7 +3266,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.796143, y: -47.294075, z: -10}
+  m_LocalPosition: {x: 32.789726, y: -47.294113, z: -10}
   m_LocalScale: {x: 1.1948497, y: 1.1948497, z: 1.1948497}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3327,6 +3327,36 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &527228437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 527228438}
+  m_Layer: 0
+  m_Name: BulletPocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &527228438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527228437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.13, y: 0.32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 923860001}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &551986892
 GameObject:
   m_ObjectHideFlags: 0
@@ -6295,7 +6325,7 @@ GameObject:
   - component: {fileID: 594572425}
   m_Layer: 8
   m_Name: SunBee
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6924,6 +6954,7 @@ Transform:
   m_Children:
   - {fileID: 1999142498}
   - {fileID: 1992833503}
+  - {fileID: 527228438}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -7005,6 +7036,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 4950215591424442339, guid: b6be8da1e217077418e1d4be5266176b, type: 3}
+  bulletPocket: {fileID: 527228438}
 --- !u!1 &963231117
 GameObject:
   m_ObjectHideFlags: 0
@@ -7208,7 +7241,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029734721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.798935, y: -48.758, z: -10}
+  m_LocalPosition: {x: 32.79252, y: -48.758, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1758396107}
@@ -7553,7 +7586,7 @@ GameObject:
   - component: {fileID: 1143057937}
   m_Layer: 5
   m_Name: RadarImage
-  m_TagString: radar
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
