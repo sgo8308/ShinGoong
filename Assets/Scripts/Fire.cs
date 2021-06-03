@@ -25,6 +25,7 @@ public class Fire : MonoBehaviour
     Camera m_cam = null; //카메라 변수
 
     float power = 0.0f;
+        
     public GameObject arrowCount; 
 
     public static float arrowPowerSpeed;

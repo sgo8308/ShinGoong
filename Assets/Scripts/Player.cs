@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
         {
             Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
 
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("UI"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
 
             if (rayHit.collider != null)  //레이와 충돌한 오브젝트가 있다면
             {
@@ -132,12 +132,31 @@ public class Player : MonoBehaviour
             anim.SetBool("isJumping", false);
             jumpingState = false;
         }
-
-
-
     }
 
+    #region Dead
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "radar")
+        {
+            Invoke("PlayerDead", 0.1f); // dead after 0.1 seconds
+        }
+    }
 
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "radar")
+        {
+            CancelInvoke("PlayerDead");
+        }
+    }
+
+    void PlayerDead()
+    {
+        anim.SetBool("isHit", true);
+    }
+    #endregion
+    
     private void Rope()
     {
         if (Input.GetKey(KeyCode.R))
@@ -172,8 +191,5 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-
-    
 }
 
