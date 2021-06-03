@@ -4,14 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - power
-  - arrowcount
-  - bullet
-  - radar
-  - arrow
-  - monster
-  - monsterbody
-  - platform
+  - ArrowCount
+  - Radar
+  - Arrow
+  - Monster
+  - MonsterBody
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -21,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - SunBee
+  - Player
   - Arrow
   - MiniMap
   - Platform

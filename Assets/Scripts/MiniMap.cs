@@ -22,21 +22,6 @@ public class MiniMap : MonoBehaviour
     void Update()
     {
         FollowPlayer();
-
-        //1. 왼쪽 제한 초과 아래제한 초과
-        //1. 왼쪽 제한 초과 위 제한 초과
-        //2. 왼쪽 제한만 초과
-        //4. 오른쪽 제한만 초과
-        //4. 오른쪽 제한 초과 아래 제한 초과
-        //4. 오른쪽 제한 초과 위 제한 초과
-        //3. 위 제한만 초과
-        //3. 아래 제한만 초과
-        //3. 아무것도 초과하지 않음
-
-        //if (MMCPos.x > leftLimX)
-        //{
-        //    MMCPos
-        //}
     }
 
     private void FollowPlayer()
@@ -46,57 +31,35 @@ public class MiniMap : MonoBehaviour
         if (isVerticalMoveNeeded)
         {
             if (playerPos.x < leftLimX && playerPos.y > topLimY)
-            {
                 _MMCPos.Set(leftLimX, topLimY, transform.position.z);
-            }
             else if (playerPos.x < leftLimX && playerPos.y < botLimY)
-            {
                 _MMCPos.Set(leftLimX, botLimY, transform.position.z);
-            }
             else if (playerPos.x > rightLimX && playerPos.y > topLimY)
-            {
                 _MMCPos.Set(rightLimX, topLimY, transform.position.z);
-            }
             else if (playerPos.x > rightLimX && playerPos.y < botLimY)
-            {
                 _MMCPos.Set(rightLimX, botLimY, transform.position.z);
-            }
             else if (playerPos.x < leftLimX)
-            {
                 _MMCPos.Set(leftLimX, playerPos.y, transform.position.z);
-            }
             else if (playerPos.x > rightLimX)
-            {
                 _MMCPos.Set(rightLimX, playerPos.y, transform.position.z);
-            }
             else if (playerPos.y > topLimY)
-            {
                 _MMCPos.Set(playerPos.x, topLimY, transform.position.z);
-            }
             else if (playerPos.y < botLimY)
-            {
                 _MMCPos.Set(playerPos.x, botLimY, transform.position.z);
-            }
             else
-            {
                 _MMCPos.Set(player.position.x, player.position.y, transform.position.z);
-            }
+
             _minimapCamera.transform.SetPositionAndRotation(_MMCPos, Quaternion.identity);
         }
         else
         {
             if (playerPos.x < leftLimX)
-            {
                 _MMCPos.Set(leftLimX, _MMCPos.y, transform.position.z);
-            }
             else if (playerPos.x > rightLimX)
-            {
                 _MMCPos.Set(rightLimX, _MMCPos.y, transform.position.z);
-            }
             else
-            {
                 _MMCPos.Set(player.position.x, _MMCPos.y, transform.position.z);
-            }
+
             _minimapCamera.transform.SetPositionAndRotation(_MMCPos, Quaternion.identity);
         }
     }
