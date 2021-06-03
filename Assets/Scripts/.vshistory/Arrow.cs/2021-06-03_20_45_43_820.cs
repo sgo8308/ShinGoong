@@ -49,8 +49,8 @@ public class Arrow : MonoBehaviour
             if (BombShot._bombShot_State)  //폭발샷이라면 폭발 애니메이션 동작한다.
             {
                 anim.SetBool("isExploding", true);
-                Invoke("Destroy", 2);
             }
+
 
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; //오브젝트를 움직이지 않게 한다.
             GetComponent<Rigidbody2D>().velocity = _zeroVelocity;
@@ -107,10 +107,5 @@ public class Arrow : MonoBehaviour
     {
         transform.parent = null;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-    }
-
-    void Destroy()
-    {
-        Destroy(gameObject);
     }
 }
