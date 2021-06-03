@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8604248037897302485}
   - component: {fileID: 6924843166899904744}
   m_Layer: 9
-  m_Name: RopeArrow 2
+  m_Name: RopeArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb742c1f9d6cd9e44be7aed2e6faa4ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ropePrefab: {fileID: 7734542276756243671, guid: 8bcaa035b2f0d964abf10ba29d9fa990,
+  ropePrefab: {fileID: 7734542276756243671, guid: 8bcaa035b2f0d964abf10ba29d9fa990,
     type: 3}
 --- !u!1 &9041099100298545075
 GameObject:

@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class Rope : MonoBehaviour
 {
-   
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (collision.gameObject.name == "SunBee")
-        {
+        if (collision.gameObject.name == "Player")
             Destroy(this.gameObject);
-        }
     }
 }

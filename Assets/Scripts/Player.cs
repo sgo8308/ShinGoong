@@ -7,30 +7,28 @@ public class Player : MonoBehaviour
     public float maxSpeed;
     public float jumpPower;
 
-    Rigidbody2D rigid;
-    SpriteRenderer spriteRenderer;
+    Rigidbody2D _rigid;
+    SpriteRenderer _spriteRenderer;
 
-    Vector2 MousePosition;
-    Camera m_cam = null; //카메라 변수
+    Vector2 _mousePosition;
+    Camera _mainCamera = null;
 
-    Animator anim;
+    Animator _animator;
 
-    public static bool jumpingState = false;  //플레이어의 점핑 상태
-
-    Vector2 _mousePositoin;
+    public static bool jumpingState = false;
 
     public static bool _ropeMove = false;
 
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();  //초기화
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
+        _rigid = GetComponent<Rigidbody2D>();  //초기화
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     void Start()
     {
-        m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
+        _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         Cursor.visible = true;
     }
 
@@ -38,53 +36,43 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Input.GetAxisRaw("Horizontal") == 0)
         {
+            _mousePosition = Input.mousePosition;
+            _mousePosition = _mainCamera.ScreenToWorldPoint(_mousePosition);
 
-            MousePosition = Input.mousePosition;
-            MousePosition = m_cam.ScreenToWorldPoint(MousePosition);
-
-            if (MousePosition.x > transform.position.x) //마우스가 플레이어보다 오른쪽에 있을때
+            if (_mousePosition.x > transform.position.x) //마우스가 플레이어보다 오른쪽에 있을때
             {
-                spriteRenderer.flipX = false;
+                _spriteRenderer.flipX = false;
             }
-            else if (MousePosition.x <= transform.position.x) //마우스가 플레이어보다 왼쪽에 있을때
+            else if (_mousePosition.x <= transform.position.x) //마우스가 플레이어보다 왼쪽에 있을때
             {
-                spriteRenderer.flipX = true;
+                _spriteRenderer.flipX = true;
             }
         }
     }
 
-
     void Update()
     {
         //Jump
-        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))   
+        if (Input.GetButtonDown("Jump") && !_animator.GetBool("isJumping"))   
         {
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            anim.SetBool("isJumping", true);
+            _rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            _animator.SetBool("isJumping", true);
             jumpingState = true;
         }
         //Stop Speed
         if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
-        {
-            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.1f, rigid.velocity.y);
-        }
-        if (Input.GetButtonDown("Horizontal"))
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;  //1과 -1이 같지 않을때 false 출력(체크해제)
+            _rigid.velocity = new Vector2(_rigid.velocity.normalized.x * 0.1f, _rigid.velocity.y);
 
+        if (Input.GetButtonDown("Horizontal"))
+            _spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;  //1과 -1이 같지 않을때 false 출력(체크해제)
 
         P_directionSet();
 
         //Animation
-        if (Mathf.Abs(rigid.velocity.x) < 0.4)
-        {
-            anim.SetBool("isRunning", false);
-            
-        }
+        if (Mathf.Abs(_rigid.velocity.x) < 0.4)
+            _animator.SetBool("isRunning", false);
         else
-        {
-            anim.SetBool("isRunning", true);
-            
-        }
+            _animator.SetBool("isRunning", true);
 
         ropeMove();
     }
@@ -92,44 +80,43 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         //GetAxisRaw 함수를 이용해 Horizontal 값을 가져옴(-1,0,1) [Edit] -> [Project Settings] -> Input
-
         if (Input.GetAxisRaw("Horizontal") == 1)
         {
-            spriteRenderer.flipX = false;                         //Turn right
-            rigid.AddForce(Vector2.right, ForceMode2D.Impulse);  //Move right
+            _spriteRenderer.flipX = false;                         //Turn right
+            _rigid.AddForce(Vector2.right, ForceMode2D.Impulse);  //Move right
         }
         if (Input.GetAxisRaw("Horizontal") == -1)
         {
-            spriteRenderer.flipX = true;                          //Turn left
-            rigid.AddForce(Vector2.left, ForceMode2D.Impulse);   //Move left
+            _spriteRenderer.flipX = true;                          //Turn left
+            _rigid.AddForce(Vector2.left, ForceMode2D.Impulse);   //Move left
         }
 
         //Max Speed
-        if (rigid.velocity.x > maxSpeed)  //Right Max Speed
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        else if (rigid.velocity.x < maxSpeed * (-1))  //Left Max Speed
-            rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
+        if (_rigid.velocity.x > maxSpeed)  //Right Max Speed
+            _rigid.velocity = new Vector2(maxSpeed, _rigid.velocity.y);
+        else if (_rigid.velocity.x < maxSpeed * (-1))  //Left Max Speed
+            _rigid.velocity = new Vector2(maxSpeed * (-1), _rigid.velocity.y);
 
         //Landing Platform
-        if (rigid.velocity.y < 0)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
+        if (_rigid.velocity.y < 0)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
         {
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+            Debug.DrawRay(_rigid.position, Vector3.down, new Color(0, 1, 0));
 
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
+            RaycastHit2D rayHit = Physics2D.Raycast(_rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
 
             if (rayHit.collider != null)  //레이와 충돌한 오브젝트가 있다면
             {
                 if (rayHit.distance < 1.2f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
                 {
-                    anim.SetBool("isJumping", false);
+                    _animator.SetBool("isJumping", false);
                     jumpingState = false;
                 }
             }
         }
 
-        if (rigid.velocity.y == 0)
+        if (_rigid.velocity.y == 0)
         {
-            anim.SetBool("isJumping", false);
+            _animator.SetBool("isJumping", false);
             jumpingState = false;
         }
     }
@@ -137,36 +124,31 @@ public class Player : MonoBehaviour
     #region Dead
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "radar")
-        {
-            Invoke("PlayerDead", 0.1f); // dead after 0.1 seconds
-        }
+        if (col.gameObject.tag == "Radar")
+            Invoke("Dead", 0.1f); // dead after 0.1 seconds
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "radar")
-        {
-            CancelInvoke("PlayerDead");
-        }
+        if(col.gameObject.tag == "Radar")
+            CancelInvoke("Dead");
     }
 
-    void PlayerDead()
+    void Dead()
     {
-        anim.SetBool("isHit", true);
+        _animator.SetBool("isHit", true);
     }
     #endregion
     
     private void Rope()
     {
         if (Input.GetKey(KeyCode.R))
-
         {
             if (Input.GetMouseButtonDown(0))
             {
-                MousePosition = Input.mousePosition;
-                MousePosition = m_cam.ScreenToWorldPoint(MousePosition);
-                print(MousePosition);
+                _mousePosition = Input.mousePosition;
+                _mousePosition = _mainCamera.ScreenToWorldPoint(_mousePosition);
+                print(_mousePosition);
             }
         }
     }
@@ -176,7 +158,7 @@ public class Player : MonoBehaviour
         if (_ropeMove)
         {
             print("move");
-            Vector2 ropeArrow_Position = RopeArrow.Current_RopeArrowPosition_List[0]; //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+            Vector2 ropeArrow_Position = RopeArrow.currentRopeArrowPositionList[0]; //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
                                                                                
             this.GetComponent<Rigidbody2D>().gravityScale = 0; //플레이어의 중력을 0으로 한다.
 
