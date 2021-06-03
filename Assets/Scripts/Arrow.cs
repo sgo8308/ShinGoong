@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-
-
     bool arrowState = true;
-
+    float _damage;
+    Vector2 _zeroVelocity;
     List<Vector2> ArrowColList = new List<Vector2>();
 
     [SerializeField] int ArrowCol_MaxCount = 4;
 
     void Start()
     {
-
+        _damage = 70;
+        _zeroVelocity = new Vector2(0, 0);
     }
 
     // Update is called once per frame
@@ -27,18 +27,24 @@ public class Arrow : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-
     {
+        if (collision.gameObject.tag == "monsterbody")
+        {
+            MonsterMite monsterMite = collision.transform.parent.GetComponent<MonsterMite>(); // 일단 쥐 몸을 바로 가지고 옴 후에 몬스터 클래스를 상속하면 바꿔줄 것 
+            if (monsterMite.OnDead.GetPersistentEventCount() == 0)
+                monsterMite.OnDead.AddListener(DetachedFromMonster);
+        }
+
         if (GetComponent<Rigidbody2D>().gravityScale != 0) //곡사가 충돌할때 화살이 박힌다.
         {
             Debug.Log("곡사 충돌 시작!");
 
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; //오브젝트를 움직이지 않게 한다.
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; //오브젝트를 움직이지 않게 한다.
+            GetComponent<Rigidbody2D>().velocity = _zeroVelocity;
+
             arrowState = false; //화살촉 방향 변화를 멈추게 한다.
 
-            this.gameObject.layer = 0;
-            GetComponent<BoxCollider2D>().isTrigger = true;
-
+            this.gameObject.layer = 14;
         }
 
         if (GetComponent<Rigidbody2D>().gravityScale == 0)  //직사가 충돌할때 화살이 반사된다.
@@ -51,7 +57,7 @@ public class Arrow : MonoBehaviour
             // print(collision.contacts[0].point);
 
             Vector2 newVelocity = Vector2.Reflect(transform.right, inNormal);  //반사각 벡터
-            GetComponent<Rigidbody2D>().velocity = newVelocity * Fire.arrowPowerSpeed * 1/3;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
+            GetComponent<Rigidbody2D>().velocity = newVelocity * Fire.arrowPowerSpeed * 1 / 3;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
 
             ArrowColList.Add(collision.contacts[0].point);  //매 충돌시 리스트에 충돌 좌표를 담는다. 
 
@@ -62,25 +68,30 @@ public class Arrow : MonoBehaviour
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; //오브젝트를 움직이지 않게 한다.
                 arrowState = false; //화살촉 방향 변화를 멈추게 한다.
 
-                this.gameObject.layer = 0;
+                this.gameObject.layer = 14;
                 GetComponent<BoxCollider2D>().isTrigger = true;
             }
         }
-
+        
     }
-
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "SunBee" && this.gameObject.layer == 0)
+        if (collision.gameObject.name == "SunBee" && this.gameObject.layer == 14)
         {
-            print("화살 회수");
             Destroy(this.gameObject);  //박힌 화살 없애기
 
             Fire.arrowCount_int += 1;
-            
         }
-
     }
-
+    public float GetDamage()
+    {
+        return _damage;
+    }
+    
+    void DetachedFromMonster()
+    {
+        transform.parent = null;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+    }
 }

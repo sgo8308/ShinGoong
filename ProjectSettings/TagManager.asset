@@ -6,6 +6,12 @@ TagManager:
   tags:
   - power
   - arrowcount
+  - bullet
+  - radar
+  - arrow
+  - monster
+  - monsterbody
+  - platform
   layers:
   - Default
   - TransparentFX
@@ -19,9 +25,9 @@ TagManager:
   - Arrow
   - MiniMap
   - Platform
-  - 
-  - 
-  - 
+  - Monster
+  - MonsterBody
+  - UsedArrow
   - 
   - 
   - 
