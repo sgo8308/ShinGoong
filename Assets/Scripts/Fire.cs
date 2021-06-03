@@ -7,12 +7,15 @@ using TMPro;
 
 public class Fire : MonoBehaviour
 {
-    [SerializeField] GameObject m_goPrefab = null; //화살 프리팹을 담을 변수
+    [SerializeField] GameObject _arrowPrefab = null; //화살 프리팹을 담을 변수
+    [SerializeField] GameObject _ropeArrowPrefab = null; //화살 프리팹을 담을 변수
+
+
     [SerializeField] Transform m_tfArrow = null;   //화살의 위치값을 담을 변수
     [SerializeField] Transform player = null;
     [SerializeField] float arrow_speed = 5f;    //화살 속도
     [SerializeField] float arrow_maxPower = 3f;    //화살 Max Power
-    
+    [SerializeField] float ropeArrow_speed = 15f;    //화살 속도
 
 
     public Image gaugeBar;
@@ -28,8 +31,10 @@ public class Fire : MonoBehaviour
 
     public string arrowMaxCount;
 
-    
-    
+    Vector2 MousePosition;
+
+    public static bool _ropeArrowState = false;
+
     void Start()
     {
         m_cam = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
@@ -53,13 +58,13 @@ public class Fire : MonoBehaviour
     void TryFire()
     {
         
-        if (Input.GetAxisRaw("Horizontal") == 0 && !Player.jumpingState )  //플레이어가 움직이지 않을때에만 화살이 발사된다.
+        if (Input.GetAxisRaw("Horizontal") == 0 && !Player.jumpingState && !Input.GetKey(KeyCode.R))  //플레이어가 움직이지 않을때에만 화살이 발사된다.
         {
             if (Input.GetMouseButtonUp(0))
             {
                 if (arrowCount_int > 0)
                 {
-                    GameObject t_arrow = Instantiate(m_goPrefab, m_tfArrow.position, m_tfArrow.rotation); //화살 생성
+                    GameObject t_arrow = Instantiate(_arrowPrefab, m_tfArrow.position, m_tfArrow.rotation); //화살 생성
                     t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * arrow_speed * 1 / 2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
                     arrowPowerSpeed = power * arrow_speed;
 
@@ -90,12 +95,32 @@ public class Fire : MonoBehaviour
                 }
             }
 
+
+           
+
+
             arrowCount.GetComponent<TextMeshProUGUI>().text = arrowCount_int.ToString();
         }
+
+        Rope();
     }
 
-   
 
+    private void Rope()
+    {
+        if (Input.GetKey(KeyCode.R))
+
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                GameObject RopeArrow = Instantiate(_ropeArrowPrefab, m_tfArrow.position, m_tfArrow.rotation); //화살 생성
+                RopeArrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
+                RopeArrow.GetComponent<Rigidbody2D>().velocity = RopeArrow.transform.right * arrow_maxPower * ropeArrow_speed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+
+                _ropeArrowState = true;
+            }
+        }
+    }
 
     // Update is called once per frame
     void Update()

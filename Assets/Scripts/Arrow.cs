@@ -12,6 +12,13 @@ public class Arrow : MonoBehaviour
 
     [SerializeField] int ArrowCol_MaxCount = 4;
 
+    Animator anim;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
+
     void Start()
     {
 
@@ -33,12 +40,23 @@ public class Arrow : MonoBehaviour
         {
             Debug.Log("곡사 충돌 시작!");
 
+            if (BombShot._bombShot_State)  //폭발샷이라면 폭발 애니메이션 동작한다.
+            {
+                print("펑");
+                anim.SetBool("isExploding", true);
+
+            }
+
+
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; //오브젝트를 움직이지 않게 한다.
             arrowState = false; //화살촉 방향 변화를 멈추게 한다.
 
-            this.gameObject.layer = 0;
-            GetComponent<BoxCollider2D>().isTrigger = true;
-
+            if (!BombShot._bombShot_State)  //폭발샷이 아니라면 레이어를 0으로 하여 이후에 화살 회수가 가능하도록 한다.
+            {
+                this.gameObject.layer = 0;
+                GetComponent<BoxCollider2D>().isTrigger = true;
+            }
+           
         }
 
         if (GetComponent<Rigidbody2D>().gravityScale == 0)  //직사가 충돌할때 화살이 반사된다.
@@ -67,9 +85,14 @@ public class Arrow : MonoBehaviour
             }
         }
 
+        
     }
 
-    
+    private void LateUpdate()
+    {
+       
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "SunBee" && this.gameObject.layer == 0)
@@ -81,6 +104,9 @@ public class Arrow : MonoBehaviour
             
         }
 
+
+
+        
     }
 
 }
