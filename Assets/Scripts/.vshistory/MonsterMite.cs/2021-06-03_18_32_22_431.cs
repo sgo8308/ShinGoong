@@ -148,8 +148,6 @@ public class MonsterMite : MonoBehaviour
             collision.gameObject.transform.parent = this.transform;
 
             _hpBarFrame.SetActive(true);
-            CancelInvoke("HideHpBarFrame");
-            Invoke("HideHpBarFrame", 3);
 
             Arrow arrow = collision.gameObject.GetComponent<Arrow>();
             HpReduced(arrow.GetDamage());
