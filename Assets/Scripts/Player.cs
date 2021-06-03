@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
 
     public static bool jumpingState = false;  //플레이어의 점핑 상태
 
+    Vector2 _mousePositoin;
+
+    public static bool _ropeMove = false;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();  //초기화
@@ -82,7 +86,7 @@ public class Player : MonoBehaviour
             
         }
 
-
+        ropeMove();
     }
 
     private void FixedUpdate()
@@ -128,9 +132,6 @@ public class Player : MonoBehaviour
             anim.SetBool("isJumping", false);
             jumpingState = false;
         }
-
-
-
     }
 
     #region Dead
@@ -155,5 +156,40 @@ public class Player : MonoBehaviour
         anim.SetBool("isHit", true);
     }
     #endregion
+    
+    private void Rope()
+    {
+        if (Input.GetKey(KeyCode.R))
+
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                MousePosition = Input.mousePosition;
+                MousePosition = m_cam.ScreenToWorldPoint(MousePosition);
+                print(MousePosition);
+            }
+        }
+    }
+
+    private void ropeMove()
+    {
+        if (_ropeMove)
+        {
+            print("move");
+            Vector2 ropeArrow_Position = RopeArrow.Current_RopeArrowPosition_List[0]; //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+                                                                               
+            this.GetComponent<Rigidbody2D>().gravityScale = 0; //플레이어의 중력을 0으로 한다.
+
+            transform.position = Vector2.MoveTowards(gameObject.transform.position, ropeArrow_Position, 0.1f);  //로프화살 좌표까지 이동한다.
+
+            Vector2 p_Position = transform.position;
+
+            if (p_Position == ropeArrow_Position)
+            {
+                _ropeMove = false;
+                this.GetComponent<Rigidbody2D>().gravityScale = 3;
+            }
+        }
+    }
 }
 
