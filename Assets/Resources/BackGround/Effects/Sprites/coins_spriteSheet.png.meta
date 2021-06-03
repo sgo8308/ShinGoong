@@ -47,6 +47,9 @@ TextureImporter:
   - first:
       213: -8833116386439732416
     second: coins_spriteSheet_14
+  - first:
+      213: -5958911702243409127
+    second: coins_spriteSheet_15
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -417,12 +420,12 @@ TextureImporter:
       name: coins_spriteSheet_14
       rect:
         serializedVersion: 2
-        x: 200
-        y: 50
+        x: 150
+        y: 0
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -434,10 +437,31 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: coins_spriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9130dd3e061bd4da0800000000000000
+      internalID: -5958911702243409127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: dd46859998a77264dbb9aa2ba4fffff9
     internalID: 0
     vertices: []
     indices: 
