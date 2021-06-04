@@ -5,13 +5,12 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     bool _arrowState = true;
-    public float damage;
+    float _damage;
     const float ORIGINAL_DAMAGE = 70;
-    const float BOMB_SHOT_DAMAGE = 30;
     Vector2 _zeroVelocity;
     List<Vector2> _arrowColList = new List<Vector2>();
     const int USED_ARROW_LAYER_NUM = 14;
-    public int arrowColMaxCount = 4;
+    [SerializeField] int arrowColMaxCount = 4;
 
     Animator _anim;
 
@@ -22,10 +21,7 @@ public class Arrow : MonoBehaviour
 
     void Start()
     {
-        damage = ORIGINAL_DAMAGE;
-        if (BombShot.bombShotState)
-            damage += BOMB_SHOT_DAMAGE;
-
+        _damage = 70;
         _zeroVelocity = new Vector2(0, 0);
     }
 
@@ -52,6 +48,7 @@ public class Arrow : MonoBehaviour
                 if (BombShot.bombShotState)  //폭발샷이라면 폭발 애니메이션 동작한다.
                 {
                     _anim.SetBool("isExploding", true);
+                    _damage += 30;
                     Invoke("Destroy", 2);
                 }
 
@@ -96,6 +93,10 @@ public class Arrow : MonoBehaviour
 
             Fire.arrowCount += 1;
         }
+    }
+    public float GetDamage()
+    {
+        return _damage;
     }
     
     void DetachedFromMonster()
