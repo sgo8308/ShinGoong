@@ -7,15 +7,15 @@ using TMPro;
 
 public class Fire : MonoBehaviour
 {
-    public GameObject arrowPrefab = null; //화살 프리팹을 담을 변수
-    public GameObject ropeArrowPrefab = null; //화살 프리팹을 담을 변수
+    [SerializeField] GameObject arrowPrefab = null; //화살 프리팹을 담을 변수
+    [SerializeField] GameObject ropeArrowPrefab = null; //화살 프리팹을 담을 변수
 
 
-    public Transform transformOfArrow = null;   //화살의 위치값을 담을 변수
-    public Transform player = null;
-    public float arrowSpeed = 50f;    //화살 속도
-    public float arrowMaxPower = 1f;    //화살 Max Power
-    public float ropeArrowSpeed = 15f;    //화살 속도
+    [SerializeField] Transform transformOfArrow = null;   //화살의 위치값을 담을 변수
+    [SerializeField] Transform player = null;
+    [SerializeField] float arrowSpeed = 50f;    //화살 속도
+    [SerializeField] float arrowMaxPower = 1f;    //화살 Max Power
+    [SerializeField] float ropeArrowSpeed = 15f;    //화살 속도
 
 
     public Image gaugeBar;
@@ -83,7 +83,7 @@ public class Fire : MonoBehaviour
                 }
                 else if (arrowCount == 0)
                     _power = 0.0f;
-            }                                
+            }
 
             if (Input.GetMouseButton(0) && arrowCount != 0)
             {

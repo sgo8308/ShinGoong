@@ -7,7 +7,6 @@ public class Arrow : MonoBehaviour
     bool _arrowState = true;
     public float damage;
     const float ORIGINAL_DAMAGE = 70;
-    const float BOMB_SHOT_DAMAGE = 30;
     Vector2 _zeroVelocity;
     List<Vector2> _arrowColList = new List<Vector2>();
     const int USED_ARROW_LAYER_NUM = 14;
@@ -22,10 +21,7 @@ public class Arrow : MonoBehaviour
 
     void Start()
     {
-        damage = ORIGINAL_DAMAGE;
-        if (BombShot.bombShotState)
-            damage += BOMB_SHOT_DAMAGE;
-
+        damage = 70;
         _zeroVelocity = new Vector2(0, 0);
     }
 

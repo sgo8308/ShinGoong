@@ -80,6 +80,9 @@ public class Fire : MonoBehaviour
                     _power = 0.0f;
 
                     arrowCount -= 1;
+
+                    if (BombShot.bombShotState)
+                        t_arrow.GetComponent<Arrow>().damage += 30;
                 }
                 else if (arrowCount == 0)
                     _power = 0.0f;

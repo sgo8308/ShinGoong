@@ -150,7 +150,7 @@ public class MonsterMite : MonoBehaviour
             Invoke("HideHpBarFrame", 3);
 
             Arrow arrow = collision.gameObject.GetComponent<Arrow>();
-            ReduceHp(arrow.damage);
+            ReduceHp(arrow.GetDamage());
 
             GetAngry();
 
@@ -182,9 +182,13 @@ public class MonsterMite : MonoBehaviour
         _anim.SetFloat("Hp", _hp);
 
         if ((_hp / 100) <= 0)
+        {
             _hpBar.fillAmount = 0;
+        }
         else
+        {
             _hpBar.fillAmount = _hp / 100;
+        }
     }
 
     void Dead()

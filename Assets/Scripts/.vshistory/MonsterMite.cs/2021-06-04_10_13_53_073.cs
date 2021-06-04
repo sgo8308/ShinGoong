@@ -151,7 +151,7 @@ public class MonsterMite : MonoBehaviour
 
             Arrow arrow = collision.gameObject.GetComponent<Arrow>();
             ReduceHp(arrow.damage);
-
+            Debug.Log("맞을 때 데미지"+arrow.damage);
             GetAngry();
 
             CheckIfDead();
@@ -182,9 +182,13 @@ public class MonsterMite : MonoBehaviour
         _anim.SetFloat("Hp", _hp);
 
         if ((_hp / 100) <= 0)
+        {
             _hpBar.fillAmount = 0;
+        }
         else
+        {
             _hpBar.fillAmount = _hp / 100;
+        }
     }
 
     void Dead()

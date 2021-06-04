@@ -8,9 +8,9 @@ public class RopeArrow : MonoBehaviour
    
     public static List<Vector2> currentRopeArrowPositionList = new List<Vector2>();
 
-    //  public int ArrowCol_MaxCount = 4;
+    //  [SerializeField] int ArrowCol_MaxCount = 4;
 
-    public GameObject ropePrefab = null; //로프 프리팹을 담을 변수
+    [SerializeField] GameObject ropePrefab = null; //로프 프리팹을 담을 변수
 
     void Start()
     {
