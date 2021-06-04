@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
-public class MonsterMite : Monster
+public class MiteTest : Monster
 {
     protected override void Awake()
     {
@@ -59,43 +57,4 @@ public class MonsterMite : Monster
         Invoke("Think", 3);
     }
 
-    public override void GetAngry()
-    {
-        _radar.GetComponent<Image>().color = new Color(1, 0, 0, 0.75f);
-        _speed = 3;
-        if (_nextMove == 0 && this.transform.rotation == Quaternion.Euler(0, 0, 0))
-        {
-            _nextMove = 1;
-        }
-        else if (_nextMove == 0 && this.transform.rotation == Quaternion.Euler(0, 180, 0))
-        {
-            _nextMove = -1;
-        }
-
-        _anim.SetInteger("WalkSpeed", _nextMove);
-        _anim.speed = 1.3f;
-
-        CancelInvoke("Think");
-        Invoke("Think", 3);
-    }
-
-    public override void GetPeaceful()
-    {
-        _radar.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
-        _speed = 1;
-        _anim.speed = 1;
-    }
-
-    protected override void OnDetectPlayer()
-    {
-        GetAngry();
-        CancelInvoke("GetPeaceful");
-        Invoke("GetPeaceful", 5);
-    }
-
-    protected override void Dead()
-    {
-        base.Dead();
-        Instantiate(coin, this.transform.position, transform.rotation);
-    }
 }

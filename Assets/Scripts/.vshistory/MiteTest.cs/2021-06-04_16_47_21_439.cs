@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class MonsterMite : Monster
+public class MiteTest : Monster
 {
     protected override void Awake()
     {
@@ -59,6 +58,7 @@ public class MonsterMite : Monster
         Invoke("Think", 3);
     }
 
+
     public override void GetAngry()
     {
         _radar.GetComponent<Image>().color = new Color(1, 0, 0, 0.75f);
@@ -92,6 +92,7 @@ public class MonsterMite : Monster
         CancelInvoke("GetPeaceful");
         Invoke("GetPeaceful", 5);
     }
+
 
     protected override void Dead()
     {

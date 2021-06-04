@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class MonsterMite : Monster
+public class MiteTest : Monster
 {
     protected override void Awake()
     {
@@ -58,6 +57,7 @@ public class MonsterMite : Monster
         CancelInvoke("Think");
         Invoke("Think", 3);
     }
+
 
     public override void GetAngry()
     {
