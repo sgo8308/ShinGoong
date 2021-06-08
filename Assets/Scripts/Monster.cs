@@ -91,7 +91,8 @@ public abstract class Monster : MonoBehaviour
             Arrow arrow = collision.gameObject.GetComponent<Arrow>();
             ReduceHp(arrow.damage);
 
-            GetAngry();
+            if (_hp <= 30)
+                GetAngry();
 
             CheckIfDead();
 

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MonsterMite : Monster
@@ -59,6 +56,13 @@ public class MonsterMite : Monster
         Invoke("Think", 3);
     }
 
+    protected override void OnDetectPlayer()
+    {
+        GetAngry();
+        CancelInvoke("GetPeaceful");
+        Invoke("GetPeaceful", 5);
+    }
+
     public override void GetAngry()
     {
         _radar.GetComponent<Image>().color = new Color(1, 0, 0, 0.75f);
@@ -84,13 +88,6 @@ public class MonsterMite : Monster
         _radar.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
         _speed = 1;
         _anim.speed = 1;
-    }
-
-    protected override void OnDetectPlayer()
-    {
-        GetAngry();
-        CancelInvoke("GetPeaceful");
-        Invoke("GetPeaceful", 5);
     }
 
     protected override void Dead()
