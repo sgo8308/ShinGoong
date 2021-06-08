@@ -41,9 +41,9 @@ public class Arrow : MonoBehaviour
     {
         if (collision.gameObject.tag == "MonsterBody")
         {
-            MonsterMite monsterMite = collision.transform.parent.GetComponent<MonsterMite>(); // 일단 쥐 몸을 바로 가지고 옴 후에 몬스터 클래스를 상속하면 바꿔줄 것 
-            if (monsterMite.OnDead.GetPersistentEventCount() == 0)
-                monsterMite.OnDead.AddListener(DetachedFromMonster);
+            Monster monster = collision.transform.parent.GetComponent<Monster>();
+            if (monster.OnDead.GetPersistentEventCount() == 0)
+                monster.OnDead.AddListener(DetachedFromMonster);
         }
 
         if (collision.gameObject.tag == "MonsterBody" || collision.gameObject.tag == "Platform") {

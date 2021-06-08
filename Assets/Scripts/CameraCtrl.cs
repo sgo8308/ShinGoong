@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class CameraCtrl : MonoBehaviour
 {
-    void Update()
+    public int zoomOutSize;
+   void Update()
     {
         ZoomOut();        //왼쪽 shift키를 누르고 있으면 카메라 줌 아웃이 된다.
     }
@@ -14,7 +15,7 @@ public class CameraCtrl : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {            
-            GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = 9;
+            GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = zoomOutSize;
         }
         else
         {           

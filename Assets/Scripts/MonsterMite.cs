@@ -1,45 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class MonsterMite : MonoBehaviour
+public class MonsterMite : Monster
 {
-    Animator _anim;
-    Rigidbody2D _rigid;
-    GameObject _radar;
-    GameObject _hpBarFrame;
-    Image _hpBar;
-    float _speed;
-    int _nextMove; // -1 , 0 , 1 -> left, stop, right
-    float _hp;
-    float _defensivePower;
-    public GameObject coin;
-    public UnityEvent OnDead;
-
-    void Awake()
+    protected override void Awake()
     {
-        _rigid = GetComponent<Rigidbody2D>();
-        _anim = GetComponent<Animator>();
-
-        _radar = this.transform.Find("MonsterCanvas").transform
-                                .Find("RadarImage").gameObject;
-
-        _hpBarFrame = this.transform.Find("MonsterCanvas").transform
-                                    .Find("HpBarFrame").gameObject;
-
-        _hpBar = _hpBarFrame.transform.Find("HpBar").GetComponent<Image>();
-
-        _speed = 1;
-        _hp = 100;
-        _defensivePower = 0;
-
-        AddHitEvent();
-
-        OnDead = new UnityEvent();
-
-        Invoke("Think", 5); // think per 5 seconds
+        base.Awake();
+        Initialize();
     }
 
     void FixedUpdate()
@@ -57,8 +24,17 @@ public class MonsterMite : MonoBehaviour
         if (rayHit.collider == null)
             Turn();
     }
-    #region Move
-    void Think()
+
+    protected override void Initialize()
+    {
+        _speed = 1;
+        _hp = 100;
+        _defensivePower = 0;
+
+        Invoke("Think", 5);
+    }
+
+    protected override void Think()
     {
         _nextMove = Random.Range(-1, 2);
 
@@ -80,37 +56,14 @@ public class MonsterMite : MonoBehaviour
         Invoke("Think", 3);
     }
 
-    void FlipSprite()
+    protected override void OnDetectPlayer()
     {
-        // Flip Monster Sprite and Radar image 
-        if (_nextMove != 0)
-        {
-            if (_nextMove == 1)
-            {
-                this.transform.rotation = Quaternion.Euler(0, 0, 0);
-                _hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 180, 0);
-            }
-            else
-            {
-                this.transform.rotation = Quaternion.Euler(0, 180, 0);
-                _hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, 0);
-            }
-        }
-    }
-    #endregion
-
-    #region RadarDetection
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            GetAngry();
-            CancelInvoke("GetPeaceful");
-            Invoke("GetPeaceful", 5);
-        }
+        GetAngry();
+        CancelInvoke("GetPeaceful");
+        Invoke("GetPeaceful", 5);
     }
 
-    public void GetAngry()
+    public override void GetAngry()
     {
         _radar.GetComponent<Image>().color = new Color(1, 0, 0, 0.75f);
         _speed = 3;
@@ -130,88 +83,16 @@ public class MonsterMite : MonoBehaviour
         Invoke("Think", 3);
     }
 
-    public void GetPeaceful()
+    public override void GetPeaceful()
     {
         _radar.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
         _speed = 1;
         _anim.speed = 1;
     }
-    #endregion
 
-    #region When Monster get hit by arrow
-    void OnHit(Collision2D collision)
+    protected override void Dead()
     {
-        if (collision.collider.tag == "Arrow" && gameObject.tag == "Monster")
-        {
-            collision.gameObject.transform.parent = this.transform;
-
-            _hpBarFrame.SetActive(true);
-            CancelInvoke("HideHpBarFrame");
-            Invoke("HideHpBarFrame", 3);
-
-            Arrow arrow = collision.gameObject.GetComponent<Arrow>();
-            ReduceHp(arrow.damage);
-
-            GetAngry();
-
-            CheckIfDead();
-
-            CancelInvoke("GetPeaceful");
-            Invoke("GetPeaceful", 5);
-        }
-    }
-
-    void AddHitEvent()
-    {
-        MonsterBody monsterBody = this.transform.Find("Body").GetComponent<MonsterBody>();
-        monsterBody.OnMonsterHit.AddListener(OnHit);
-    }
-
-    void CheckIfDead()
-    {
-        if ((_hp / 100) <= 0)
-        {
-            Destroy(_hpBarFrame);
-            Dead();
-        }
-    }
-
-    void ReduceHp(float damage)
-    {
-        _hp -= damage - _defensivePower;
-        _anim.SetFloat("Hp", _hp);
-
-        if ((_hp / 100) <= 0)
-            _hpBar.fillAmount = 0;
-        else
-            _hpBar.fillAmount = _hp / 100;
-    }
-
-    void Dead()
-    {
-        OnDead.Invoke();
-
-        gameObject.tag = "Untagged";
-        gameObject.transform.Find("Body").tag = "Untagged";
-
-        _speed = 0;
-
-        CancelInvoke();
-        Invoke("Destroy", 3);
-
+        base.Dead();
         Instantiate(coin, this.transform.position, transform.rotation);
-
-        Destroy(_radar);
     }
-
-    void Destroy()
-    {
-        Destroy(this.gameObject);
-    }
-
-    void HideHpBarFrame()
-    {
-        _hpBarFrame.SetActive(false);
-    }
-    #endregion
 }
