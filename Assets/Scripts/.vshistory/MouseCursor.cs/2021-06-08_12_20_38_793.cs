@@ -32,13 +32,13 @@ public class MouseCursor : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (isAimCursorNeeded)
-            Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto);  //마우스 커서를 화면에 표시
-        else
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-    }
+    //private void Update()
+    //{
+    //    if (isAimCursorNeeded)
+    //        Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto);  //마우스 커서를 화면에 표시
+    //    else
+    //        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    //}
 }
 
 

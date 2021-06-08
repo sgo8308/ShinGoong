@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestParent : MonoBehaviour
+public class Door : MonoBehaviour
 {
     void Start()
     {

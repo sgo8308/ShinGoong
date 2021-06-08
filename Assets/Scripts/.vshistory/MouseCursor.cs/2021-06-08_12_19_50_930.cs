@@ -30,6 +30,8 @@ public class MouseCursor : MonoBehaviour
             //중심좌표로 사용하지 않을 경우 Adjust Hot Spot으로 입력 받은 것을 사용합니다.
             hotSpot = adjustHotSpot;
         }
+        
+        Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto);  //마우스 커서를 화면에 표시
     }
 
     private void Update()
