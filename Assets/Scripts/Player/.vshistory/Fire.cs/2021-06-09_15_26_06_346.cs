@@ -12,6 +12,7 @@ public class Fire : MonoBehaviour
 
 
     public Transform transformOfArrow = null;   //화살의 위치값을 담을 변수
+    public Transform player = null;
     public float arrowSpeed = 50f;    //화살 속도
     public float arrowMaxPower = 1f;    //화살 Max Power
     public float ropeArrowSpeed = 15f;    //화살 속도
@@ -49,7 +50,7 @@ public class Fire : MonoBehaviour
 
         LookAtMouse();
         TryFire();
-        transformOfArrow.transform.position = _player.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
+        transformOfArrow.transform.position = player.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
     }
 
     void LookAtMouse()
