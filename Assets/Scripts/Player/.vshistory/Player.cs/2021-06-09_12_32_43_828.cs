@@ -172,17 +172,12 @@ public class Player : MonoBehaviour
     
     public void AcquireCoin()
     {
+        Transform.Find("MainCanvas")
+                  .Find("CoinCount")
+                  .GetComponent<TextMeshPro>().text = coinCount.ToString;
+
         coinCount++;
-
-        UpdateMainCoinUI();
-
         inventoryUI.UpdateCoinUI(coinCount);
-    }
-
-    void UpdateMainCoinUI()
-    {
-        mainUI.transform.Find("CoinCount")
-                .GetComponent<TextMeshProUGUI>().text = coinCount.ToString();
     }
 
     private void Rope()

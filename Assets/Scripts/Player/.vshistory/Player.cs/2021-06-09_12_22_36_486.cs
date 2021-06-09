@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -15,7 +14,6 @@ public class Player : MonoBehaviour
     public int level;
 
     public InventoryUI inventoryUI;
-    public Canvas mainUI;
 
     Rigidbody2D _rigid;
     SpriteRenderer _spriteRenderer;
@@ -170,19 +168,10 @@ public class Player : MonoBehaviour
     }
     #endregion
     
-    public void AcquireCoin()
+    void AcquireCoin()
     {
-        coinCount++;
 
-        UpdateMainCoinUI();
-
-        inventoryUI.UpdateCoinUI(coinCount);
-    }
-
-    void UpdateMainCoinUI()
-    {
-        mainUI.transform.Find("CoinCount")
-                .GetComponent<TextMeshProUGUI>().text = coinCount.ToString();
+        inventoryUI.UpdateCoinUI();
     }
 
     private void Rope()

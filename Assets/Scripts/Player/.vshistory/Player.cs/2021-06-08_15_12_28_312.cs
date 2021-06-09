@@ -1,21 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class Player : MonoBehaviour
 {
-    public static Player instance;
     public static bool canMove;
     public float maxSpeed;
     public float jumpPower;
-
-    public int coinCount;
-    public int arrowCount;
-    public int level;
-
-    public InventoryUI inventoryUI;
-    public Canvas mainUI;
 
     Rigidbody2D _rigid;
     SpriteRenderer _spriteRenderer;
@@ -31,14 +22,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-
         _rigid = GetComponent<Rigidbody2D>();  //초기화
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
@@ -49,7 +32,6 @@ public class Player : MonoBehaviour
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         Cursor.visible = true;
         canMove = true;
-        coinCount = 0;
     }
 
     void P_directionSet()
@@ -170,21 +152,6 @@ public class Player : MonoBehaviour
     }
     #endregion
     
-    public void AcquireCoin()
-    {
-        coinCount++;
-
-        UpdateMainCoinUI();
-
-        inventoryUI.UpdateCoinUI(coinCount);
-    }
-
-    void UpdateMainCoinUI()
-    {
-        mainUI.transform.Find("CoinCount")
-                .GetComponent<TextMeshProUGUI>().text = coinCount.ToString();
-    }
-
     private void Rope()
     {
         if (Input.GetKey(KeyCode.R))

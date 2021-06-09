@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     public int level;
 
     public InventoryUI inventoryUI;
-    public Canvas mainUI;
 
     Rigidbody2D _rigid;
     SpriteRenderer _spriteRenderer;
@@ -172,17 +171,12 @@ public class Player : MonoBehaviour
     
     public void AcquireCoin()
     {
+        GameObject.Find("MainCanvas")
+                  .Find("CoinCount")
+                  .GetComponent<TextMeshPro>
+
         coinCount++;
-
-        UpdateMainCoinUI();
-
         inventoryUI.UpdateCoinUI(coinCount);
-    }
-
-    void UpdateMainCoinUI()
-    {
-        mainUI.transform.Find("CoinCount")
-                .GetComponent<TextMeshProUGUI>().text = coinCount.ToString();
     }
 
     private void Rope()

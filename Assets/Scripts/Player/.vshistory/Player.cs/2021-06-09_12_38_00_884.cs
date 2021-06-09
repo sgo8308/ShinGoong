@@ -174,12 +174,12 @@ public class Player : MonoBehaviour
     {
         coinCount++;
 
-        UpdateMainCoinUI();
+        UpdateCoinUI();
 
         inventoryUI.UpdateCoinUI(coinCount);
     }
 
-    void UpdateMainCoinUI()
+    void UpdateCoinUI()
     {
         mainUI.transform.Find("CoinCount")
                 .GetComponent<TextMeshProUGUI>().text = coinCount.ToString();

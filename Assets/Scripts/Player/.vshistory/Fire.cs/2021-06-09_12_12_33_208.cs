@@ -40,7 +40,7 @@ public class Fire : MonoBehaviour
         arrowCountText = GameObject.FindGameObjectWithTag("ArrowCount");
 
         arrowCountText.GetComponent<TextMeshProUGUI>().text = arrowMaxCount;
-        _player.arrowCount = Convert.ToInt32(arrowCountText.GetComponent<TextMeshProUGUI>().text);
+        Player.instance.arrowCount = Convert.ToInt32(arrowCountText.GetComponent<TextMeshProUGUI>().text);
     }
 
     void Update()
@@ -68,7 +68,7 @@ public class Fire : MonoBehaviour
         {
             if (Input.GetMouseButtonUp(0))
             {
-                if (_player.arrowCount > 0)
+                if (arrowCount > 0)
                 {
                     GameObject t_arrow = Instantiate(arrowPrefab, transformOfArrow.position, transformOfArrow.rotation); //화살 생성
                     t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * _power * arrowSpeed * 1 / 2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
@@ -84,11 +84,11 @@ public class Fire : MonoBehaviour
 
                     Player.instance.arrowCount -= 1;
                 }
-                else if (_player.arrowCount == 0)
+                else if (arrowCount == 0)
                     _power = 0.0f;
             }                                
 
-            if (Input.GetMouseButton(0) && _player.arrowCount != 0)
+            if (Input.GetMouseButton(0) && arrowCount != 0)
             {
                 _power += Time.deltaTime;
                 gaugeBar.fillAmount = _power / arrowMaxPower;
@@ -98,7 +98,7 @@ public class Fire : MonoBehaviour
                 }
             }
 
-            arrowCountText.GetComponent<TextMeshProUGUI>().text = _player.arrowCount.ToString();
+            arrowCountText.GetComponent<TextMeshProUGUI>().text = arrowCount.ToString();
         }
 
         Rope();
