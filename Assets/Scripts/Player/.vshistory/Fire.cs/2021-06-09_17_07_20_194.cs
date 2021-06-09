@@ -17,8 +17,6 @@ public class Fire : MonoBehaviour
 
     MainUI _mainUI;
 
-    GameObject _player;
-
     Camera _mainCamera = null; //카메라 변수
 
     float _power = 0.0f;
@@ -30,7 +28,7 @@ public class Fire : MonoBehaviour
     void Start()
     {
         _mainUI = MainUI.instance;
-        _player = GameObject.Find("Player");
+
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
     }
 
@@ -41,7 +39,7 @@ public class Fire : MonoBehaviour
 
         LookAtMouse();
         TryFire();
-        transformOfArrow.transform.position = _player.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
+        transformOfArrow.transform.position = _mainUI.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
     }
 
     void LookAtMouse()

@@ -19,12 +19,7 @@ public class SceneManager : MonoBehaviour
     public void GoTo(string sceneName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-
-        InitializeArrowCount(sceneName);
-    }
-
-    void InitializeArrowCount(string sceneName)
-    {
+        
         switch (sceneName)
         {
             case "ShelterScene":
