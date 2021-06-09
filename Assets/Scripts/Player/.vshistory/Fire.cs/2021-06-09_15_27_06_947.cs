@@ -10,28 +10,36 @@ public class Fire : MonoBehaviour
     public GameObject arrowPrefab = null; //화살 프리팹을 담을 변수
     public GameObject ropeArrowPrefab = null; //화살 프리팹을 담을 변수
 
+
     public Transform transformOfArrow = null;   //화살의 위치값을 담을 변수
     public float arrowSpeed = 50f;    //화살 속도
     public float arrowMaxPower = 1f;    //화살 Max Power
     public float ropeArrowSpeed = 15f;    //화살 속도
 
-    MainUI _mainUI;
+    Player _player;
 
-    GameObject _player;
+    public Image gaugeBar;
 
     Camera _mainCamera = null; //카메라 변수
 
     float _power = 0.0f;
         
+    public GameObject arrowCountText; 
+
     public static float arrowPowerSpeed;
+
+    public string arrowMaxCount;
 
     public static bool ropeArrowState = false;
 
     void Start()
     {
-        _mainUI = MainUI.instance;
-        _player = GameObject.Find("Player");
+        _player = Player.instance;
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
+        arrowCountText = GameObject.FindGameObjectWithTag("ArrowCount");
+
+        arrowCountText.GetComponent<TextMeshProUGUI>().text = arrowMaxCount;
+        _player.arrowCount = Convert.ToInt32(arrowCountText.GetComponent<TextMeshProUGUI>().text);
     }
 
     void Update()
@@ -59,7 +67,7 @@ public class Fire : MonoBehaviour
         {
             if (Input.GetMouseButtonUp(0))
             {
-                if (_mainUI.arrowCount > 0)
+                if (_player.arrowCount > 0)
                 {
                     GameObject t_arrow = Instantiate(arrowPrefab, transformOfArrow.position, transformOfArrow.rotation); //화살 생성
                     t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * _power * arrowSpeed * 1 / 2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
@@ -73,23 +81,23 @@ public class Fire : MonoBehaviour
 
                     _power = 0.0f;
 
-                    _mainUI.arrowCount -= 1;
+                    Player.instance.arrowCount -= 1;
                 }
-                else if (_mainUI.arrowCount == 0)
+                else if (_player.arrowCount == 0)
                     _power = 0.0f;
             }                                
 
-            if (Input.GetMouseButton(0) && _mainUI.arrowCount != 0)
+            if (Input.GetMouseButton(0) && _player.arrowCount != 0)
             {
                 _power += Time.deltaTime;
-
-                _mainUI.UpdateGaugeBarUI(_power, arrowMaxPower);
-
+                gaugeBar.fillAmount = _power / arrowMaxPower;
                 if (_power > arrowMaxPower)
+                {
                     _power = arrowMaxPower;
+                }
             }
 
-            _mainUI.UpdateArrowCountUI();
+            arrowCountText.GetComponent<TextMeshProUGUI>().text = _player.arrowCount.ToString();
         }
 
         Rope();

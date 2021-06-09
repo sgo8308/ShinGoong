@@ -5,9 +5,14 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance;
     public static bool canMove;
     public float maxSpeed;
     public float jumpPower;
+
+    public int coinCount;
+    public int arrowCount;
+    public int level;
 
     public InventoryUI inventoryUI;
 
@@ -25,6 +30,14 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+
         _rigid = GetComponent<Rigidbody2D>();  //초기화
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
@@ -35,7 +48,7 @@ public class Player : MonoBehaviour
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         Cursor.visible = true;
         canMove = true;
-        MainUI.instance.coinCount = 0;
+        coinCount = 0;
     }
 
     void P_directionSet()
@@ -158,11 +171,11 @@ public class Player : MonoBehaviour
     
     public void AcquireCoin()
     {
-        MainUI.instance.coinCount++;
+        coinCount++;
 
         MainUI.instance.UpdateCoinUI();
 
-        inventoryUI.UpdateCoinUI(MainUI.instance.coinCount);
+        inventoryUI.UpdateCoinUI(coinCount);
     }
 
     private void Rope()

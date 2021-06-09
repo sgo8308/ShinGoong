@@ -94,7 +94,7 @@ public class Arrow : MonoBehaviour
         {
             Destroy(this.gameObject);
 
-            MainUI.instance.arrowCount += 1;
+            Player.instance.arrowCount += 1;
         }
     }
     

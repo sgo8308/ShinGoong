@@ -10,6 +10,7 @@ public class Fire : MonoBehaviour
     public GameObject arrowPrefab = null; //화살 프리팹을 담을 변수
     public GameObject ropeArrowPrefab = null; //화살 프리팹을 담을 변수
 
+
     public Transform transformOfArrow = null;   //화살의 위치값을 담을 변수
     public float arrowSpeed = 50f;    //화살 속도
     public float arrowMaxPower = 1f;    //화살 Max Power
@@ -17,12 +18,14 @@ public class Fire : MonoBehaviour
 
     MainUI _mainUI;
 
-    GameObject _player;
+    public Image gaugeBar;
 
     Camera _mainCamera = null; //카메라 변수
 
     float _power = 0.0f;
         
+    public GameObject arrowCountText; 
+
     public static float arrowPowerSpeed;
 
     public static bool ropeArrowState = false;
@@ -30,8 +33,10 @@ public class Fire : MonoBehaviour
     void Start()
     {
         _mainUI = MainUI.instance;
-        _player = GameObject.Find("Player");
+
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
+
+        _mainUI.arrowCount = Convert.ToInt32(arrowCountText.GetComponent<TextMeshProUGUI>().text);
     }
 
     void Update()
@@ -41,7 +46,7 @@ public class Fire : MonoBehaviour
 
         LookAtMouse();
         TryFire();
-        transformOfArrow.transform.position = _player.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
+        transformOfArrow.transform.position = _mainUI.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
     }
 
     void LookAtMouse()
@@ -82,14 +87,14 @@ public class Fire : MonoBehaviour
             if (Input.GetMouseButton(0) && _mainUI.arrowCount != 0)
             {
                 _power += Time.deltaTime;
-
-                _mainUI.UpdateGaugeBarUI(_power, arrowMaxPower);
-
+                gaugeBar.fillAmount = _power / arrowMaxPower;
                 if (_power > arrowMaxPower)
+                {
                     _power = arrowMaxPower;
+                }
             }
 
-            _mainUI.UpdateArrowCountUI();
+            arrowCountText.GetComponent<TextMeshProUGUI>().text = _mainUI.arrowCount.ToString();
         }
 
         Rope();

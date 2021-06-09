@@ -13,26 +13,18 @@ public class SceneManager : MonoBehaviour
 {
     public SceneType sceneType;
 
-    public const int STAGE1_ARROW_COUNT = 50;
-    public const int SHELTER_ARROW_COUNT = 45;
-
     public void GoTo(string sceneName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-
-        InitializeArrowCount(sceneName);
-    }
-
-    void InitializeArrowCount(string sceneName)
-    {
+        
         switch (sceneName)
         {
-            case "ShelterScene":
-                MainUI.instance.InitializeArrowCount(SHELTER_ARROW_COUNT);
+            case "Stage1Scene":
+                MainUI.instance.InitializeArrowCount(50);
                 break;
 
-            case "Stage1Scene":
-                MainUI.instance.InitializeArrowCount(STAGE1_ARROW_COUNT);
+            case "ShelterScene":
+                MainUI.instance.InitializeArrowCount(100);
                 break;
 
             default:
