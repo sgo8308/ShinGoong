@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         Cursor.visible = true;
         canMove = true;
+        MainUI.instance.coinCount = 0;
     }
 
     void P_directionSet()

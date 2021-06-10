@@ -46,7 +46,6 @@ public class MainUI : MonoBehaviour
                                  .GetComponent<Image>();
 
         UpdateCoinUI();
-        UpdateLevelUI();
     }
 
     public void UpdateCoinUI()
@@ -56,7 +55,7 @@ public class MainUI : MonoBehaviour
 
     public void UpdateLevelUI()
     {
-        _levelUI.text = level.ToString();
+
     }
 
     public void UpdateArrowCountUI()

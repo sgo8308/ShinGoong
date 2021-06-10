@@ -14,7 +14,6 @@ public class MainUI : MonoBehaviour
 
     TextMeshProUGUI _coinCountUI;
     TextMeshProUGUI _arrowCountUI;
-    TextMeshProUGUI _levelUI;
     Image _gaugeBarUI;
 
     private void Awake()
@@ -32,10 +31,7 @@ public class MainUI : MonoBehaviour
     private void Start()
     {
         InitializeArrowCount(45);
-
-        _levelUI = transform.Find("LevelCount")
-                                .GetComponent<TextMeshProUGUI>();
-
+        
         _coinCountUI = transform.Find("CoinCount")
                                 .GetComponent<TextMeshProUGUI>();
 
@@ -46,17 +42,11 @@ public class MainUI : MonoBehaviour
                                  .GetComponent<Image>();
 
         UpdateCoinUI();
-        UpdateLevelUI();
     }
 
     public void UpdateCoinUI()
     {
         _coinCountUI.text = coinCount.ToString();
-    }
-
-    public void UpdateLevelUI()
-    {
-        _levelUI.text = level.ToString();
     }
 
     public void UpdateArrowCountUI()

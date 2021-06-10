@@ -46,7 +46,6 @@ public class MainUI : MonoBehaviour
                                  .GetComponent<Image>();
 
         UpdateCoinUI();
-        UpdateLevelUI();
     }
 
     public void UpdateCoinUI()

@@ -29,7 +29,6 @@ public class InventoryUI : MonoBehaviour
         _inventory.onChangeItem += RedrawSlotUI;
 
         AllocateSlotNum();
-        UpdateCoinUI();
     }
 
     void Update()

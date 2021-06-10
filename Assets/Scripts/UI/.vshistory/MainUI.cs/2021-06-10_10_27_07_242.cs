@@ -33,7 +33,7 @@ public class MainUI : MonoBehaviour
     {
         InitializeArrowCount(45);
 
-        _levelUI = transform.Find("LevelCount")
+        _levelUI = transform.Find("Level")
                                 .GetComponent<TextMeshProUGUI>();
 
         _coinCountUI = transform.Find("CoinCount")
@@ -46,7 +46,6 @@ public class MainUI : MonoBehaviour
                                  .GetComponent<Image>();
 
         UpdateCoinUI();
-        UpdateLevelUI();
     }
 
     public void UpdateCoinUI()
@@ -56,7 +55,7 @@ public class MainUI : MonoBehaviour
 
     public void UpdateLevelUI()
     {
-        _levelUI.text = level.ToString();
+
     }
 
     public void UpdateArrowCountUI()

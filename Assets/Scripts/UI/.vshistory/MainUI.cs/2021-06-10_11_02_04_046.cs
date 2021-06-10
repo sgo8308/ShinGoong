@@ -49,6 +49,19 @@ public class MainUI : MonoBehaviour
         UpdateLevelUI();
     }
 
+    private void Update()
+    {
+        CheckCoinCount();
+    }
+
+    void CheckCoinCount()
+    {
+        if (coinCount < 2000)
+        {
+            Debug.Log("CHANGE");
+        }
+    }
+
     public void UpdateCoinUI()
     {
         _coinCountUI.text = coinCount.ToString();
