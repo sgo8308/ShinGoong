@@ -23,9 +23,6 @@ public class Player : MonoBehaviour
 
     public static bool _ropeMove = false;
 
-    public delegate void OnPlayerDead();
-    public OnPlayerDead onPlayerDead;
-
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();  //초기화
@@ -38,7 +35,6 @@ public class Player : MonoBehaviour
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         Cursor.visible = true;
         canMove = true;
-        
     }
 
     void P_directionSet()
@@ -155,10 +151,7 @@ public class Player : MonoBehaviour
     void Dead()
     {
         _animator.SetBool("isHit", true);
-        canMove = false;
-        
-        if(onPlayerDead != null)
-            onPlayerDead.Invoke();
+        //canMove = false;
     }
     #endregion
     

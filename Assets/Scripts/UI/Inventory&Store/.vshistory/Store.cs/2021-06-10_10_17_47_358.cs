@@ -17,7 +17,7 @@ public class Store : MonoBehaviour
 
     private void Start()
     {
-        StageManager.instance.InitializeStore();   
+        SceneManager.instance.InitializeStore();   
     }
 
     //Interact with store

@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 using System;
-using UnityEngine.SceneManagement;
 
 public enum StageState
 {
@@ -21,6 +20,8 @@ public class StageManager : MonoBehaviour
 
     Stopwatch _stopWatch;
 
+    SceneManager _sceneManager;
+
     private void Awake()
     {
         if (instance != null)
@@ -35,9 +36,10 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStageState;
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += RegisterOnPlayerDead;
+        _sceneManager = SceneManager.instance;
+        _sceneManager.onSceneLoad += StartStopWatch;
+        _sceneManager.onSceneLoad += InitializeStageState;
+        _sceneManager.onSceneLoad += RegisterOnPlayerDead;
 
         _stopWatch = new Stopwatch();
     }
@@ -45,9 +47,9 @@ public class StageManager : MonoBehaviour
     //스테이지인데 스탑워치가 실행중라면 리턴
     // 스탑워치가 실행중이 아니라면 시작.
 
-    void StartStopWatch(Scene scene, LoadSceneMode mode)
+    void StartStopWatch(string sceneName)
     {
-        if (scene.name == "ShelterScene")
+        if (sceneName == "ShelterScene")
             return;
 
         if (_stopWatch.IsRunning)
@@ -56,9 +58,9 @@ public class StageManager : MonoBehaviour
         _stopWatch.Start();
     }
 
-    void RegisterOnPlayerDead(Scene scene, LoadSceneMode mode)
+    void RegisterOnPlayerDead(string sceneName)
     {
-        if (scene.name == "ShelterScene")
+        if (sceneName == "ShelterScene")
             return;
 
         Player _player = GameObject.Find("Player").GetComponent<Player>();
@@ -79,9 +81,9 @@ public class StageManager : MonoBehaviour
         return playTime;
     }
 
-    public void InitializeStageState(Scene scene, LoadSceneMode mode)
+    public void InitializeStageState(string sceneName)
     {
-        if (scene.name == "ShelterScene")
+        if (sceneName == "ShelterScene")
             stageState = StageState.CLEAR;
         else
             stageState = StageState.UNCLEAR;

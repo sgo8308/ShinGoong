@@ -38,7 +38,6 @@ public class Player : MonoBehaviour
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         Cursor.visible = true;
         canMove = true;
-        
     }
 
     void P_directionSet()
@@ -156,9 +155,7 @@ public class Player : MonoBehaviour
     {
         _animator.SetBool("isHit", true);
         canMove = false;
-        
-        if(onPlayerDead != null)
-            onPlayerDead.Invoke();
+        onPlayerDead.Invoke();
     }
     #endregion
     

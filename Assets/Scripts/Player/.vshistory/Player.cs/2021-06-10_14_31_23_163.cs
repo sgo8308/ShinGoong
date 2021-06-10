@@ -156,9 +156,7 @@ public class Player : MonoBehaviour
     {
         _animator.SetBool("isHit", true);
         canMove = false;
-        
-        if(onPlayerDead != null)
-            onPlayerDead.Invoke();
+        onPlayerDead.Invoke();
     }
     #endregion
     

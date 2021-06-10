@@ -21,6 +21,8 @@ public class StageManager : MonoBehaviour
 
     Stopwatch _stopWatch;
 
+    SceneManager _sceneManager;
+
     private void Awake()
     {
         if (instance != null)

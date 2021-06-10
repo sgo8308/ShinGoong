@@ -14,6 +14,9 @@ public class SceneManager : MonoBehaviour
     public const int STAGE1_ARROW_COUNT = 50;
     public const int SHELTER_ARROW_COUNT = 45;
 
+    public GameObject inventoryPanel;
+    public GameObject storePanel;
+
     private void Awake()
     {
         if (instance != null)
@@ -26,11 +29,11 @@ public class SceneManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-
     public void GoTo(string sceneName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
         InitializeArrowCount(sceneName);
+
     }
 
     void InitializeArrowCount(string sceneName)
@@ -51,6 +54,12 @@ public class SceneManager : MonoBehaviour
                 MainUI.instance.InitializeArrowCount(45);
                 break;
         }
+    }
+
+    public void InitializeStore()
+    {
+        GameObject.Find("StoreNpc").GetComponent<Store>().inventoryPanel = inventoryPanel;
+        GameObject.Find("StoreNpc").GetComponent<Store>().storePanel = storePanel;
     }
 
     public void ExitGame()

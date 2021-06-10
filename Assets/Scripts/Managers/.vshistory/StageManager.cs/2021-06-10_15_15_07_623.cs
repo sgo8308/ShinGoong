@@ -21,6 +21,8 @@ public class StageManager : MonoBehaviour
 
     Stopwatch _stopWatch;
 
+    SceneManager _sceneManager;
+
     private void Awake()
     {
         if (instance != null)
@@ -47,7 +49,7 @@ public class StageManager : MonoBehaviour
 
     void StartStopWatch(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "ShelterScene")
+        if (sceneName == "ShelterScene")
             return;
 
         if (_stopWatch.IsRunning)
@@ -58,7 +60,7 @@ public class StageManager : MonoBehaviour
 
     void RegisterOnPlayerDead(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "ShelterScene")
+        if (sceneName == "ShelterScene")
             return;
 
         Player _player = GameObject.Find("Player").GetComponent<Player>();
@@ -81,7 +83,7 @@ public class StageManager : MonoBehaviour
 
     public void InitializeStageState(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "ShelterScene")
+        if (sceneName == "ShelterScene")
             stageState = StageState.CLEAR;
         else
             stageState = StageState.UNCLEAR;

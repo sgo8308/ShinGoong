@@ -14,6 +14,9 @@ public class SceneManager : MonoBehaviour
     public const int STAGE1_ARROW_COUNT = 50;
     public const int SHELTER_ARROW_COUNT = 45;
 
+    public delegate void OnSceneLoad(string sceneName);
+    public OnSceneLoad onSceneLoad;
+
     private void Awake()
     {
         if (instance != null)
@@ -31,6 +34,7 @@ public class SceneManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
         InitializeArrowCount(sceneName);
+        onSceneLoad.Invoke(sceneName);
     }
 
     void InitializeArrowCount(string sceneName)
