@@ -47,9 +47,7 @@ public class Fire : MonoBehaviour
 
         LookAtMouse();
         TryFire();
-
-        //플레이어 목 근처에서 화살이 나가게
-        arrowDirection.transform.position = new Vector2(_player.transform.position.x, _player.transform.position.y + 0.3f);
+        arrowDirection.transform.position = _player.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
     }
 
     void LookAtMouse()

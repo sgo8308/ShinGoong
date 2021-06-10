@@ -29,7 +29,7 @@ public class RopeArrow : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; //오브젝트를 움직이지 않게 한다.
         Fire.ropeArrowState = false;  //로프화살이 정지됨
-        Player.ropeMove = true;
+        Player._ropeMove = true;
 
         currentRopeArrowPositionList.Add( transform.position);
 

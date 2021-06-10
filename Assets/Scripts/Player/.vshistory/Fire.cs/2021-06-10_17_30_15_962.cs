@@ -47,9 +47,7 @@ public class Fire : MonoBehaviour
 
         LookAtMouse();
         TryFire();
-
-        //플레이어 목 근처에서 화살이 나가게
-        arrowDirection.transform.position = new Vector2(_player.transform.position.x, _player.transform.position.y + 0.3f);
+        arrowDirection.transform.position = _player.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
     }
 
     void LookAtMouse()
@@ -130,7 +128,7 @@ public class Fire : MonoBehaviour
     {
         GameObject RopeArrow = Instantiate(ropeArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
         RopeArrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-        RopeArrow.GetComponent<Rigidbody2D>().velocity = RopeArrow.transform.right * arrowMaxPower * ropeArrowSpeed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+        RopeArrow.GetComponent<Rigidbody2D>().velocity = RopeArrow.transform.right * _arrow_maxPower * _ropeArrow_speed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
 
 
     }

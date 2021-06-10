@@ -210,6 +210,8 @@ public class Player : MonoBehaviour
     {
         _animator.SetBool("isReady", false);
 
+
+
         if (_aimAngle >= 0 && _aimAngle < 20) //마우스 각도가 0~20도 일때 Aiming20 애니메이션 시작
         {
             _animator.SetBool("isAiming20", true);
@@ -220,10 +222,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void AimingCancel()
-    {
-        _animator.SetBool("isFireFinish20", false);
 
+    private void Rope()
+    {
+        if (Input.GetKey(KeyCode.R))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                _mousePosition = Input.mousePosition;
+                _mousePosition = _mainCamera.ScreenToWorldPoint(_mousePosition);
+                print(_mousePosition);
+            }
+        }
     }
 
     private void RopeMove()

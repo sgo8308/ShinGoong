@@ -21,11 +21,7 @@ public class Player : MonoBehaviour
 
     public static bool jumpingState = false;
 
-    public static bool ropeMove = false;
-
-    public Transform arrowDirection = null;
-
-    float _aimAngle;
+    public static bool _ropeMove = false;
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
@@ -93,9 +89,7 @@ public class Player : MonoBehaviour
         else
             _animator.SetBool("isRunning", true);
 
-        RopeMove();
-
-        AttackReady();
+        ropeMove();
     }
 
     private void FixedUpdate()
@@ -177,58 +171,22 @@ public class Player : MonoBehaviour
         inventoryUI.UpdateCoinUI();
     }
 
-    private void AttackReady()
+    private void Rope()
     {
-        if (Input.GetMouseButtonDown(0))  //down -> ready애니메이션 시작
+        if (Input.GetKey(KeyCode.R))
         {
-            CalculateBowAngle();
-            _animator.SetBool("isReady", true);
-            Invoke("ReadyCancel", 0.8f);
-        }
-
-        if (Input.GetMouseButtonUp(0))  //up -> 0.2초 뒤에 angle애니메이션 취소
-        {
-            _animator.SetBool("isAiming20", false);
-            _animator.SetBool("isFireFinish20", true);
-
-            Invoke("AimingCancel", 0.3f);
+            if (Input.GetMouseButtonDown(0))
+            {
+                _mousePosition = Input.mousePosition;
+                _mousePosition = _mainCamera.ScreenToWorldPoint(_mousePosition);
+                print(_mousePosition);
+            }
         }
     }
 
-    void CalculateBowAngle()
+    private void ropeMove()
     {
-        Vector2 t_mousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
-        Vector2 t_direction = new Vector2(t_mousePos.x - arrowDirection.position.x,
-                                          t_mousePos.y - arrowDirection.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
-
-        _aimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
-        _aimAngle = Mathf.Abs(90 - _aimAngle);
-        print(_aimAngle);
-    }
-
-    private void ReadyCancel()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
-    {
-        _animator.SetBool("isReady", false);
-
-        if (_aimAngle >= 0 && _aimAngle < 20) //마우스 각도가 0~20도 일때 Aiming20 애니메이션 시작
-        {
-            _animator.SetBool("isAiming20", true);
-        }
-        if (_aimAngle >= 20 && _aimAngle < 30)
-        {
-            _animator.SetBool("isAiming30", true);
-        }
-    }
-
-    private void AimingCancel()
-    {
-        _animator.SetBool("isFireFinish20", false);
-
-    }
-
-    private void RopeMove()
-    {
-        if (ropeMove)
+        if (_ropeMove)
         {
             print("move");
             Vector2 ropeArrow_Position = RopeArrow.currentRopeArrowPositionList[0]; //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
@@ -241,7 +199,7 @@ public class Player : MonoBehaviour
 
             if (p_Position == ropeArrow_Position)
             {
-                ropeMove = false;
+                _ropeMove = false;
                 this.GetComponent<Rigidbody2D>().gravityScale = 3;
             }
         }

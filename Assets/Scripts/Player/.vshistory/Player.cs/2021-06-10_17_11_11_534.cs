@@ -226,6 +226,19 @@ public class Player : MonoBehaviour
 
     }
 
+    private void Rope()
+    {
+        if (Input.GetKey(KeyCode.R))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                _mousePosition = Input.mousePosition;
+                _mousePosition = _mainCamera.ScreenToWorldPoint(_mousePosition);
+                print(_mousePosition);
+            }
+        }
+    }
+
     private void RopeMove()
     {
         if (ropeMove)

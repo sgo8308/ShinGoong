@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MouseCursor : MonoBehaviour
 {
-    public static bool isAimCursorNeeded = true;
+    public static bool isAimCursorNeeded = false;
 
     //마우스 포인터로 사용할 텍스처를 입력받습니다.
     public Texture2D cursorTexture;
@@ -15,6 +15,8 @@ public class MouseCursor : MonoBehaviour
     {
         _hotSpot.x = cursorTexture.width / 2;
         _hotSpot.y = cursorTexture.height / 2;
+
+        Cursor.SetCursor(cursorTexture, _hotSpot, CursorMode.Auto);  //마우스 커서를 화면에 표시
     }
 
     private void Update()

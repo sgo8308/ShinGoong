@@ -181,7 +181,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))  //down -> ready애니메이션 시작
         {
-            CalculateBowAngle();
+            CalAngle();
             _animator.SetBool("isReady", true);
             Invoke("ReadyCancel", 0.8f);
         }
@@ -195,35 +195,31 @@ public class Player : MonoBehaviour
         }
     }
 
-    void CalculateBowAngle()
+    void CalAngle()
     {
-        Vector2 t_mousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
-        Vector2 t_direction = new Vector2(t_mousePos.x - arrowDirection.position.x,
-                                          t_mousePos.y - arrowDirection.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
+        Vector2 t_mousePos = m_cam.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+        Vector2 t_direction = new Vector2(t_mousePos.x - _tfArrow.position.x,
+                                          t_mousePos.y - _tfArrow.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
 
         _aimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
         _aimAngle = Mathf.Abs(90 - _aimAngle);
         print(_aimAngle);
     }
 
-    private void ReadyCancel()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
+
+
+
+    private void Rope()
     {
-        _animator.SetBool("isReady", false);
-
-        if (_aimAngle >= 0 && _aimAngle < 20) //마우스 각도가 0~20도 일때 Aiming20 애니메이션 시작
+        if (Input.GetKey(KeyCode.R))
         {
-            _animator.SetBool("isAiming20", true);
+            if (Input.GetMouseButtonDown(0))
+            {
+                _mousePosition = Input.mousePosition;
+                _mousePosition = _mainCamera.ScreenToWorldPoint(_mousePosition);
+                print(_mousePosition);
+            }
         }
-        if (_aimAngle >= 20 && _aimAngle < 30)
-        {
-            _animator.SetBool("isAiming30", true);
-        }
-    }
-
-    private void AimingCancel()
-    {
-        _animator.SetBool("isFireFinish20", false);
-
     }
 
     private void RopeMove()

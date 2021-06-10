@@ -1647,7 +1647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &167002352
 Transform:
   m_ObjectHideFlags: 0
@@ -1655,7 +1655,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167002351}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 30, y: -46.5, z: 0}
   m_LocalScale: {x: 0.38163993, y: 0.38163993, z: 0.38163993}
   m_Children:
@@ -38557,8 +38557,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorTexture: {fileID: 2800000, guid: aa71a82334008444ea3e7165a2d02578, type: 3}
-  hotSpotIsCenter: 1
-  adjustHotSpot: {x: 0, y: 0}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -38610,7 +38608,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.594061, y: -55.855022, z: -10}
+  m_LocalPosition: {x: 10.610692, y: -55.854942, z: -10}
   m_LocalScale: {x: 1.1948497, y: 1.1948497, z: 1.1948497}
   m_Children: []
   m_Father: {fileID: 0}
@@ -38630,9 +38628,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 292545706614394705, guid: 97814c36e1f23d84c8d9393fb5997ec3,
     type: 3}
-  ropeArrowPrefab: {fileID: 6139968217447600531, guid: e027682052f056941b2b60b21834060d,
+  ropeArrowPrefab: {fileID: 5841127027978415184, guid: 212c60b0f6947ef4d9f4da943fcf54f0,
     type: 3}
-  transformOfArrow: {fileID: 167002352}
+  _player: {fileID: 594572418}
   arrowSpeed: 70
   arrowMaxPower: 1
   ropeArrowSpeed: 15
@@ -74074,6 +74072,7 @@ MonoBehaviour:
   maxSpeed: 4.5
   jumpPower: 23
   inventoryUI: {fileID: 0}
+  arrowDirection: {fileID: 167002352}
 --- !u!50 &594572422
 Rigidbody2D:
   serializedVersion: 4

@@ -36,7 +36,6 @@ public class Fire : MonoBehaviour
         _mainUI = MainUI.instance;
         _player = GameObject.Find("Player");
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
-        arrowDirection = GameObject.Find("ArrowDirection");
         arrowDirection.SetActive(false);
     }
 

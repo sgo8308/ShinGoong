@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MouseCursor : MonoBehaviour
 {
-    public static bool isAimCursorNeeded = true;
+    public static bool isAimCursorNeeded = false;
 
     //마우스 포인터로 사용할 텍스처를 입력받습니다.
     public Texture2D cursorTexture;

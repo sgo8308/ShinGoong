@@ -28,9 +28,6 @@ public class Fire : MonoBehaviour
 
     Vector2 t_mousePos;
 
-    Vector2 arrow_startPosition;
-
-
     void Start()
     {
         _mainUI = MainUI.instance;
@@ -47,9 +44,7 @@ public class Fire : MonoBehaviour
 
         LookAtMouse();
         TryFire();
-
-        //플레이어 목 근처에서 화살이 나가게
-        arrowDirection.transform.position = new Vector2(_player.transform.position.x, _player.transform.position.y + 0.3f);
+        arrowDirection.transform.position = _player.transform.position;  //발사 직전 화살의 위치 = 플레이어의 위치
     }
 
     void LookAtMouse()
@@ -65,10 +60,26 @@ public class Fire : MonoBehaviour
     {
         if (Input.GetAxisRaw("Horizontal") == 0 && !Player.jumpingState && !Input.GetKey(KeyCode.R))  //플레이어가 움직이지 않을때에만 화살이 발사된다.
         {
-            if (Input.GetMouseButtonUp(0) && !ropeArrowState)// 로프화살이 발사된 상태가 아닐때 마우스 클릭한 경우
+            if (Input.GetMouseButtonUp(0))
             {
-                print("마우스위치 : " + t_mousePos);
-                Invoke("Attack", 0.1f);  //활시위를 놓을때 0.1초 후에 화살이 발사된다.
+                if (_mainUI.arrowCount > 0)
+                {
+                    GameObject t_arrow = Instantiate(arrowPrefab, arrowDirection.position, arrowDirection.rotation); //화살 생성
+                    t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * _power * arrowSpeed * 1 / 2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+                    arrowPowerSpeed = _power * arrowSpeed;
+
+                    if (_power >= arrowMaxPower)
+                    {
+                        t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
+                        t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * _power * arrowSpeed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+                    }
+
+                    _power = 0.0f;
+
+                    _mainUI.arrowCount -= 1;
+                }
+                else if (_mainUI.arrowCount == 0)
+                    _power = 0.0f;
             }                                
 
             if (Input.GetMouseButton(0) && _mainUI.arrowCount != 0)
@@ -87,51 +98,18 @@ public class Fire : MonoBehaviour
         Rope();
     }
 
-    void Attack()
-    {
-        if (_mainUI.arrowCount > 0)
-        {
-            arrow_startPosition = new Vector2(arrowDirection.transform.position.x, arrowDirection.transform.position.y);  //발사 위치 설정
-            
-            GameObject t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * _power * arrowSpeed * 1 / 2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
-            arrowPowerSpeed = _power * arrowSpeed;
-
-            if (_power >= arrowMaxPower)
-            {
-                t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-                t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * _power * arrowSpeed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
-            }
-
-            _power = 0.0f;
-
-            _mainUI.arrowCount -= 1;
-        }
-        else if (_mainUI.arrowCount == 0)
-            _power = 0.0f;
-    }
-
     private void Rope()
     {
         if (Input.GetKey(KeyCode.R))
         {
             if (Input.GetMouseButtonDown(0))
             {
-                GameObject RopeArrow = Instantiate(ropeArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
+                GameObject RopeArrow = Instantiate(ropeArrowPrefab, arrowDirection.position, arrowDirection.rotation); //화살 생성
                 RopeArrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
                 RopeArrow.GetComponent<Rigidbody2D>().velocity = RopeArrow.transform.right * arrowMaxPower * ropeArrowSpeed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
 
                 ropeArrowState = true;
             }
         }
-    }
-
-    private void RopeFire()
-    {
-        GameObject RopeArrow = Instantiate(ropeArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-        RopeArrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-        RopeArrow.GetComponent<Rigidbody2D>().velocity = RopeArrow.transform.right * arrowMaxPower * ropeArrowSpeed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
-
-
     }
 }
