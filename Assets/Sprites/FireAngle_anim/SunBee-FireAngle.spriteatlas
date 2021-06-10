@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SunBee-FireAngle
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: b03c18230a8d50d4984059b43d97e61b, type: 3}
+    - {fileID: 2800000, guid: 8f1e6a3dca2acd745b3c1b9c21874a3c, type: 3}
+    - {fileID: 2800000, guid: e898f9be5d3909144ac8427389a97412, type: 3}
+    - {fileID: 2800000, guid: 8ad675c139d0fc0449d18d80b8deb0b9, type: 3}
+    - {fileID: 2800000, guid: 573505965ba99f74d9f94c3bf01f68b2, type: 3}
+    - {fileID: 2800000, guid: 764f35d90252a3e49b9aed00c15bb509, type: 3}
+    - {fileID: 2800000, guid: 42734cbfe13d171468153f8af8345fec, type: 3}
+    - {fileID: 2800000, guid: 0b5133bc5a3ba4f4bbda69a805c277f0, type: 3}
+    - {fileID: 2800000, guid: f57ef30e02cf541418fcb78725028e5a, type: 3}
+    - {fileID: 2800000, guid: d52b047ad6e3b424aa0607059b10aaf3, type: 3}
+    - {fileID: 2800000, guid: 1b95fc3e6679ed9428504ecb2ded8972, type: 3}
+    - {fileID: 2800000, guid: 28ab76f5d626ca447aee88cadb1935d8, type: 3}
+    - {fileID: 2800000, guid: 855cba6c42e8d8348afd1d30e6b01d53, type: 3}
+    - {fileID: 2800000, guid: d57d5e189003b4e42ad7635c365fa99e, type: 3}
+    - {fileID: 2800000, guid: 6a1c9ba58d2ea4147ae2794706a92c37, type: 3}
+    - {fileID: 2800000, guid: 7db2a356e6a10854da88c5d68c6fbfe2, type: 3}
+    - {fileID: 2800000, guid: 9151ff41d87ba63439df8718a4874845, type: 3}
+    - {fileID: 2800000, guid: 3051a69c7b4d61549891646975523a07, type: 3}
+    - {fileID: 2800000, guid: 9722fa7b5b77c4d4eb2f4dd04dd3e9e4, type: 3}
+    - {fileID: 2800000, guid: 19712df0c1f02f54b9a180ca89a7b65b, type: 3}
+    - {fileID: 2800000, guid: 9fa150b849d441949b123b2f1240574a, type: 3}
+    - {fileID: 2800000, guid: 8d2c79f2aff84c74cbe00585d9b40321, type: 3}
+    - {fileID: 2800000, guid: dc9b77f04cb9a8f46836ab3378953d97, type: 3}
+    - {fileID: 2800000, guid: d2805f85fa3041e4a85dae970491da58, type: 3}
+    - {fileID: 2800000, guid: 0d2d9c1fa53b06b4aba3af5410b5444c, type: 3}
+    - {fileID: 2800000, guid: 9c0b8b1c44e9e5d43bb444ca8e24e930, type: 3}
+    - {fileID: 2800000, guid: 0513d4bbbbcdb354096b68f6c2692b71, type: 3}
+    - {fileID: 2800000, guid: 9ae9f0b2df1276a4a9c5f2e40364d21e, type: 3}
+    - {fileID: 2800000, guid: 9a90764cefcd8674186c40f61d917526, type: 3}
+    - {fileID: 2800000, guid: a79ea2e5a4284c441bedd25f1fc514e4, type: 3}
+    - {fileID: 2800000, guid: d99a7bb8e1b676743b47e7b3a6328d44, type: 3}
+    - {fileID: 2800000, guid: 74c25387e7a8cf14185cbf8edca89b2d, type: 3}
+    - {fileID: 2800000, guid: 6bbe0ef4d9a4277409d1551104b27bbd, type: 3}
+    - {fileID: 2800000, guid: 65006c1282b28954e98092d476d1ab09, type: 3}
+    - {fileID: 2800000, guid: 5ad8d0f953c132f4db3d9e128c1fbdfd, type: 3}
+    - {fileID: 2800000, guid: b45cc967107004541850c5f25cdc6eff, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: dc9b77f04cb9a8f46836ab3378953d97, type: 3}
+  - {fileID: 21300000, guid: 19712df0c1f02f54b9a180ca89a7b65b, type: 3}
+  - {fileID: 21300000, guid: 9151ff41d87ba63439df8718a4874845, type: 3}
+  - {fileID: 21300000, guid: 8ad675c139d0fc0449d18d80b8deb0b9, type: 3}
+  - {fileID: 21300000, guid: 65006c1282b28954e98092d476d1ab09, type: 3}
+  - {fileID: 21300000, guid: 9ae9f0b2df1276a4a9c5f2e40364d21e, type: 3}
+  - {fileID: 21300000, guid: 8d2c79f2aff84c74cbe00585d9b40321, type: 3}
+  - {fileID: 21300000, guid: b03c18230a8d50d4984059b43d97e61b, type: 3}
+  - {fileID: 21300000, guid: 6bbe0ef4d9a4277409d1551104b27bbd, type: 3}
+  - {fileID: 21300000, guid: d2805f85fa3041e4a85dae970491da58, type: 3}
+  - {fileID: 21300000, guid: 6a1c9ba58d2ea4147ae2794706a92c37, type: 3}
+  - {fileID: 21300000, guid: a79ea2e5a4284c441bedd25f1fc514e4, type: 3}
+  - {fileID: 21300000, guid: 28ab76f5d626ca447aee88cadb1935d8, type: 3}
+  - {fileID: 21300000, guid: 7db2a356e6a10854da88c5d68c6fbfe2, type: 3}
+  - {fileID: 21300000, guid: 573505965ba99f74d9f94c3bf01f68b2, type: 3}
+  - {fileID: 21300000, guid: b45cc967107004541850c5f25cdc6eff, type: 3}
+  - {fileID: 21300000, guid: 74c25387e7a8cf14185cbf8edca89b2d, type: 3}
+  - {fileID: 21300000, guid: d57d5e189003b4e42ad7635c365fa99e, type: 3}
+  - {fileID: 21300000, guid: 9fa150b849d441949b123b2f1240574a, type: 3}
+  - {fileID: 21300000, guid: d99a7bb8e1b676743b47e7b3a6328d44, type: 3}
+  - {fileID: 21300000, guid: 764f35d90252a3e49b9aed00c15bb509, type: 3}
+  - {fileID: 21300000, guid: 5ad8d0f953c132f4db3d9e128c1fbdfd, type: 3}
+  - {fileID: 21300000, guid: d52b047ad6e3b424aa0607059b10aaf3, type: 3}
+  - {fileID: 21300000, guid: 9722fa7b5b77c4d4eb2f4dd04dd3e9e4, type: 3}
+  - {fileID: 21300000, guid: 0513d4bbbbcdb354096b68f6c2692b71, type: 3}
+  - {fileID: 21300000, guid: 9c0b8b1c44e9e5d43bb444ca8e24e930, type: 3}
+  - {fileID: 21300000, guid: 9a90764cefcd8674186c40f61d917526, type: 3}
+  - {fileID: 21300000, guid: 855cba6c42e8d8348afd1d30e6b01d53, type: 3}
+  - {fileID: 21300000, guid: 3051a69c7b4d61549891646975523a07, type: 3}
+  - {fileID: 21300000, guid: 0b5133bc5a3ba4f4bbda69a805c277f0, type: 3}
+  - {fileID: 21300000, guid: 8f1e6a3dca2acd745b3c1b9c21874a3c, type: 3}
+  - {fileID: 21300000, guid: f57ef30e02cf541418fcb78725028e5a, type: 3}
+  - {fileID: 21300000, guid: 1b95fc3e6679ed9428504ecb2ded8972, type: 3}
+  - {fileID: 21300000, guid: e898f9be5d3909144ac8427389a97412, type: 3}
+  - {fileID: 21300000, guid: 0d2d9c1fa53b06b4aba3af5410b5444c, type: 3}
+  - {fileID: 21300000, guid: 42734cbfe13d171468153f8af8345fec, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - 90Angle2
+  - 80Angle2
+  - 70Angle2
+  - 30Angle1
+  - 130Angle1
+  - 110Angle1
+  - 90Angle1
+  - 20Angle1
+  - 120Angle3
+  - 90Angle3
+  - 60Angle3
+  - 110Angle3
+  - 50Angle3
+  - 70Angle1
+  - 30Angle2
+  - 130Angle3
+  - 120Angle2
+  - 60Angle2
+  - 80Angle3
+  - 120Angle1
+  - 30Angle3
+  - 130Angle2
+  - 50Angle1
+  - 80Angle1
+  - 100Angle3
+  - 100Angle2
+  - 110Angle2
+  - 60Angle1
+  - 70Angle3
+  - 40Angle2
+  - 20Angle2
+  - 40Angle3
+  - 50Angle2
+  - 20Angle3
+  - 100Angle1
+  - 40Angle1
+  m_Tag: SunBee-FireAngle
+  m_IsVariant: 0

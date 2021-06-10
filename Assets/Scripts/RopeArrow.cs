@@ -25,7 +25,9 @@ public class RopeArrow : MonoBehaviour
         
         if (Fire._ropeArrowState) //로프화살이 발사 중이라면
         {
+            print("로프생성?");
             GameObject Rope = Instantiate(_ropePrefab, transform.position, transform.rotation); //로프 생성
+            
         }
 
     

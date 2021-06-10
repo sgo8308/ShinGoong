@@ -6,29 +6,29 @@ using UnityEngine.UI;
 public class BombShot : MonoBehaviour
 {
 
-    public static bool _bombShot_State;    
+    public static bool bombShot_State;    
 
     void Start()
     {
 
 
-        _bombShot_State = false;
+        bombShot_State = false;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (!_bombShot_State)
+            if (!bombShot_State)
             {
                 GetComponent<RawImage>().enabled = true;
-                _bombShot_State = true;
+                bombShot_State = true;
             }
 
-            else if (_bombShot_State)
+            else if (bombShot_State)
             {
                 GetComponent<RawImage>().enabled = false;
-                _bombShot_State = false;
+                bombShot_State = false;
             }
 
         }

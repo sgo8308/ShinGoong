@@ -9,32 +9,32 @@ public class MouseCursor : MonoBehaviour
     public Texture2D cursorTexture;
 
     //텍스처의 중심을 마우스 좌표로 할 것인지 체크박스로 입력받습니다.
-    public bool hotSpotIsCenter = false;
+    //public bool hotSpotIsCenter = false;
 
     //텍스처의 어느부분을 마우스의 좌표로 할 것인지 텍스처의 좌표를 입력받습니다.
     
-    public Vector2 adjustHotSpot = Vector2.zero;
+    Vector2 adjustHotSpot = Vector2.zero;
 
     //내부에서 사용할 필드를 선업합니다.
 
-    private Vector2 hotSpot;
+    Vector2 _hotSpot;
 
-    public void Start()
+    void Start()
     {
 
-        if (hotSpotIsCenter)
+     //   if (hotSpotIsCenter)
         {
-            hotSpot.x = cursorTexture.width / 2;
-            hotSpot.y = cursorTexture.height / 2;
+            _hotSpot.x = cursorTexture.width / 2;
+            _hotSpot.y = cursorTexture.height / 2;
         }
-        else
+    //    else
         {
             //중심좌표로 사용하지 않을 경우 Adjust Hot Spot으로 입력 받은 것을 사용합니다.
             
-            hotSpot = adjustHotSpot;
+     //       hotSpot = adjustHotSpot;
         }
         
-        Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto);  //마우스 커서를 화면에 표시
+        Cursor.SetCursor(cursorTexture, _hotSpot, CursorMode.Auto);  //마우스 커서를 화면에 표시
     }
   
 }

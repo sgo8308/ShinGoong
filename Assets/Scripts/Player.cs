@@ -21,6 +21,10 @@ public class Player : MonoBehaviour
 
     public static bool _ropeMove = false;
 
+    public Transform _tfArrow = null;   //화살의 위치값을 담을 변수
+
+    float _aimAngle;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();  //초기화
@@ -86,9 +90,68 @@ public class Player : MonoBehaviour
             
         }
 
-        ropeMove();
+        RopeMove();
+
+        AttackReady();
+    }
+    
+    private void AttackReady()
+    {
+        
+
+        if (Input.GetMouseButtonDown(0))  //down -> ready애니메이션 시작
+        {
+            CalAngle();
+            anim.SetBool("isReady", true);
+            Invoke("ReadyCancel", 0.8f);
+        }
+
+        if (Input.GetMouseButtonUp(0))  //up -> 0.2초 뒤에 angle애니메이션 취소
+        {
+            anim.SetBool("isAiming20", false);
+            anim.SetBool("isFireFinish20", true);
+
+            Invoke("AimingCancel", 0.3f);
+
+        }
+
     }
 
+    void CalAngle() {
+        Vector2 t_mousePos = m_cam.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+        Vector2 t_direction = new Vector2(t_mousePos.x - _tfArrow.position.x,
+                                          t_mousePos.y - _tfArrow.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
+
+        _aimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
+        _aimAngle = Mathf.Abs(90 - _aimAngle);
+        print(_aimAngle);
+    } 
+
+
+    private void ReadyCancel()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
+    {
+        anim.SetBool("isReady", false);
+
+        
+
+        if (_aimAngle >=0 && _aimAngle <20) //마우스 각도가 0~20도 일때 Aiming20 애니메이션 시작
+        {
+            anim.SetBool("isAiming20", true);
+        }
+        if (_aimAngle >= 20 && _aimAngle < 30)
+        {
+            anim.SetBool("isAiming30", true);
+        }
+    }
+
+    
+
+
+    private void AimingCancel()
+    {
+        anim.SetBool("isFireFinish20", false);
+
+    }
     private void FixedUpdate()
     {
         //GetAxisRaw 함수를 이용해 Horizontal 값을 가져옴(-1,0,1) [Edit] -> [Project Settings] -> Input
@@ -171,7 +234,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ropeMove()
+    private void RopeMove()
     {
         if (_ropeMove)
         {

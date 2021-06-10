@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sunbee-Ready
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 4d74bcf0654a7c242a6befc90ce192a2, type: 3}
+    - {fileID: 2800000, guid: 101093973cd9be849b094ab583047609, type: 3}
+    - {fileID: 2800000, guid: 5eab5aae5849e794ab367a1efa1c1c60, type: 3}
+    - {fileID: 2800000, guid: 0a7404eb28a0f9f4aa500d80d9f978db, type: 3}
+    - {fileID: 2800000, guid: 2043c1ed55eaf1f4fa19a09e15d91dfb, type: 3}
+    - {fileID: 2800000, guid: e9df1a73bfd159b47af2e5aafa439631, type: 3}
+    - {fileID: 2800000, guid: ea21b1ef633a4fd4a99aa46abab3201a, type: 3}
+    - {fileID: 2800000, guid: d9d10451a28e84a43ae12e05faab061f, type: 3}
+    - {fileID: 2800000, guid: 98901c28ce7fb664b8fc7e6a8e26ce24, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 4d74bcf0654a7c242a6befc90ce192a2, type: 3}
+  - {fileID: 21300000, guid: d9d10451a28e84a43ae12e05faab061f, type: 3}
+  - {fileID: 21300000, guid: e9df1a73bfd159b47af2e5aafa439631, type: 3}
+  - {fileID: 21300000, guid: 101093973cd9be849b094ab583047609, type: 3}
+  - {fileID: 21300000, guid: 98901c28ce7fb664b8fc7e6a8e26ce24, type: 3}
+  - {fileID: 21300000, guid: 0a7404eb28a0f9f4aa500d80d9f978db, type: 3}
+  - {fileID: 21300000, guid: 2043c1ed55eaf1f4fa19a09e15d91dfb, type: 3}
+  - {fileID: 21300000, guid: 5eab5aae5849e794ab367a1efa1c1c60, type: 3}
+  - {fileID: 21300000, guid: ea21b1ef633a4fd4a99aa46abab3201a, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - sunbi-ready1
+  - sunbi-ready8
+  - sunbi-ready6
+  - sunbi-ready2
+  - sunbi-ready9
+  - sunbi-ready4
+  - sunbi-ready5
+  - sunbi-ready3
+  - sunbi-ready7
+  m_Tag: Sunbee-Ready
+  m_IsVariant: 0

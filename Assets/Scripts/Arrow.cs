@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    bool arrowState = true;
+    bool _arrowState = true;
     float _damage;
     Vector2 _zeroVelocity;
     List<Vector2> ArrowColList = new List<Vector2>();
@@ -27,7 +27,7 @@ public class Arrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (arrowState)
+        if (_arrowState)
         {
             transform.right = GetComponent<Rigidbody2D>().velocity;  //매 프레임마다 화살의 x축 벡터값을 2d의 속도로 정해준다. 화살촉 방향 조절
         }
@@ -46,7 +46,7 @@ public class Arrow : MonoBehaviour
         {
             Debug.Log("곡사 충돌 시작!");
             
-            if (BombShot._bombShot_State)  //폭발샷이라면 폭발 애니메이션 동작한다.
+            if (BombShot.bombShot_State)  //폭발샷이라면 폭발 애니메이션 동작한다.
             {
                 anim.SetBool("isExploding", true);
                 Invoke("Destroy", 2);
@@ -54,9 +54,9 @@ public class Arrow : MonoBehaviour
 
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; //오브젝트를 움직이지 않게 한다.
             GetComponent<Rigidbody2D>().velocity = _zeroVelocity;
-            arrowState = false; //화살촉 방향 변화를 멈추게 한다.
+            _arrowState = false; //화살촉 방향 변화를 멈추게 한다.
 
-            if (!BombShot._bombShot_State)  //폭발샷이 아니라면 레이어를 14로 하여 이후에 화살 회수가 가능하도록 한다.
+            if (!BombShot.bombShot_State)  //폭발샷이 아니라면 레이어를 14로 하여 이후에 화살 회수가 가능하도록 한다.
             {
                 this.gameObject.layer = 14;
             }
@@ -81,7 +81,7 @@ public class Arrow : MonoBehaviour
             {
 
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; //오브젝트를 움직이지 않게 한다.
-                arrowState = false; //화살촉 방향 변화를 멈추게 한다.
+                _arrowState = false; //화살촉 방향 변화를 멈추게 한다.
 
                 this.gameObject.layer = 14;
                 GetComponent<BoxCollider2D>().isTrigger = true;
