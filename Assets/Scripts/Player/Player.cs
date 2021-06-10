@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
 
         MainUI.instance.UpdateCoinUI();
 
-        inventoryUI.UpdateCoinUI(MainUI.instance.coinCount);
+        inventoryUI.UpdateCoinUI();
     }
 
     private void Rope()
