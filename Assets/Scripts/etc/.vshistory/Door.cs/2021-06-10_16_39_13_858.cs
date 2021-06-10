@@ -7,7 +7,6 @@ public class Door : MonoBehaviour
     SceneManager _sceneManager;
     bool _isLoadingNextScene;
     public string sceneName;
-    bool isPlayerInTrigger;
 
     private void Start()
     {
@@ -18,20 +17,7 @@ public class Door : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag != "Player")
-            return;
-
-        isPlayerInTrigger = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        isPlayerInTrigger = false;
-    }
-
-    private void Update()
-    {
-        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.F) && !_isLoadingNextScene)
+        if (Input.GetKeyDown(KeyCode.F) && !_isLoadingNextScene) 
         {
             _isLoadingNextScene = true;
             _sceneManager.GoTo(sceneName);
