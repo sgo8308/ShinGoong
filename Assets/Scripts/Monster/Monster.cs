@@ -15,6 +15,7 @@ public abstract class Monster : MonoBehaviour
     protected float _speed;
     protected float _hp;
     protected float _defensivePower;
+    protected float _experiencePoint;
     public GameObject coin;
     public UnityEvent OnDead;
 

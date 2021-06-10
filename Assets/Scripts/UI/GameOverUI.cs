@@ -11,7 +11,6 @@ public class GameOverUI : MonoBehaviour
     TextMeshProUGUI _playTime;
     TextMeshProUGUI _level;
 
-
     private void Awake()
     {
         var obj = FindObjectsOfType<GameOverUI>();
@@ -29,6 +28,7 @@ public class GameOverUI : MonoBehaviour
     void Start()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += RegisterOnPlayerDead;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += setUIinActive;
 
         _stageManager = StageManager.instance;
 
@@ -71,5 +71,11 @@ public class GameOverUI : MonoBehaviour
     void UpdateLevelUI()
     { 
     
+    }
+
+    void setUIinActive(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "ShelterScene")
+            this.gameObject.SetActive(false);
     }
 }

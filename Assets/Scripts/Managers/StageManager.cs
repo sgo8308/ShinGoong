@@ -38,12 +38,10 @@ public class StageManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStageState;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += RegisterOnPlayerDead;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += ResetStopWatch;
 
         _stopWatch = new Stopwatch();
     }
-    //씬매니저에서 새로운 씬이 로딩되면 알람 받고 만약 쉘터면 스톱워치 중단.
-    //스테이지인데 스탑워치가 실행중라면 리턴
-    // 스탑워치가 실행중이 아니라면 시작.
 
     void StartStopWatch(Scene scene, LoadSceneMode mode)
     {
@@ -68,6 +66,12 @@ public class StageManager : MonoBehaviour
     void StopStopWatch()
     {
         _stopWatch.Stop();
+    }
+
+    void ResetStopWatch(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "ShelterScene")
+            _stopWatch.Reset();
     }
 
     public string GetPlayTime()
@@ -97,11 +101,20 @@ public class StageManager : MonoBehaviour
    
     public GameObject inventoryPanel;
     public GameObject storePanel;
+    
+    void InitializeShelter()
+    {
+        InitializeStore();
+
+    }
+
     public void InitializeStore()
     {
         GameObject.Find("StoreNpc").GetComponent<Store>().inventoryPanel = inventoryPanel;
         GameObject.Find("StoreNpc").GetComponent<Store>().storePanel = storePanel;
-    } 
+    }
+    
+     
 
     #endregion
 }
