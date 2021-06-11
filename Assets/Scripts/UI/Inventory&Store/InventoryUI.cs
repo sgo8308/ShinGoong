@@ -68,6 +68,8 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
+
+
     void RedrawSlotUI()
     {
         for (int i = 0; i < _slots.Length; i++)

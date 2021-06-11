@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ItemToolTip : MonoBehaviour
+public class ItemToolTipInfoSetter : MonoBehaviour
 {
     TextMeshProUGUI _levelLimit;
     TextMeshProUGUI _itemName;
@@ -59,15 +59,65 @@ public class ItemToolTip : MonoBehaviour
 
         gameObject.SetActive(false);
     }
-    void SetImmutableInfo(Item item)
+    
+    public void SetInventoryItemToolTipInfo(SlotType slotType, Item item, bool isStoreActive)
     {
-        if (item.hasLevelLimit) 
+        switch (slotType)
+        {
+            case SlotType.Inventory:
+                SetInventoryItemInfo(item, isStoreActive);
+                break;
+
+            case SlotType.Equipped:
+                SetEquippedItemInfo(item, isStoreActive);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void SetStoreItemInfo(Item item)
+    {
+        SetImmutableInfo(item);
+
+        _price.text = item.priceInStore.ToString();
+        _rightClickInfo.text = "BUY";
+    }
+
+    private void SetInventoryItemInfo(Item item, bool isStoreActive)
+    {
+        SetImmutableInfo(item);
+
+        _price.text = item.priceInInventory.ToString();
+
+        if (isStoreActive)
+            _rightClickInfo.text = "SELL";
+        else
+            _rightClickInfo.text = "EQUIP";
+    }
+
+    private void SetEquippedItemInfo(Item item, bool isStoreActive)
+    {
+        SetImmutableInfo(item);
+
+        _price.text = item.priceInInventory.ToString();
+
+        if (isStoreActive)
+            _rightClickInfo.text = "SELL";
+        else
+            _rightClickInfo.text = "UNEQUIP";
+    }
+
+    private void SetImmutableInfo(Item item)
+    {
+        if (item.hasLevelLimit)
         {
             _levelLimit.transform.parent.gameObject.SetActive(true);
 
             _levelLimit.text = item.levelLimit.ToString();
         }
-        else 
+        else
         {
             _levelLimit.transform.parent.gameObject.SetActive(false);
         }
@@ -89,71 +139,5 @@ public class ItemToolTip : MonoBehaviour
         {
             _skillImage.transform.parent.gameObject.SetActive(false);
         }
-        
-    }
-
-    public void SetStoreItemInfo(Item item)
-    {
-        SetImmutableInfo(item);
-
-        _price.text = item.priceInStore.ToString();
-        _rightClickInfo.text = "BUY";
-    }
-
-    public void SetInventoryItemInfo(Item item, bool isStoreActive)
-    {
-        SetImmutableInfo(item);
-
-        _price.text = item.priceInInventory.ToString();
-        
-        if (isStoreActive)
-            _rightClickInfo.text = "SELL";
-        else
-            _rightClickInfo.text = "EQUIP";
-    }
-
-    public void SetEquippedItemInfo(Item item, bool isStoreActive)
-    {
-        SetImmutableInfo(item);
-
-        _price.text = item.priceInInventory.ToString();
-
-        if (isStoreActive)
-            _rightClickInfo.text = "SELL";
-        else
-            _rightClickInfo.text = "UNEQUIP";
-    }
-
-    public void ShowToolTip(Vector3 position, SlotType slotType)
-    {
-        switch (slotType)
-        {
-            case SlotType.Inventory:
-                gameObject.GetComponent<RectTransform>().pivot = new Vector2(1, 0);
-                break;
-
-            case SlotType.Equipped:
-                gameObject.GetComponent<RectTransform>().pivot = new Vector2(1, 1);
-                break;
-
-            case SlotType.StoreTopSide:
-                gameObject.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
-                break;
-
-            case SlotType.StoreBottomSide:
-                gameObject.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
-                break;
-
-            default:
-                break;
-        }
-
-        gameObject.SetActive(true);
-        transform.position = position;
-    }
-
-    public void HideToolTip()
-    {
-        gameObject.SetActive(false);
     }
 }

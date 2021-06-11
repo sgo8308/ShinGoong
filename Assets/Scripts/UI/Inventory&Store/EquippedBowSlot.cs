@@ -9,14 +9,8 @@ public class EquippedBowSlot : MonoBehaviour , IPointerUpHandler , IPointerEnter
     public Item item;
     public Image itemIcon;
     public bool isItemSet = false;
-    InventoryUI inventoryUI;
     public GameObject storePanel;
 
-    private void Start()
-    {
-        inventoryUI = transform.root.GetComponent<InventoryUI>();
-        item = null;
-    }
     public void UpdateSlotUI()
     {
         itemIcon.sprite = item.itemImage;
@@ -49,7 +43,9 @@ public class EquippedBowSlot : MonoBehaviour , IPointerUpHandler , IPointerEnter
         }
     }
 
-    public ItemToolTip toolTip;
+    public ItemToolTipOpener itemToolTipOpener;
+    public ItemToolTipInfoSetter itemToolTipInfoSetter;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!isItemSet)
@@ -57,18 +53,20 @@ public class EquippedBowSlot : MonoBehaviour , IPointerUpHandler , IPointerEnter
 
         if (storePanel.activeSelf)
         {
-            toolTip.SetEquippedItemInfo(item, storePanel.activeSelf);
+            itemToolTipInfoSetter.
+                SetInventoryItemToolTipInfo(SlotType.Equipped, item, storePanel.activeSelf);
         }
         else
         {
-            toolTip.SetEquippedItemInfo(item, storePanel.activeSelf);
+            itemToolTipInfoSetter.
+                SetInventoryItemToolTipInfo(SlotType.Equipped, item, storePanel.activeSelf);
         }
 
-        toolTip.ShowToolTip(transform.position, SlotType.Equipped);
+        itemToolTipOpener.OpenToolTip(transform.position, SlotType.Equipped);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        toolTip.HideToolTip();
+        itemToolTipOpener.CloseToolTip();
     }
 }

@@ -45,24 +45,25 @@ public class StoreSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHand
                       .GetComponent<TextMeshProUGUI>().text = item.priceInStore.ToString();
     }
 
-    public ItemToolTip toolTip;
+    public ItemToolTipOpener itemToolTipOpener;
+    public ItemToolTipInfoSetter itemToolTipInfoSetter;
     public void OnPointerEnter(PointerEventData eventData)
     {
 
-        toolTip.SetStoreItemInfo(item);
+        itemToolTipInfoSetter.SetStoreItemInfo(item);
 
         if (transform.position.y > this.transform.root.position.y)
         {
-            toolTip.ShowToolTip(transform.position, SlotType.StoreTopSide);
+            itemToolTipOpener.OpenToolTip(transform.position, SlotType.StoreTopSide);
         }
         else
         {
-            toolTip.ShowToolTip(transform.position, SlotType.StoreBottomSide);
+            itemToolTipOpener.OpenToolTip(transform.position, SlotType.StoreBottomSide);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        toolTip.HideToolTip();
+        itemToolTipOpener.CloseToolTip();
     }
 }

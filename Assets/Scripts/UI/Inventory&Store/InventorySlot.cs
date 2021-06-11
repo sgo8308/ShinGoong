@@ -93,8 +93,8 @@ public class InventorySlot : MonoBehaviour , IPointerUpHandler , IPointerEnterHa
         }
     }
 
-    public ItemToolTip toolTip;
-
+    public ItemToolTipOpener itemToolTipOpener;
+    public ItemToolTipInfoSetter itemToolTipInfoSetter;
     //When mouse hover a item.
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -103,18 +103,20 @@ public class InventorySlot : MonoBehaviour , IPointerUpHandler , IPointerEnterHa
 
         if (storePanel.activeSelf)
         {
-            toolTip.SetInventoryItemInfo(item, storePanel.activeSelf);
+            itemToolTipInfoSetter.
+                SetInventoryItemToolTipInfo(SlotType.Inventory, item, storePanel.activeSelf);
         }
         else
         {
-            toolTip.SetInventoryItemInfo(item, storePanel.activeSelf);
+            itemToolTipInfoSetter.
+                SetInventoryItemToolTipInfo(SlotType.Inventory, item, storePanel.activeSelf);
         }
 
-        toolTip.ShowToolTip(transform.position, SlotType.Inventory);
+        itemToolTipOpener.OpenToolTip(transform.position, SlotType.Inventory);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        toolTip.HideToolTip();
+        itemToolTipOpener.CloseToolTip();
     }
 }

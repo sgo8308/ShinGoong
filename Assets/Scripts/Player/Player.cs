@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     public static bool jumpingState = false;
 
     public static bool ropeMove = false;
-
+    
     public Transform arrowDirection = null;
 
     float _aimAngle;
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
     
     public void AcquireCoin()
     {
-        MainUI.instance.coinCount++;
+        MainUI.instance. coinCount++;
 
         MainUI.instance.UpdateCoinUI();
 
