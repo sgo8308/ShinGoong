@@ -37,17 +37,17 @@ public class SceneManager : MonoBehaviour
         switch (sceneName)
         {
             case "ShelterScene":
-                InventoryInfo.instance.InitializeArrowCount(SHELTER_ARROW_COUNT);
+                Inventory.instance.InitializeArrowCount(SHELTER_ARROW_COUNT);
                 sceneType = SceneType.SHELTER;
                 break;
 
             case "Stage1Scene":
-                InventoryInfo.instance.InitializeArrowCount(STAGE1_ARROW_COUNT);
+                Inventory.instance.InitializeArrowCount(STAGE1_ARROW_COUNT);
                 sceneType = SceneType.STAGE;
                 break;
 
             default:
-                InventoryInfo.instance.InitializeArrowCount(45);
+                Inventory.instance.InitializeArrowCount(45);
                 break;
         }
     }

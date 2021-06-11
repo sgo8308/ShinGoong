@@ -11,6 +11,8 @@ public class StoreSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHand
 
     public PlayerInfo playerInfo;
 
+    public Player player;
+
     private void Start()
     {
         Initialize();
@@ -18,20 +20,17 @@ public class StoreSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (InventoryInfo.instance.coinCount < item.priceInStore)
+        if (Inventory.instance.info.coinCount < item.priceInStore)
             return;
 
         if (playerInfo.level < item.levelLimit)
             return;
 
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            InventoryInfo.instance.SubtractCoinCount(item.priceInStore);
-            MainUI.instance.UpdateCoinUI();
-            inventoryUi.UpdateCoinUI();
+        if (!Inventory.instance.info.CanAddItem())
+            return;
 
-            InventoryInfo.instance.AddItem(item);
-        }
+        if (eventData.button == PointerEventData.InputButton.Right)
+            player.Buy(inventoryUi, this);
     }
 
     void Initialize()

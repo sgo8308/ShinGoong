@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class InventoryInfo : MonoBehaviour
 {
-    public static InventoryInfo instance;
-
     public List<Item> items = new List<Item>();
 
     public InventorySlotInfo[] slotInfos;
@@ -18,20 +16,6 @@ public class InventoryInfo : MonoBehaviour
 
     public int arrowCount { get; private set; }
 
-    public delegate void OnChangeItem();
-    public OnChangeItem onChangeItem;
-
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
     private void Start()
     {
         slotInfos = slotHolder.GetComponentsInChildren<InventorySlotInfo>();
@@ -42,33 +26,47 @@ public class InventoryInfo : MonoBehaviour
 
         InitializeArrowCount(45);
 
-        coinCount = 20000;
+        coinCount = 50000;
     }
 
-    public void AddItem(Item item)
+    public void AddItemInfo(Item item)
     {
-        if (items.Count < inventorySlotCount)
-        {
-            items.Add(item);
-            if (onChangeItem != null) 
-            {
-                onChangeItem.Invoke();
-                AssignSlotsNum();
-            }
-        }
+        items.Add(item);
     }
 
-    public void RemoveItem(int index)
+    public void RemoveItemInfo(int index)
     {
         items.RemoveAt(index);
-        onChangeItem.Invoke();
-        AssignSlotsNum();
     }
 
-    public void ChangeItem(int slotNum, Item item)
+    public void ChangeItemInfo(int slotNum, Item item)
     {
         items.RemoveAt(slotNum);
         items.Insert(slotNum, item);
+    }
+
+    public void RemoveAllItemInfo()
+    {
+        for (int i = 0; i < slotInfos.Length; i++)
+        {
+            slotInfos[i].RemoveItemInfo();
+        }
+    }
+
+    public void AddAllItemInfo()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            slotInfos[i].SetItemInfo(items[i]);
+        }
+    }
+
+    public bool CanAddItem()
+    {
+        if (items.Count >= inventorySlotCount)
+            return false;
+
+        return true;
     }
 
     public void AddCoinCount(int coinCount)
@@ -95,7 +93,7 @@ public class InventoryInfo : MonoBehaviour
     {
         this.arrowCount = arrowCount;
     }
-    private void AssignSlotsNum()
+    public void AssignSlotsNum()
     {
         for (int i = 0; i < slotInfos.Length; i++)
         {

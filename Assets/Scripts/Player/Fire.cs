@@ -70,7 +70,7 @@ public class Fire : MonoBehaviour
                 Invoke("Attack", 0.1f);  //활시위를 놓을때 0.1초 후에 화살이 발사된다.
             }                                
 
-            if (Input.GetMouseButton(0) && InventoryInfo.instance.arrowCount != 0)
+            if (Input.GetMouseButton(0) && Inventory.instance.info.arrowCount != 0)
             {
                 _power += Time.deltaTime;
 
@@ -88,7 +88,7 @@ public class Fire : MonoBehaviour
 
     void Attack()
     {
-        if (InventoryInfo.instance.arrowCount > 0)
+        if (Inventory.instance.info.arrowCount > 0)
         {
             arrow_startPosition = new Vector2(arrowDirection.transform.position.x, arrowDirection.transform.position.y);  //발사 위치 설정
             
@@ -104,9 +104,9 @@ public class Fire : MonoBehaviour
 
             _power = 0.0f;
 
-            InventoryInfo.instance.SubtractArrowCount();
+            Inventory.instance.info.SubtractArrowCount();
         }
-        else if (InventoryInfo.instance.arrowCount == 0)
+        else if (Inventory.instance.info.arrowCount == 0)
             _power = 0.0f;
     }
 

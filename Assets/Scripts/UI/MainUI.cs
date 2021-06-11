@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
@@ -14,8 +12,6 @@ public class MainUI : MonoBehaviour
     TextMeshProUGUI _arrowCountUI;
     TextMeshProUGUI _levelUI;
     Image _gaugeBarUI;
-
-
 
     private void Awake()
     {
@@ -49,7 +45,7 @@ public class MainUI : MonoBehaviour
 
     public void UpdateCoinUI()
     {
-        _coinCountUI.text = InventoryInfo.instance.coinCount.ToString();
+        _coinCountUI.text = Inventory.instance.info.coinCount.ToString();
     }
 
     public void UpdateLevelUI()
@@ -59,7 +55,7 @@ public class MainUI : MonoBehaviour
 
     public void UpdateArrowCountUI()
     {
-        _arrowCountUI.text = InventoryInfo.instance.arrowCount.ToString(); 
+        _arrowCountUI.text = Inventory.instance.info.arrowCount.ToString(); 
     }
 
     public void UpdateGaugeBarUI(float arrowPower, float arrowMaxPower)

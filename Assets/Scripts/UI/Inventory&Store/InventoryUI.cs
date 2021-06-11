@@ -9,22 +9,21 @@ public class InventoryUI : MonoBehaviour
     void Start()
     {
         slotUIs = slotHolder.GetComponentsInChildren<InventorySlotUI>();
-        InventoryInfo.instance.onChangeItem += RedrawSlotsUI;
-
         UpdateCoinUI();
     }
 
-    void RedrawSlotsUI()
+    public void RemoveAllItemImage()
     {
         for (int i = 0; i < slotUIs.Length; i++)
         {
-            InventoryInfo.instance.slotInfos[i].RemoveItem();
             slotUIs[i].RemoveItemImage();
         }
+    }
 
-        for (int i = 0; i < InventoryInfo.instance.items.Count; i++)
+    public void SetAllItemImage()
+    {
+        for (int i = 0; i < Inventory.instance.info.items.Count; i++)
         {
-            InventoryInfo.instance.slotInfos[i].SetItem(InventoryInfo.instance.items[i]);
             slotUIs[i].SetItemImage();
         }
     }
@@ -35,6 +34,6 @@ public class InventoryUI : MonoBehaviour
                  .Find("MoneyPanel")
                  .Find("CoinCount")
                  .GetComponent<TextMeshProUGUI>()
-                 .text = InventoryInfo.instance.coinCount.ToString();
+                 .text = Inventory.instance.info.coinCount.ToString();
     }
 }

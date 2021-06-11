@@ -11,8 +11,6 @@ public class Player : MonoBehaviour
     public float maxSpeed;
     public float jumpPower;
 
-    public InventoryUI inventoryUI;
-
     Rigidbody2D _rigid;
     SpriteRenderer _spriteRenderer;
 
@@ -172,11 +170,11 @@ public class Player : MonoBehaviour
     
     public void AcquireCoin()
     {
-        InventoryInfo.instance.AddCoinCount(1);
+        Inventory.instance.AddCoin(1);
 
         MainUI.instance.UpdateCoinUI();
 
-        inventoryUI.UpdateCoinUI();
+        Inventory.instance.ui.UpdateCoinUI();
     }
 
     private void AttackReady()
@@ -261,6 +259,59 @@ public class Player : MonoBehaviour
             canMove = false;
 
         return canMove;
+    }
+
+    public void Sell(InventoryUI invenUI, InventorySlotInfo slotInfo) 
+    {
+        Inventory.instance.AddCoin(slotInfo.item.priceInInventory);
+        MainUI.instance.UpdateCoinUI();
+        invenUI.UpdateCoinUI();
+
+        Inventory.instance.RemoveItem(slotInfo.slotNum);
+    }
+
+    public void Buy(InventoryUI inventoryUI, StoreSlot storeSlot)
+    {
+        Inventory.instance.SubtractCoin(storeSlot.item.priceInStore);
+        MainUI.instance.UpdateCoinUI();
+        inventoryUI.UpdateCoinUI();
+
+        Inventory.instance.AddItem(storeSlot.item);
+    }
+
+    public void Equip(InventorySlot inventorySlot, InventoryEquipSlot equipSlot)
+    {
+        Item tempItem = inventorySlot.info.item;
+        
+        if (equipSlot.info.isItemSet)
+        {
+            inventorySlot.SetItem(equipSlot.info.item);
+
+            equipSlot.SetItem(tempItem);
+
+            Inventory.instance.
+                ChangeItem(inventorySlot.info.slotNum, inventorySlot.info.item);
+        }
+        else
+        {
+            equipSlot.SetItem(tempItem);
+
+            Inventory.instance.RemoveItem(inventorySlot.info.slotNum);
+        }
+    }
+
+    public void UnEquip(InventoryEquipSlot equipSlot)
+    {
+        if (Inventory.instance.info.items.Count < Inventory.instance.info.inventorySlotCount)
+        {
+            Inventory.instance.AddItem(equipSlot.info.item);
+            equipSlot.RemoveItem();
+        }
+    }
+
+    public void Use(InventorySlotInfo slotInfo)
+    {
+        Inventory.instance.RemoveItem(slotInfo.slotNum);
     }
 }
 
