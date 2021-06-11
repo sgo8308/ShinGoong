@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class CameraCtrl : MonoBehaviour
 {
+    public PlayerMove playerMove;
+
     void Update()
     {
-        if (!Player.canMove)
-            return;
-
-        ZoomOut();        //왼쪽 shift키를 누르고 있으면 카메라 줌 아웃이 된다.
+        if (playerMove.canMove)
+            ZoomOut();   
     }
 
+    //왼쪽 shift키를 누르고 있으면 카메라 줌 아웃이 된다.
     private void ZoomOut()
     {
         if (Input.GetKey(KeyCode.LeftShift))

@@ -4,40 +4,34 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour , IPointerUpHandler , IPointerEnterHandler , IPointerExitHandler
+public class InventorySlotUI : MonoBehaviour , IPointerUpHandler , IPointerEnterHandler , IPointerExitHandler
 {
-    public int slotNumber;
-    public Item item;
+    public InventorySlotInfo inventorySlotInfo;
     public Image itemIcon;
     public EquippedBowSlot equippedBowItemSlot;
     InventoryUI _inventoryUI;
     public GameObject storePanel;
-    bool _isItemSet;
 
     private void Start()
     {
         equippedBowItemSlot = transform.root.Find("InventoryPanel")
                                             .Find("BowItemPanel")
-                                            .Find("BowItemSlot").GetComponent<EquippedBowSlot>();
+                                            .Find("BowItemSlot")
+                                            .GetComponent<EquippedBowSlot>();
 
         _inventoryUI = transform.root.GetComponent<InventoryUI>();
-        item = null;
     }
 
-    public void UpdateSlotUI()
+    public void SetItemImage()
     {
-        itemIcon.sprite = item.itemImage;
+        itemIcon.sprite = inventorySlotInfo.item.itemImage;
         itemIcon.gameObject.SetActive(true);
-
-        _isItemSet = true;
     }
 
-    public void RemoveSlot()
+    public void RemoveItemImage()
     {
-        item = null;
+        itemIcon.sprite = null;
         itemIcon.gameObject.SetActive(false);
-
-        _isItemSet = false;
     }
 
     //When click a item
@@ -45,46 +39,47 @@ public class InventorySlot : MonoBehaviour , IPointerUpHandler , IPointerEnterHa
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (item == null)
+            if (inventorySlotInfo.item == null)
                 return;
             //With store
             if (storePanel.activeSelf)
             {
-                MainUI.instance.coinCount += item.priceInInventory;
+                InventoryInfo.instance.AddCoinCount(inventorySlotInfo.item.priceInInventory);
                 MainUI.instance.UpdateCoinUI();
                 _inventoryUI.UpdateCoinUI();
-                Inventory.instance.RemoveItem(slotNumber);
+                InventoryInfo.instance.RemoveItem(inventorySlotInfo.slotNum);
 
                 return;
             }
 
             //Without store
-            switch (item.itemType)
+            switch (inventorySlotInfo.item.itemType)
             {
                 case ItemType.Bow:
-                    Item tempItem = item;
+                    Item tempItem = inventorySlotInfo.item;
 
                     if (equippedBowItemSlot.isItemSet)
                     {
-                        this.item = equippedBowItemSlot.item;
-                        UpdateSlotUI();
+                        inventorySlotInfo.SetItem(equippedBowItemSlot.item);
+                        SetItemImage();
 
                         equippedBowItemSlot.Equip(tempItem);
                         equippedBowItemSlot.UpdateSlotUI();
 
-                        Inventory.instance.ChangeItem(slotNumber, item);
+                        InventoryInfo.instance.
+                            ChangeItem(inventorySlotInfo.slotNum, inventorySlotInfo.item);
                     }
                     else 
                     {
                         equippedBowItemSlot.Equip(tempItem);
                         equippedBowItemSlot.UpdateSlotUI();
 
-                        Inventory.instance.RemoveItem(slotNumber);
+                        InventoryInfo.instance.RemoveItem(inventorySlotInfo.slotNum);
                     }
                     break;
 
                 case ItemType.Consumables:
-                    Inventory.instance.RemoveItem(slotNumber);
+                    InventoryInfo.instance.RemoveItem(inventorySlotInfo.slotNum);
                     break;
 
                 default:
@@ -98,18 +93,18 @@ public class InventorySlot : MonoBehaviour , IPointerUpHandler , IPointerEnterHa
     //When mouse hover a item.
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!_isItemSet)
+        if (!inventorySlotInfo.isItemSet)
             return;
 
         if (storePanel.activeSelf)
         {
             itemToolTipInfoSetter.
-                SetInventoryItemToolTipInfo(SlotType.Inventory, item, storePanel.activeSelf);
+                SetInventoryItemToolTipInfo(SlotType.Inventory, inventorySlotInfo.item, storePanel.activeSelf);
         }
         else
         {
             itemToolTipInfoSetter.
-                SetInventoryItemToolTipInfo(SlotType.Inventory, item, storePanel.activeSelf);
+                SetInventoryItemToolTipInfo(SlotType.Inventory, inventorySlotInfo.item, storePanel.activeSelf);
         }
 
         itemToolTipOpener.OpenToolTip(transform.position, SlotType.Inventory);

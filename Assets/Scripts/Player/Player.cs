@@ -5,7 +5,9 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
-    public static bool canMove;
+    public PlayerInfo playerInfo;
+    public PlayerMove playerMove;
+
     public float maxSpeed;
     public float jumpPower;
 
@@ -30,6 +32,8 @@ public class Player : MonoBehaviour
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
 
+    private bool isDead = false;
+
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();  //초기화
@@ -41,8 +45,6 @@ public class Player : MonoBehaviour
     {
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         Cursor.visible = true;
-        canMove = true;
-        
     }
 
     void P_directionSet()
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (!canMove)
+        if (!playerMove.canMove)
         {
             _animator.SetBool("isRunning", false);
             return;
@@ -100,7 +102,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!canMove)
+        if (!playerMove.canMove)
             return;
 
         //GetAxisRaw 함수를 이용해 Horizontal 값을 가져옴(-1,0,1) [Edit] -> [Project Settings] -> Input
@@ -161,7 +163,7 @@ public class Player : MonoBehaviour
     void Dead()
     {
         _animator.SetBool("isHit", true);
-        canMove = false;
+        isDead = true;
         
         if(onPlayerDead != null)
             onPlayerDead.Invoke();
@@ -170,7 +172,7 @@ public class Player : MonoBehaviour
     
     public void AcquireCoin()
     {
-        MainUI.instance. coinCount++;
+        InventoryInfo.instance.AddCoinCount(1);
 
         MainUI.instance.UpdateCoinUI();
 
@@ -245,6 +247,20 @@ public class Player : MonoBehaviour
                 this.GetComponent<Rigidbody2D>().gravityScale = 3;
             }
         }
+    }
+
+    public GameObject inventoryPanel;
+    
+    public GameObject storePanel;
+
+    public bool SetCanMoveTrue()
+    {
+        bool canMove = true;
+
+        if (isDead || inventoryPanel.activeSelf)
+            canMove = false;
+
+        return canMove;
     }
 }
 

@@ -6,7 +6,11 @@ using TMPro;
 public class StoreSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Item item;
+
     public InventoryUI inventoryUi;
+
+    public PlayerInfo playerInfo;
+
     private void Start()
     {
         Initialize();
@@ -14,19 +18,19 @@ public class StoreSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (MainUI.instance.coinCount < item.priceInStore)
+        if (InventoryInfo.instance.coinCount < item.priceInStore)
             return;
 
-        if (MainUI.instance.level < item.levelLimit)
+        if (playerInfo.level < item.levelLimit)
             return;
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            MainUI.instance.coinCount -= item.priceInStore;
+            InventoryInfo.instance.SubtractCoinCount(item.priceInStore);
             MainUI.instance.UpdateCoinUI();
             inventoryUi.UpdateCoinUI();
 
-            Inventory.instance.AddItem(item);
+            InventoryInfo.instance.AddItem(item);
         }
     }
 

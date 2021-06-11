@@ -8,14 +8,14 @@ public class MainUI : MonoBehaviour
 {
     public static MainUI instance;
 
-    public int coinCount;
-    public int arrowCount;
-    public int level;
+    public PlayerInfo playerInfo;
 
     TextMeshProUGUI _coinCountUI;
     TextMeshProUGUI _arrowCountUI;
     TextMeshProUGUI _levelUI;
     Image _gaugeBarUI;
+
+
 
     private void Awake()
     {
@@ -31,8 +31,6 @@ public class MainUI : MonoBehaviour
 
     private void Start()
     {
-        InitializeArrowCount(45);
-
         _levelUI = transform.Find("LevelCount")
                                 .GetComponent<TextMeshProUGUI>();
 
@@ -51,26 +49,21 @@ public class MainUI : MonoBehaviour
 
     public void UpdateCoinUI()
     {
-        _coinCountUI.text = coinCount.ToString();
+        _coinCountUI.text = InventoryInfo.instance.coinCount.ToString();
     }
 
     public void UpdateLevelUI()
     {
-        _levelUI.text = level.ToString();
+        _levelUI.text = playerInfo.level.ToString();
     }
 
     public void UpdateArrowCountUI()
     {
-        _arrowCountUI.text = arrowCount.ToString(); 
+        _arrowCountUI.text = InventoryInfo.instance.arrowCount.ToString(); 
     }
 
     public void UpdateGaugeBarUI(float arrowPower, float arrowMaxPower)
     {
         _gaugeBarUI.fillAmount = arrowPower / arrowMaxPower;
-    }
-
-    public void InitializeArrowCount(int arrowCount)
-    {
-        this.arrowCount = arrowCount;
     }
 }

@@ -7,6 +7,8 @@ using TMPro;
 
 public class Fire : MonoBehaviour
 {
+    public PlayerMove playerMove;
+
     public GameObject arrowPrefab = null; //화살 프리팹을 담을 변수
     public GameObject ropeArrowPrefab = null; //화살 프리팹을 담을 변수
 
@@ -15,8 +17,6 @@ public class Fire : MonoBehaviour
     public float arrowSpeed = 50f;    //화살 속도
     public float arrowMaxPower = 1f;    //화살 Max Power
     public float ropeArrowSpeed = 15f;    //화살 속도
-
-    MainUI _mainUI;
 
     Camera _mainCamera = null; //카메라 변수
 
@@ -33,7 +33,6 @@ public class Fire : MonoBehaviour
 
     void Start()
     {
-        _mainUI = MainUI.instance;
         _player = GameObject.Find("Player");
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         arrowDirection = GameObject.Find("ArrowDirection");
@@ -42,7 +41,7 @@ public class Fire : MonoBehaviour
 
     void Update()
     {
-        if (!Player.canMove)
+        if (!playerMove.canMove)
             return;
 
         LookAtMouse();
@@ -71,17 +70,17 @@ public class Fire : MonoBehaviour
                 Invoke("Attack", 0.1f);  //활시위를 놓을때 0.1초 후에 화살이 발사된다.
             }                                
 
-            if (Input.GetMouseButton(0) && _mainUI.arrowCount != 0)
+            if (Input.GetMouseButton(0) && InventoryInfo.instance.arrowCount != 0)
             {
                 _power += Time.deltaTime;
 
-                _mainUI.UpdateGaugeBarUI(_power, arrowMaxPower);
+                MainUI.instance.UpdateGaugeBarUI(_power, arrowMaxPower);
 
                 if (_power > arrowMaxPower)
                     _power = arrowMaxPower;
             }
 
-            _mainUI.UpdateArrowCountUI();
+            MainUI.instance.UpdateArrowCountUI();
         }
 
         Rope();
@@ -89,7 +88,7 @@ public class Fire : MonoBehaviour
 
     void Attack()
     {
-        if (_mainUI.arrowCount > 0)
+        if (InventoryInfo.instance.arrowCount > 0)
         {
             arrow_startPosition = new Vector2(arrowDirection.transform.position.x, arrowDirection.transform.position.y);  //발사 위치 설정
             
@@ -105,9 +104,9 @@ public class Fire : MonoBehaviour
 
             _power = 0.0f;
 
-            _mainUI.arrowCount -= 1;
+            InventoryInfo.instance.SubtractArrowCount();
         }
-        else if (_mainUI.arrowCount == 0)
+        else if (InventoryInfo.instance.arrowCount == 0)
             _power = 0.0f;
     }
 

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -35,9 +33,9 @@ public class EquippedBowSlot : MonoBehaviour , IPointerUpHandler , IPointerEnter
         if (eventData.button != PointerEventData.InputButton.Right)
             return;
 
-        if (Inventory.instance.items.Count < Inventory.instance.slotCount)
+        if (InventoryInfo.instance.items.Count < InventoryInfo.instance.inventorySlotCount)
         {
-            Inventory.instance.AddItem(item);
+            InventoryInfo.instance.AddItem(item);
             RemoveSlot();
             isItemSet = false;
         }

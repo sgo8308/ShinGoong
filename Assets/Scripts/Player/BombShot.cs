@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BombShot : MonoBehaviour
 {
+    public PlayerMove playerMove;
     public static bool bombShotState;    
 
     void Start()
@@ -14,7 +15,7 @@ public class BombShot : MonoBehaviour
 
     void Update()
     {
-        if (!Player.canMove)
+        if (!playerMove.canMove)
             return;
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
