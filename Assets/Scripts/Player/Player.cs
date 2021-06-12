@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     private PlayerMove playerMove;
     private PlayerAttack playerAttack;
+    private PlayerSkill playerSkill;
     private Animator animator;
 
     public delegate void OnPlayerDead();
@@ -16,6 +14,7 @@ public class Player : MonoBehaviour
     {
         playerMove = GetComponent<PlayerMove>();
         playerAttack = GetComponent<PlayerAttack>();
+        playerSkill = GetComponent<PlayerSkill>();
         Cursor.visible = true;
     }
 
@@ -91,6 +90,8 @@ public class Player : MonoBehaviour
 
             Inventory.instance.RemoveItem(inventorySlot.GetSlotNum());
         }
+
+        playerSkill.SetSkill(equipSlot.GetItem());
     }
 
     public void UnEquip(InventoryEquipSlot equipSlot)

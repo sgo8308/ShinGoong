@@ -52,9 +52,12 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        if (isRopeMoving)
+            RopeMove();
+
         if (!canMove)
         {
-            animator.SetBool("isRunning", false);
+            StopPlayer();
             return;
         }
 
@@ -68,13 +71,10 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetButtonDown("Horizontal"))
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;  //1과 -1이 같지 않을때 false 출력(체크해제)
 
-        //Animation
         if (Mathf.Abs(rigid.velocity.x) < 0.4)
             animator.SetBool("isRunning", false);
         else
             animator.SetBool("isRunning", true);
-
-        RopeMove();
     }
 
     public void SetCanMove(bool value)
@@ -139,6 +139,9 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+
+    public float ropeMoveSpeed;
+
     private void RopeMove()
     {
         if (isRopeMoving)
@@ -147,7 +150,7 @@ public class PlayerMove : MonoBehaviour
 
             this.GetComponent<Rigidbody2D>().gravityScale = 0; //플레이어의 중력을 0으로 한다.
 
-            transform.position = Vector2.MoveTowards(gameObject.transform.position, ropeArrow_Position, 0.1f);  //로프화살 좌표까지 이동한다.
+            transform.position = Vector2.MoveTowards(gameObject.transform.position, ropeArrow_Position, ropeMoveSpeed);  //로프화살 좌표까지 이동한다.
 
             Vector2 p_Position = transform.position;
 
@@ -176,5 +179,6 @@ public class PlayerMove : MonoBehaviour
     public void StopPlayer()
     {
         rigid.velocity = zeroVector;
+        animator.SetBool("isRunning", false);
     }
 }

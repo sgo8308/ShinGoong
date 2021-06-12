@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public static bool ropeArrowState = false;
+    public static bool isRopeArrowMoving = false;
 
     public static float power = 0.0f;
 
@@ -43,7 +43,8 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         if (!canShoot || playerMove.isJumping ||
-                playerMove.isRopeMoving || Inventory.instance.GetArrowCount() < 0) // 로프가 나가는 중인 것도 제외 시키기
+                playerMove.isRopeMoving || Inventory.instance.GetArrowCount() < 0 ||
+                isRopeArrowMoving)
             return;
 
         SetArrowDirection();
@@ -161,7 +162,7 @@ public class PlayerAttack : MonoBehaviour
         RopeArrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
         RopeArrow.GetComponent<Rigidbody2D>().velocity = RopeArrow.transform.right * ropeArrowSpeed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
 
-        ropeArrowState = true;
+        isRopeArrowMoving = true;
     }
 
     
