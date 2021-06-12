@@ -5,9 +5,15 @@ using UnityEngine.EventSystems;
 
 public class InventoryEquipSlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public InventoryEquipSlotInfo info;
-    public InventoryEquipSlotUI ui;
     public GameObject storePanel;
+    private InventoryEquipSlotInfo info;
+    private InventoryEquipSlotUI ui;
+
+    private void Start()
+    {
+        info = GetComponent<InventoryEquipSlotInfo>();
+        ui = GetComponent<InventoryEquipSlotUI>();
+    }
 
     public void SetItem(Item item)
     {
@@ -21,6 +27,19 @@ public class InventoryEquipSlot : MonoBehaviour, IPointerUpHandler, IPointerEnte
         ui.RemoveItemImage();
     }
 
+    public Item GetItem()
+    {
+        return info.item;
+    }
+
+    public bool IsItemSet()
+    {
+        return info.isItemSet;
+    }
+
+
+
+
     public Player player;
     public void OnPointerUp(PointerEventData eventData)
     {
@@ -31,7 +50,7 @@ public class InventoryEquipSlot : MonoBehaviour, IPointerUpHandler, IPointerEnte
     }
 
     public ItemToolTipOpener itemToolTipOpener;
-    public ItemToolTipInfoSetter itemToolTipInfoSetter;
+    public ItemToolTipUI itemToolTipUI;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -40,12 +59,12 @@ public class InventoryEquipSlot : MonoBehaviour, IPointerUpHandler, IPointerEnte
 
         if (storePanel.activeSelf)
         {
-            itemToolTipInfoSetter.
+            itemToolTipUI.
                 SetInventoryItemToolTipInfo(SlotType.Equipped, info.item, storePanel.activeSelf);
         }
         else
         {
-            itemToolTipInfoSetter.
+            itemToolTipUI.
                 SetInventoryItemToolTipInfo(SlotType.Equipped, info.item, storePanel.activeSelf);
         }
 

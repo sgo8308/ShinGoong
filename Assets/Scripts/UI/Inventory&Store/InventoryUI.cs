@@ -22,7 +22,7 @@ public class InventoryUI : MonoBehaviour
 
     public void SetAllItemImage()
     {
-        for (int i = 0; i < Inventory.instance.info.items.Count; i++)
+        for (int i = 0; i < Inventory.instance.GetItemCount(); i++)
         {
             slotUIs[i].SetItemImage();
         }
@@ -34,6 +34,6 @@ public class InventoryUI : MonoBehaviour
                  .Find("MoneyPanel")
                  .Find("CoinCount")
                  .GetComponent<TextMeshProUGUI>()
-                 .text = Inventory.instance.info.coinCount.ToString();
+                 .text = Inventory.instance.GetCoinCount().ToString();
     }
 }

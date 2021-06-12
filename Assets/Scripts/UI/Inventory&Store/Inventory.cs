@@ -4,8 +4,8 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
 
-    public InventoryInfo info;
-    public InventoryUI ui;
+    private InventoryInfo info;
+    private InventoryUI ui;
 
     private void Awake()
     {
@@ -16,6 +16,17 @@ public class Inventory : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        info = GetComponent<InventoryInfo>();
+        ui = GetComponent<InventoryUI>();
+    }
+
+    public int GetSlotCount()
+    {
+        return info.inventorySlotCount;
     }
 
     public void AddItem(Item item)
@@ -52,6 +63,21 @@ public class Inventory : MonoBehaviour
         info.ChangeItemInfo(slotNumOfChangedItem, item);
     }
 
+    public int GetItemCount()
+    {
+        return info.items.Count;
+    }
+
+    public bool CanAddItem()
+    {
+        return info.CanAddItem();
+    }
+
+    public void UpdateCoin()
+    {
+        ui.UpdateCoinUI();
+    }
+
     public void AddCoin(int coinCount)
     {
         info.AddCoinCount(coinCount);
@@ -64,6 +90,11 @@ public class Inventory : MonoBehaviour
         ui.UpdateCoinUI();
     }
 
+    public int GetCoinCount()
+    {
+        return info.coinCount;
+    }
+
     public void AddArrow()
     {
         info.AddArrowCount();
@@ -72,6 +103,11 @@ public class Inventory : MonoBehaviour
     public void UseArrow()
     {
         info.SubtractArrowCount();
+    }
+
+    public int GetArrowCount()
+    {
+        return info.arrowCount;
     }
 
     public void InitializeArrowCount(int arrowCount)

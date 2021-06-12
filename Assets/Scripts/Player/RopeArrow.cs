@@ -12,6 +12,8 @@ public class RopeArrow : MonoBehaviour
 
     public GameObject ropePrefab = null; //로프 프리팹을 담을 변수
 
+    public PlayerMove playerMove;
+
     void Start()
     {
         currentRopeArrowPositionList.Clear();
@@ -29,7 +31,7 @@ public class RopeArrow : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; //오브젝트를 움직이지 않게 한다.
         Fire.ropeArrowState = false;  //로프화살이 정지됨
-        Player.ropeMove = true;
+        playerMove.SetIsRopeMoving(true);
 
         currentRopeArrowPositionList.Add( transform.position);
 

@@ -6,13 +6,6 @@ using TMPro;
 
 public class ItemToolTipOpener : MonoBehaviour
 {
-    public InventoryOpener inventoryOpener;
-
-    private void Start()
-    {
-        inventoryOpener.onInventoryClosed += CloseToolTip;
-    }
-
     public void OpenToolTip(Vector3 position, SlotType slotType)
     {
         switch (slotType)

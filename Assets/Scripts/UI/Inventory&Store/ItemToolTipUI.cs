@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ItemToolTipInfoSetter : MonoBehaviour
+public class ItemToolTipUI : MonoBehaviour
 {
     TextMeshProUGUI _levelLimit;
     TextMeshProUGUI _itemName;

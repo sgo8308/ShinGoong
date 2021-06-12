@@ -6,11 +6,9 @@ public class InventoryOpener : MonoBehaviour
 
     public GameObject storePanel;
 
-    public delegate void OnInventoryOpened();
-    public OnInventoryOpened onInventoryOpened;
+    public PlayerMove playerMove;
 
-    public delegate void OnInventoryClosed();
-    public OnInventoryClosed onInventoryClosed;
+    public ItemToolTipOpener itemToolTipOpener;
 
     private void Update()
     {
@@ -31,14 +29,14 @@ public class InventoryOpener : MonoBehaviour
     public void OpenInventory()
     {
         inventoryPanel.SetActive(true);
-        onInventoryOpened.Invoke();
+        playerMove.SetCanMove(false);
     }
 
     public void CloseInventory()
     {
         inventoryPanel.SetActive(false);
-        onInventoryClosed.Invoke();
-
+        playerMove.SetCanMove(true);
+        itemToolTipOpener.CloseToolTip();
     }
 
     private bool CanOpen()

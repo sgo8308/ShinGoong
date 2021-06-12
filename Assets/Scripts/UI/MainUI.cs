@@ -45,7 +45,7 @@ public class MainUI : MonoBehaviour
 
     public void UpdateCoinUI()
     {
-        _coinCountUI.text = Inventory.instance.info.coinCount.ToString();
+        _coinCountUI.text = Inventory.instance.GetCoinCount().ToString();
     }
 
     public void UpdateLevelUI()
@@ -55,7 +55,7 @@ public class MainUI : MonoBehaviour
 
     public void UpdateArrowCountUI()
     {
-        _arrowCountUI.text = Inventory.instance.info.arrowCount.ToString(); 
+        _arrowCountUI.text = Inventory.instance.GetArrowCount().ToString(); 
     }
 
     public void UpdateGaugeBarUI(float arrowPower, float arrowMaxPower)

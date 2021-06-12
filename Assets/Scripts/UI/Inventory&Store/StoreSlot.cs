@@ -20,13 +20,13 @@ public class StoreSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (Inventory.instance.info.coinCount < item.priceInStore)
+        if (Inventory.instance.GetCoinCount() < item.priceInStore)
             return;
 
         if (playerInfo.level < item.levelLimit)
             return;
 
-        if (!Inventory.instance.info.CanAddItem())
+        if (!Inventory.instance.CanAddItem())
             return;
 
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -49,11 +49,11 @@ public class StoreSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHand
     }
 
     public ItemToolTipOpener itemToolTipOpener;
-    public ItemToolTipInfoSetter itemToolTipInfoSetter;
+    public ItemToolTipUI itemToolTipUI;
     public void OnPointerEnter(PointerEventData eventData)
     {
 
-        itemToolTipInfoSetter.SetStoreItemInfo(item);
+        itemToolTipUI.SetStoreItemInfo(item);
 
         if (transform.position.y > this.transform.root.position.y)
         {

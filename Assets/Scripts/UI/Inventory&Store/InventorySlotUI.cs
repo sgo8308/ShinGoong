@@ -6,17 +6,14 @@ using UnityEngine.UI;
 
 public class InventorySlotUI : MonoBehaviour
 {
-    public InventorySlotInfo inventorySlotInfo;
     public Image itemIcon;
     public InventoryEquipSlotUI equipSlot;
     public GameObject storePanel;
+    private InventorySlotInfo inventorySlotInfo;
 
     private void Start()
     {
-        equipSlot = transform.root.Find("InventoryPanel")
-                                  .Find("EquipSlotPanel")
-                                  .Find("EquipSlot")
-                                  .GetComponent<InventoryEquipSlotUI>();
+        inventorySlotInfo = GetComponent<InventorySlotInfo>();
     }
 
     public void SetItemImage()

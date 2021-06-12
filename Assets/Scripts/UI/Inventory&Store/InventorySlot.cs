@@ -5,11 +5,17 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public InventorySlotInfo info;
-    public InventorySlotUI ui;
     public GameObject storePanel;
     public Inventory inventory;
     public InventoryEquipSlot inventoryEquipSlot;
+    private InventorySlotInfo info;
+    private InventorySlotUI ui;
+
+    private void Start()
+    {
+        info = GetComponent<InventorySlotInfo>();
+        ui = GetComponent<InventorySlotUI>();
+    }
     public void SetItem(Item item)
     {
         info.SetItemInfo(item);
@@ -22,7 +28,23 @@ public class InventorySlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHand
         ui.RemoveItemImage();
     }
 
+    public Item GetItem()
+    {
+        return info.item;
+    }
+
+    public bool IsItemSet()
+    {
+        return info.isItemSet;
+    }
+
+    public int GetSlotNum()
+    {
+        return info.slotNum;
+    }
+
     public Player player;
+
     //When click a item
     public void OnPointerUp(PointerEventData eventData)
     {
@@ -34,7 +56,7 @@ public class InventorySlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHand
             //With store
             if (storePanel.activeSelf)
             {
-                player.Sell(inventory.ui, info);
+                player.Sell(inventory, this);
 
                 return;
             }
@@ -57,7 +79,7 @@ public class InventorySlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHand
     }
 
     public ItemToolTipOpener itemToolTipOpener;
-    public ItemToolTipInfoSetter itemToolTipInfoSetter;
+    public ItemToolTipUI itemToolTipUI;
     //When mouse hover a item.
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -66,12 +88,12 @@ public class InventorySlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHand
 
         if (storePanel.activeSelf)
         {
-            itemToolTipInfoSetter.
+            itemToolTipUI.
                 SetInventoryItemToolTipInfo(SlotType.Inventory, info.item, storePanel.activeSelf);
         }
         else
         {
-            itemToolTipInfoSetter.
+            itemToolTipUI.
                 SetInventoryItemToolTipInfo(SlotType.Inventory, info.item, storePanel.activeSelf);
         }
 

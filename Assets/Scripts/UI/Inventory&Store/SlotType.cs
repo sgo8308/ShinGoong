@@ -9,6 +9,3 @@ public enum SlotType
     StoreTopSide,
     StoreBottomSide
 }
-public class Slot : MonoBehaviour
-{
-}
