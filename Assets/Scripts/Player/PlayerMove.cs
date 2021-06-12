@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class PlayerMove : MonoBehaviour
 {
     public bool canMove { get; private set; }
-
     public bool isRopeMoving { get; private set; }
     public bool isJumping { get; private set; }
 
@@ -17,17 +16,8 @@ public class PlayerMove : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Camera mainCamera;
     private Vector2 mousePosition;
-
-    public void SetCanMove(bool value)
-    {
-        canMove = value;
-    }
-
-    public void SetIsRopeMoving(bool value)
-    {
-        isRopeMoving = value;
-    }
-
+    private Vector2 zeroVector; 
+    
     private void Start()
     {
         playerInfo = GetComponent<PlayerInfo>();
@@ -40,6 +30,8 @@ public class PlayerMove : MonoBehaviour
         
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += 
             (Scene scene, LoadSceneMode mode) => canMove = true;
+
+        zeroVector = new Vector2(0, 0);
     }
 
     private void FixedUpdate()
@@ -82,9 +74,17 @@ public class PlayerMove : MonoBehaviour
         else
             animator.SetBool("isRunning", true);
 
-
-        FlipPlayer();
         RopeMove();
+    }
+
+    public void SetCanMove(bool value)
+    {
+        canMove = value;
+    }
+
+    public void SetIsRopeMoving(bool value)
+    {
+        isRopeMoving = value;
     }
 
     private void MoveRight()
@@ -159,7 +159,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void FlipPlayer()
+    public void FlipPlayer()
     {
         mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
@@ -171,5 +171,10 @@ public class PlayerMove : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
+    }
+
+    public void StopPlayer()
+    {
+        rigid.velocity = zeroVector;
     }
 }

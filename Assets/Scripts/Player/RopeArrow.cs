@@ -44,8 +44,9 @@ public class RopeArrow : MonoBehaviour
    {
        if (collision.gameObject.name == "Player" && this.gameObject.layer == USED_ARROW_LAYER_NUM)
        {
-           print("화살 회수");
-           Destroy(this.gameObject);  //박힌 화살 없애기
-       }
-   }
+            print("화살 회수");
+            Destroy(this.gameObject);  //박힌 화살 없애기
+            playerMove.SetCanMove(true);
+        }
+    }
 }

@@ -8,6 +8,8 @@ public class InventoryOpener : MonoBehaviour
 
     public PlayerMove playerMove;
 
+    public PlayerAttack playerAttck;
+
     public ItemToolTipOpener itemToolTipOpener;
 
     private void Update()
@@ -30,12 +32,14 @@ public class InventoryOpener : MonoBehaviour
     {
         inventoryPanel.SetActive(true);
         playerMove.SetCanMove(false);
+        playerAttck.SetCanShoot(false);
     }
 
     public void CloseInventory()
     {
         inventoryPanel.SetActive(false);
         playerMove.SetCanMove(true);
+        playerAttck.SetCanShoot(true);
         itemToolTipOpener.CloseToolTip();
     }
 

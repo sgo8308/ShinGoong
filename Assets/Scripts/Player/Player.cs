@@ -6,6 +6,7 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     private PlayerMove playerMove;
+    private PlayerAttack playerAttack;
     private Animator animator;
 
     public delegate void OnPlayerDead();
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerMove = GetComponent<PlayerMove>();
+        playerAttack = GetComponent<PlayerAttack>();
         Cursor.visible = true;
     }
 
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour
             onPlayerDead.Invoke();
         
         playerMove.SetCanMove(false);
+        playerAttack.SetCanShoot(false);
     }
     #endregion
     

@@ -71,7 +71,7 @@ public class Arrow : MonoBehaviour
                 Vector2 inNormal = collision.contacts[0].normal;               //충돌 시 법선 벡터
 
                 Vector2 newVelocity = Vector2.Reflect(transform.right, inNormal);  //반사각 벡터
-                GetComponent<Rigidbody2D>().velocity = newVelocity * Fire.arrowPowerSpeed * 1 / 3;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
+                GetComponent<Rigidbody2D>().velocity = newVelocity * Fire.power * 1 / 3;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
 
                 _arrowColList.Add(collision.contacts[0].point);  //매 충돌시 리스트에 충돌 좌표를 담는다. 
 

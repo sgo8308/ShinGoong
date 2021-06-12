@@ -1328,7 +1328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &167002352
 Transform:
   m_ObjectHideFlags: 0
@@ -2459,7 +2459,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420034}
   - component: {fileID: 519420035}
   - component: {fileID: 519420030}
   m_Layer: 0
@@ -2549,25 +2548,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9772c01913fddf4188eb6ee4db019e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 292545706614394705, guid: 97814c36e1f23d84c8d9393fb5997ec3,
-    type: 3}
-  ropeArrowPrefab: {fileID: 5841127027978415184, guid: 212c60b0f6947ef4d9f4da943fcf54f0,
-    type: 3}
-  arrowSpeed: 70
-  arrowMaxPower: 1
-  ropeArrowSpeed: 15
 --- !u!114 &519420035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3288,6 +3268,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57a3d5b376402643847b7c698480220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 292545706614394705, guid: 97814c36e1f23d84c8d9393fb5997ec3,
+    type: 3}
+  ropeArrowPrefab: {fileID: 5841127027978415184, guid: 212c60b0f6947ef4d9f4da943fcf54f0,
+    type: 3}
+  arrowSpeed: 50
+  arrowMaxPower: 75
+  ropeArrowSpeed: 15
 --- !u!1001 &648978175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9450,6 +9437,7 @@ MonoBehaviour:
   inventoryPanel: {fileID: 1756264658}
   storePanel: {fileID: 1166108477}
   playerMove: {fileID: 594572426}
+  playerAttck: {fileID: 0}
   itemToolTipOpener: {fileID: 1525932533}
 --- !u!114 &1346822534
 MonoBehaviour:
