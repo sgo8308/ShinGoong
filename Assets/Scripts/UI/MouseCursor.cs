@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MouseCursor : MonoBehaviour
 {
-    public static bool isAimCursorNeeded = true;
-
     //마우스 포인터로 사용할 텍스처를 입력받습니다.
     public Texture2D cursorTexture;
 
@@ -19,10 +15,24 @@ public class MouseCursor : MonoBehaviour
 
     private void Update()
     {
-        if (isAimCursorNeeded)
+        if (IsAimCursorNeeded())
             Cursor.SetCursor(cursorTexture, _hotSpot, CursorMode.Auto);  //마우스 커서를 화면에 표시
         else
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+
+    public GameObject inventoryPanel;
+
+    public GameObject gameOverPanel;
+
+    private bool IsAimCursorNeeded()
+    {
+        bool isAimCursorNeeded = true;
+
+        if (inventoryPanel.activeSelf || gameOverPanel.activeSelf)
+            isAimCursorNeeded = false;
+
+        return isAimCursorNeeded;
     }
 }
 

@@ -35,15 +35,14 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializePlayerPosition;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStageState;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += RegisterOnPlayerDead;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += ResetStopWatch;
 
         _stopWatch = new Stopwatch();
     }
-    //씬매니저에서 새로운 씬이 로딩되면 알람 받고 만약 쉘터면 스톱워치 중단.
-    //스테이지인데 스탑워치가 실행중라면 리턴
-    // 스탑워치가 실행중이 아니라면 시작.
 
     void StartStopWatch(Scene scene, LoadSceneMode mode)
     {
@@ -70,6 +69,12 @@ public class StageManager : MonoBehaviour
         _stopWatch.Stop();
     }
 
+    void ResetStopWatch(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "ShelterScene")
+            _stopWatch.Reset();
+    }
+
     public string GetPlayTime()
     {
         TimeSpan ts = _stopWatch.Elapsed;
@@ -92,16 +97,27 @@ public class StageManager : MonoBehaviour
         //몬스터 다 잡으면 클리어로 변경
     }
 
+    public GameObject player;
+    public void InitializePlayerPosition(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "ShelterScene")
+        {
+            Transform playerStartPosition = GameObject.Find("PlayerStartPosition").transform;
+            player.transform.position = playerStartPosition.position;
+        }
+    }
+
 
     #region Shelter
    
-    public GameObject inventoryPanel;
+    public InventoryOpener inventoryOpener;
     public GameObject storePanel;
+
     public void InitializeStore()
     {
-        GameObject.Find("StoreNpc").GetComponent<Store>().inventoryPanel = inventoryPanel;
-        GameObject.Find("StoreNpc").GetComponent<Store>().storePanel = storePanel;
-    } 
-
+        GameObject.Find("StoreNpc").GetComponent<StoreOpener>().inventoryOpener = inventoryOpener;
+        GameObject.Find("StoreNpc").GetComponent<StoreOpener>().storePanel = storePanel;
+    }
+    
     #endregion
 }
