@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameOverUI : MonoBehaviour
 {
-    Player _player;
-    StageManager _stageManager;
-    TextMeshProUGUI _playTime;
+    StageManager stageManager;
+    TextMeshProUGUI playTime;
     TextMeshProUGUI _level;
 
     private void Awake()
@@ -28,11 +27,11 @@ public class GameOverUI : MonoBehaviour
     void Start()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += RegisterOnPlayerDead;
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += setUIinActive;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += HideGameOverUI;
 
-        _stageManager = StageManager.instance;
+        stageManager = StageManager.instance;
 
-        _playTime = transform.Find("GameOverPanel")
+        playTime = transform.Find("GameOverPanel")
                              .Find("PlayTime")
                              .Find("PlayTimeText")
                              .GetComponent<TextMeshProUGUI>();
@@ -48,14 +47,14 @@ public class GameOverUI : MonoBehaviour
         if (scene.name == "ShelterScene")
             return;
 
-        _player = GameObject.Find("Player").GetComponent<Player>();
-        _player.onPlayerDead += ShowGameOverUI;
-        _player.onPlayerDead += SetPlayTime;
+        Player player = GameObject.Find("Player").GetComponent<Player>();
+        player.onPlayerDead += ShowGameOverUI;
+        player.onPlayerDead += SetPlayTime;
     }
 
     void SetPlayTime()
     {
-        _playTime.text = _stageManager.GetPlayTime();
+        playTime.text = stageManager.GetPlayTime();
     }
 
     void ShowGameOverUI()
@@ -73,9 +72,9 @@ public class GameOverUI : MonoBehaviour
     
     }
 
-    void setUIinActive(Scene scene, LoadSceneMode mode)
+    void HideGameOverUI(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "ShelterScene")
-            this.gameObject.SetActive(false);
+            transform.Find("GameOverPanel").gameObject.SetActive(false);
     }
 }

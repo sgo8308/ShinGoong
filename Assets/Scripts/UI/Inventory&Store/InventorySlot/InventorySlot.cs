@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class InventorySlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject storePanel;
-    public Inventory inventory;
     public InventoryEquipSlot inventoryEquipSlot;
     private InventorySlotInfo info;
     private InventorySlotUI ui;
@@ -56,7 +55,7 @@ public class InventorySlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHand
             //With store
             if (storePanel.activeSelf)
             {
-                player.Sell(inventory, this);
+                player.Sell(this);
 
                 return;
             }

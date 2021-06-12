@@ -26,6 +26,12 @@ public class StoreOpener : MonoBehaviour
         isPlayerInTrigger = false;
     }
 
+    private void Start()
+    {
+        StageManager.instance.InitializeStore();
+
+    }
+
     private void Update()
     {
         if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.F))

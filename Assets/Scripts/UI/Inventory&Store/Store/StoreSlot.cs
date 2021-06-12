@@ -30,7 +30,7 @@ public class StoreSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHand
             return;
 
         if (eventData.button == PointerEventData.InputButton.Right)
-            player.Buy(inventoryUi, this);
+            player.Buy(this);
     }
 
     void Initialize()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -15,7 +16,19 @@ public class Player : MonoBehaviour
         playerMove = GetComponent<PlayerMove>();
         playerAttack = GetComponent<PlayerAttack>();
         playerSkill = GetComponent<PlayerSkill>();
+        animator = GetComponent<Animator>();
         Cursor.visible = true;
+
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += Revive;
+    }
+
+    public void Revive(Scene scene, LoadSceneMode mode)
+    {
+        animator.SetBool("isHit", false);
+
+        playerMove.SetCanMove(true);
+
+        playerAttack.SetCanShoot(true);
     }
 
     #region Dead
@@ -53,20 +66,20 @@ public class Player : MonoBehaviour
     }
 
     #region Item
-    public void Sell(Inventory inventory, InventorySlot slot)
+    public void Sell(InventorySlot slot)
     {
         Inventory.instance.AddCoin(slot.GetItem().priceInInventory);
         MainUI.instance.UpdateCoinUI();
-        inventory.UpdateCoin();
+        Inventory.instance.UpdateCoin();
 
         Inventory.instance.RemoveItem(slot.GetSlotNum());
     }
 
-    public void Buy(InventoryUI inventoryUI, StoreSlot storeSlot)
+    public void Buy(StoreSlot storeSlot)
     {
         Inventory.instance.SubtractCoin(storeSlot.item.priceInStore);
         MainUI.instance.UpdateCoinUI();
-        inventoryUI.UpdateCoinUI();
+        Inventory.instance.UpdateCoin();
 
         Inventory.instance.AddItem(storeSlot.item);
     }

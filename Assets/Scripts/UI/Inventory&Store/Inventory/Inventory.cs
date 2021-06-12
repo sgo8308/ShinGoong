@@ -11,11 +11,11 @@ public class Inventory : MonoBehaviour
     {
         if (instance != null)
         {
-            Destroy(gameObject);
+            Destroy(transform.root.gameObject);
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.root.gameObject);
     }
 
     private void Start()

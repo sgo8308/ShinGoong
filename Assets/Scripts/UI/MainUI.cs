@@ -41,6 +41,7 @@ public class MainUI : MonoBehaviour
 
         UpdateCoinUI();
         UpdateLevelUI();
+        UpdateArrowCountUI();
     }
 
     public void UpdateCoinUI()

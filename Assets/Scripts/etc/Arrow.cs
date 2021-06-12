@@ -88,6 +88,7 @@ public class Arrow : MonoBehaviour
             Destroy(this.gameObject);
 
             Inventory.instance.AddArrow();
+            MainUI.instance.UpdateArrowCountUI();
         }
     }
 

@@ -35,6 +35,7 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializePlayerPosition;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStageState;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += RegisterOnPlayerDead;
@@ -96,25 +97,27 @@ public class StageManager : MonoBehaviour
         //몬스터 다 잡으면 클리어로 변경
     }
 
+    public GameObject player;
+    public void InitializePlayerPosition(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "ShelterScene")
+        {
+            Transform playerStartPosition = GameObject.Find("PlayerStartPosition").transform;
+            player.transform.position = playerStartPosition.position;
+        }
+    }
+
 
     #region Shelter
    
-    public GameObject inventoryPanel;
+    public InventoryOpener inventoryOpener;
     public GameObject storePanel;
-    
-    void InitializeShelter()
-    {
-        InitializeStore();
-
-    }
 
     public void InitializeStore()
     {
-        GameObject.Find("StoreNpc").GetComponent<Store>().inventoryPanel = inventoryPanel;
-        GameObject.Find("StoreNpc").GetComponent<Store>().storePanel = storePanel;
+        GameObject.Find("StoreNpc").GetComponent<StoreOpener>().inventoryOpener = inventoryOpener;
+        GameObject.Find("StoreNpc").GetComponent<StoreOpener>().storePanel = storePanel;
     }
     
-     
-
     #endregion
 }

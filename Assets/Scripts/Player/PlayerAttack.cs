@@ -152,8 +152,8 @@ public class PlayerAttack : MonoBehaviour
 
         power = 0.0f;
 
-        MainUI.instance.UpdateArrowCountUI();
         Inventory.instance.UseArrow();
+        MainUI.instance.UpdateArrowCountUI();
     }
 
     private void ShootRopeArrow()
