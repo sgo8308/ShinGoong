@@ -6,30 +6,31 @@ using UnityEngine.UI;
 
 public abstract class Monster : MonoBehaviour
 {
-    GameObject _hpBarFrame;
-    Image _hpBar;
-    protected GameObject _radar;
-    protected Animator _anim;
-    protected Rigidbody2D _rigid;
-    protected int _nextMove; // -1 , 0 , 1 -> left, stop, right
-    protected float _speed;
-    protected float _hp;
-    protected float _defensivePower;
+    GameObject hpBarFrame;
+    Image hpBar;
+    protected GameObject radar;
+    protected Animator anim;
+    protected Rigidbody2D rigid;
+    protected int nextMove; // -1 , 0 , 1 -> left, stop, right
+    protected float speed;
+    protected float hp;
+    protected float defensivePower;
+    protected float experiencePoint;
     public GameObject coin;
     public UnityEvent OnDead;
 
     virtual protected void Awake()
     {
-        _rigid = GetComponent<Rigidbody2D>();
-        _anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
-        _radar = this.transform.Find("MonsterCanvas").transform
+        radar = this.transform.Find("MonsterCanvas").transform
                                 .Find("RadarImage").gameObject;
 
-        _hpBarFrame = this.transform.Find("MonsterCanvas").transform
+        hpBarFrame = this.transform.Find("MonsterCanvas").transform
                                     .Find("HpBarFrame").gameObject;
 
-        _hpBar = _hpBarFrame.transform.Find("HpBar").GetComponent<Image>();
+        hpBar = hpBarFrame.transform.Find("HpBar").GetComponent<Image>();
 
         OnDead = new UnityEvent();
 
@@ -44,17 +45,17 @@ public abstract class Monster : MonoBehaviour
     protected void FlipSprite()
     {
         // Flip Monster Sprite and Radar image 
-        if (_nextMove != 0)
+        if (nextMove != 0)
         {
-            if (_nextMove == 1)
+            if (nextMove == 1)
             {
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
-                _hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 180, 0);
+                hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 180, 0);
             }
             else
             {
                 this.transform.rotation = Quaternion.Euler(0, 180, 0);
-                _hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, 0);
+                hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, 0);
             }
         }
     }
@@ -84,14 +85,14 @@ public abstract class Monster : MonoBehaviour
         {
             collision.gameObject.transform.parent = this.transform;
 
-            _hpBarFrame.SetActive(true);
+            hpBarFrame.SetActive(true);
             CancelInvoke("HideHpBarFrame");
             Invoke("HideHpBarFrame", 3);
 
             Arrow arrow = collision.gameObject.GetComponent<Arrow>();
             ReduceHp(arrow.damage);
 
-            if (_hp <= 30)
+            if (hp <= 30)
                 GetAngry();
 
             CheckIfDead();
@@ -109,22 +110,22 @@ public abstract class Monster : MonoBehaviour
 
     void CheckIfDead()
     {
-        if ((_hp / 100) <= 0)
+        if ((hp / 100) <= 0)
         {
-            Destroy(_hpBarFrame);
+            Destroy(hpBarFrame);
             Dead();
         }
     }
 
     void ReduceHp(float damage)
     {
-        _hp -= damage - _defensivePower;
-        _anim.SetFloat("Hp", _hp);
+        hp -= damage - defensivePower;
+        anim.SetFloat("Hp", hp);
 
-        if ((_hp / 100) <= 0)
-            _hpBar.fillAmount = 0;
+        if ((hp / 100) <= 0)
+            hpBar.fillAmount = 0;
         else
-            _hpBar.fillAmount = _hp / 100;
+            hpBar.fillAmount = hp / 100;
     }
 
     protected virtual void Dead()
@@ -134,12 +135,12 @@ public abstract class Monster : MonoBehaviour
         gameObject.tag = "Untagged";
         gameObject.transform.Find("Body").tag = "Untagged";
 
-        _speed = 0;
+        speed = 0;
 
         CancelInvoke();
         Invoke("Destroy", 3);
 
-        Destroy(_radar);
+        Destroy(radar);
     }
 
     void Destroy()
@@ -149,7 +150,7 @@ public abstract class Monster : MonoBehaviour
 
     void HideHpBarFrame()
     {
-        _hpBarFrame.SetActive(false);
+        hpBarFrame.SetActive(false);
     }
     #endregion
 }

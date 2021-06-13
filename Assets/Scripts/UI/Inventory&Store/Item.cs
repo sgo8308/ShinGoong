@@ -13,6 +13,7 @@ public enum ItemType
 public class Item
 {
     public ItemType itemType;
+    public ItemTag itemTag;
     public string itemName;
     public Sprite itemImage;
     public string itemInfo;
@@ -25,14 +26,4 @@ public class Item
     public int priceInStore;
     public int levelLimit;
     public bool hasLevelLimit;
-
-    public bool Equip()
-    {
-        return false;
-    }
-
-    public bool Use()
-    {
-        return false;
-    }
 }

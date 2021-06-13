@@ -1,32 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public static bool canMove;
-    public float maxSpeed;
-    public float jumpPower;
-
-    public InventoryUI inventoryUI;
-
-    Rigidbody2D _rigid;
-    SpriteRenderer _spriteRenderer;
-
-    Vector2 _mousePosition;
-    Camera _mainCamera = null;
-
-    Animator _animator;
-
-    public static bool jumpingState = false;
-
-    public static bool ropeMove = false;
-
-    public Transform arrowDirection = null;
-
     float _aimAngle;
     float _ReAimAngle;
+
+    private PlayerMove playerMove;
+    private PlayerAttack playerAttack;
+    private PlayerSkill playerSkill;
+    private Animator animator;
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
@@ -48,93 +31,24 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
+        playerMove = GetComponent<PlayerMove>();
+        playerAttack = GetComponent<PlayerAttack>();
+        playerSkill = GetComponent<PlayerSkill>();
+        animator = GetComponent<Animator>();
         Cursor.visible = true;
-        canMove = true;
 
         ImageSet();  //재조준할때 바꾸어줄 이미지를 세팅해 놓는다.
-    
+
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += Revive;
     }
 
-    void P_directionSet()
+    public void Revive(Scene scene, LoadSceneMode mode)
     {
-        if (Input.GetMouseButtonDown(0) && Input.GetAxisRaw("Horizontal") == 0)
-        {
-            _mousePosition = Input.mousePosition;
-            _mousePosition = _mainCamera.ScreenToWorldPoint(_mousePosition);
+        animator.SetBool("isHit", false);
 
-            if (_mousePosition.x > transform.position.x) //마우스가 플레이어보다 오른쪽에 있을때
-            {
-                _spriteRenderer.flipX = false;
-            }
-            else if (_mousePosition.x <= transform.position.x) //마우스가 플레이어보다 왼쪽에 있을때
-            {
-                _spriteRenderer.flipX = true;
-            }
-        }
-    }
+        playerMove.SetCanMove(true);
 
-    void Update()
-    {
-        if (!canMove)
-        {
-            _animator.SetBool("isRunning", false);
-            return;
-        }
-
-        //Jump
-        if (Input.GetButtonDown("Jump") && !_animator.GetBool("isJumping"))   
-        {
-            _rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            _animator.SetBool("isJumping", true);
-            jumpingState = true;
-        }
-        //Stop Speed
-        if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
-            _rigid.velocity = new Vector2(_rigid.velocity.normalized.x * 0.1f, _rigid.velocity.y);
-
-        if (Input.GetButtonDown("Horizontal"))
-            _spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;  //1과 -1이 같지 않을때 false 출력(체크해제)
-
-        P_directionSet();
-
-        //Animation
-        if (Mathf.Abs(_rigid.velocity.x) < 0.4)
-            _animator.SetBool("isRunning", false);
-        else
-            _animator.SetBool("isRunning", true);
-
-        RopeMove();
-
-            AttackReady();
-       
-
-
-       //     ReAiming();
-     
-
-     //       if (Input.GetMouseButtonDown(0))
-     //       {
-     //       Invoke("test", 0.5f);
-     //       }
-     //       if (Input.GetMouseButtonUp(0))
-     //       {
-     //           gameObject.GetComponent<Animator>().enabled = true;
-     //       }
-     //
-     //
-
-    }
-
-    void test()
-    {
-        gameObject.GetComponent<Animator>().enabled = false;
-
-    }
-
-    private void LateUpdate()
-    {
-       
+        playerAttack.SetCanShoot(true);
     }
 
     private void FixedUpdate()
@@ -183,9 +97,6 @@ public class Player : MonoBehaviour
             jumpingState = false;
         }
 
-       
-    }
-
     #region Dead
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -201,23 +112,25 @@ public class Player : MonoBehaviour
 
     void Dead()
     {
-        _animator.SetBool("isHit", true);
-        canMove = false;
+        animator.SetBool("isHit", true);
         
         if(onPlayerDead != null)
             onPlayerDead.Invoke();
+        
+        playerMove.SetCanMove(false);
+        playerAttack.SetCanShoot(false);
     }
     #endregion
     
     public void AcquireCoin()
     {
-        MainUI.instance.coinCount++;
+        Inventory.instance.AddCoin(1);
 
         MainUI.instance.UpdateCoinUI();
 
-        inventoryUI.UpdateCoinUI();
+        Inventory.instance.UpdateCoin();
     }
-
+    
     private void AttackReady()
     {
         
@@ -255,17 +168,63 @@ public class Player : MonoBehaviour
         }
     }
 
-    void CalculateBowAngle()
+    #region Item
+    public void Sell(InventorySlot slot)
     {
-        Vector2 t_mousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
-        Vector2 t_direction = new Vector2(t_mousePos.x - arrowDirection.position.x,
-                                          t_mousePos.y - arrowDirection.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
+        Inventory.instance.AddCoin(slot.GetItem().priceInInventory);
+        MainUI.instance.UpdateCoinUI();
+        Inventory.instance.UpdateCoin();
 
-        _aimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
-        _aimAngle = Mathf.Abs(90 - _aimAngle);
-        print(_aimAngle);
+        Inventory.instance.RemoveItem(slot.GetSlotNum());
     }
 
+    public void Buy(StoreSlot storeSlot)
+    {
+        Inventory.instance.SubtractCoin(storeSlot.item.priceInStore);
+        MainUI.instance.UpdateCoinUI();
+        Inventory.instance.UpdateCoin();
+
+        Inventory.instance.AddItem(storeSlot.item);
+    }
+    
+    public void Equip(InventorySlot inventorySlot, InventoryEquipSlot equipSlot)
+    {
+        Item tempItem = inventorySlot.GetItem();
+
+        if (equipSlot.IsItemSet())
+        {
+            inventorySlot.SetItem(equipSlot.GetItem());
+
+            equipSlot.SetItem(tempItem);
+
+            Inventory.instance.
+                ChangeItem(inventorySlot.GetSlotNum(), inventorySlot.GetItem());
+        }
+        else
+        {
+            equipSlot.SetItem(tempItem);
+
+            Inventory.instance.RemoveItem(inventorySlot.GetSlotNum());
+        }
+
+        playerSkill.SetSkill(equipSlot.GetItem());
+    }
+
+    public void UnEquip(InventoryEquipSlot equipSlot)
+    {
+        if (Inventory.instance.GetItemCount() < Inventory.instance.GetSlotCount())
+        {
+            Inventory.instance.AddItem(equipSlot.GetItem());
+            equipSlot.RemoveItem();
+        }
+    }
+
+    public void Use(InventorySlotInfo slotInfo)
+    {
+        Inventory.instance.RemoveItem(slotInfo.slotNum);
+    } 
+    #endregion
+    
     void CalculateBowAngle_ReAim()
     {
         Vector2 t_mousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
@@ -399,9 +358,5 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-   
-
-  
 }
 

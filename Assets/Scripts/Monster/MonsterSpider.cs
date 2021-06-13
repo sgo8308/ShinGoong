@@ -17,10 +17,10 @@ public class MonsterSpider : Monster
     void FixedUpdate()
     {
         //Move
-        _rigid.velocity = new Vector2(_nextMove * _speed, _rigid.velocity.y);
+        rigid.velocity = new Vector2(nextMove * speed, rigid.velocity.y);
 
         //Check - floor
-        Vector2 frontVecVertical = new Vector2(_rigid.position.x + _nextMove * 2, _rigid.position.y);
+        Vector2 frontVecVertical = new Vector2(rigid.position.x + nextMove * 2, rigid.position.y);
         Debug.DrawRay(frontVecVertical, Vector3.down, new Color(0, 1, 0), 0.1f, false);
 
         RaycastHit2D rayHit = Physics2D.Raycast(frontVecVertical,
@@ -30,7 +30,7 @@ public class MonsterSpider : Monster
             Turn();
 
         //Check - Wall
-        Vector2 frontVecHorizontal = new Vector2(_rigid.position.x + 2 * _nextMove, _rigid.position.y);
+        Vector2 frontVecHorizontal = new Vector2(rigid.position.x + 2 * nextMove, rigid.position.y);
         Debug.DrawRay(frontVecHorizontal, 2 * Vector3.left, new Color(0, 1, 0), 10.0f, false);
 
         RaycastHit2D rayHit2 = Physics2D.Raycast(frontVecHorizontal,
@@ -45,16 +45,16 @@ public class MonsterSpider : Monster
         _position = transform.position;
         _rotation = transform.rotation;
 
-        _speed = 2;
-        _hp = 100;
-        _defensivePower = 30;
+        speed = 2;
+        hp = 100;
+        defensivePower = 30;
     }
 
     protected override void Think()
     {
-        _nextMove = Random.Range(-1, 2);
+        nextMove = Random.Range(-1, 2);
 
-        _anim.SetInteger("WalkSpeed", _nextMove);
+        anim.SetInteger("WalkSpeed", nextMove);
 
         FlipSprite();
 
@@ -71,12 +71,12 @@ public class MonsterSpider : Monster
                 transform.position.x >= _position.x - 1)
         {
             transform.rotation = _rotation;
-            _nextMove = 0;
-            _anim.SetInteger("WalkSpeed", _nextMove);
+            nextMove = 0;
+            anim.SetInteger("WalkSpeed", nextMove);
             CancelInvoke("Think");
         }
 
-        if (_nextMove != 0) 
+        if (nextMove != 0) 
         {
             CancelInvoke("FindOriginalPosition");
             Invoke("FindOriginalPosition", 0.5f);
@@ -85,7 +85,7 @@ public class MonsterSpider : Monster
 
     void Turn()
     {
-        _nextMove = _nextMove * -1;
+        nextMove = nextMove * -1;
         FlipSprite();
 
         CancelInvoke("Think");
@@ -101,15 +101,15 @@ public class MonsterSpider : Monster
 
     public override void GetAngry()
     {
-        _radar.GetComponent<Image>().color = new Color(1, 0, 0, 0.75f);
-        _speed = 4;
-        if (_nextMove == 0 && _rotation == Quaternion.Euler(0, 0, 0))
-            _nextMove = 1;
-        else if (_nextMove == 0 && _rotation == Quaternion.Euler(0, 180, 0))
-            _nextMove = -1;
+        radar.GetComponent<Image>().color = new Color(1, 0, 0, 0.75f);
+        speed = 4;
+        if (nextMove == 0 && _rotation == Quaternion.Euler(0, 0, 0))
+            nextMove = 1;
+        else if (nextMove == 0 && _rotation == Quaternion.Euler(0, 180, 0))
+            nextMove = -1;
 
-        _anim.SetInteger("WalkSpeed", _nextMove);
-        _anim.speed = 1.5f;
+        anim.SetInteger("WalkSpeed", nextMove);
+        anim.speed = 1.5f;
 
         CancelInvoke("Think");
         Invoke("Think", 5);
@@ -117,9 +117,9 @@ public class MonsterSpider : Monster
 
     public override void GetPeaceful()
     {
-        _radar.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
-        _speed = 2;
-        _anim.speed = 1;
+        radar.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
+        speed = 2;
+        anim.speed = 1;
     }
 
     protected override void Dead()
