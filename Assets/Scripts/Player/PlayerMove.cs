@@ -16,8 +16,8 @@ public class PlayerMove : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Camera mainCamera;
     private Vector2 mousePosition;
-    private Vector2 zeroVector; 
-    
+    private Vector2 zeroVector;
+
     private void Start()
     {
         playerInfo = GetComponent<PlayerInfo>();
@@ -64,12 +64,8 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetButtonDown("Jump") && !animator.GetBool("isJumping"))
             Jump();
 
-        //Stop Speed
         if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
-            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.1f, rigid.velocity.y);
-
-        if (Input.GetButtonDown("Horizontal"))
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;  //1과 -1이 같지 않을때 false 출력(체크해제)
+            StopPlayer();
 
         if (Mathf.Abs(rigid.velocity.x) < 0.4)
             animator.SetBool("isRunning", false);

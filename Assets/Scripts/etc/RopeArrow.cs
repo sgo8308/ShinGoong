@@ -8,7 +8,7 @@ public class RopeArrow : MonoBehaviour
    
     public static List<Vector2> currentRopeArrowPositionList = new List<Vector2>();
 
-    public GameObject ropePrefab = null; //로프 프리팹을 담을 변수
+    public GameObject ropePrefab = null; 
 
     private PlayerMove playerMove;
 
@@ -20,9 +20,9 @@ public class RopeArrow : MonoBehaviour
 
     void Update()
     {
-        if (PlayerAttack.isRopeArrowMoving) //로프화살이 발사 중이라면
+        if (PlayerAttack.isRopeArrowMoving) 
         {
-            GameObject Rope = Instantiate(ropePrefab, transform.position, transform.rotation); //로프 생성
+            GameObject Rope = Instantiate(ropePrefab, transform.position, transform.rotation); 
         }
     }
 
