@@ -26,15 +26,24 @@ public class Player : MonoBehaviour
     public Transform arrowDirection = null;
 
     float _aimAngle;
+    float _ReAimAngle;
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
+
+    bool _aiming;
+    bool _angleChange;
+    int _currnetAngleType;
+    int _ReAimAngleType;
+
+    Sprite[] sprites;
 
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();  //초기화
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+
     }
 
     void Start()
@@ -42,7 +51,9 @@ public class Player : MonoBehaviour
         _mainCamera = Camera.main;    //태그가 main인 카메라를 변수에 넣어준다.
         Cursor.visible = true;
         canMove = true;
-        
+
+        ImageSet();  //재조준할때 바꾸어줄 이미지를 세팅해 놓는다.
+    
     }
 
     void P_directionSet()
@@ -95,7 +106,35 @@ public class Player : MonoBehaviour
 
         RopeMove();
 
-        AttackReady();
+            AttackReady();
+       
+
+
+       //     ReAiming();
+     
+
+     //       if (Input.GetMouseButtonDown(0))
+     //       {
+     //       Invoke("test", 0.5f);
+     //       }
+     //       if (Input.GetMouseButtonUp(0))
+     //       {
+     //           gameObject.GetComponent<Animator>().enabled = true;
+     //       }
+     //
+     //
+
+    }
+
+    void test()
+    {
+        gameObject.GetComponent<Animator>().enabled = false;
+
+    }
+
+    private void LateUpdate()
+    {
+       
     }
 
     private void FixedUpdate()
@@ -143,6 +182,8 @@ public class Player : MonoBehaviour
             _animator.SetBool("isJumping", false);
             jumpingState = false;
         }
+
+       
     }
 
     #region Dead
@@ -179,19 +220,38 @@ public class Player : MonoBehaviour
 
     private void AttackReady()
     {
+        
+
         if (Input.GetMouseButtonDown(0))  //down -> ready애니메이션 시작
         {
             CalculateBowAngle();
             _animator.SetBool("isReady", true);
-            Invoke("ReadyCancel", 0.8f);
+            Invoke("ReadyToAim", 0.7f);  //0.7초 후에 준비자세에서 조준자세로 바꿔준다.
+
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            ReAiming();
+
         }
 
         if (Input.GetMouseButtonUp(0))  //up -> 0.2초 뒤에 angle애니메이션 취소
         {
-            _animator.SetBool("isAiming20", false);
-            _animator.SetBool("isFireFinish20", true);
+            print("마우스 up");
+            this.gameObject.GetComponent<Animator>().enabled = true;
 
-            Invoke("AimingCancel", 0.3f);
+            _animator.SetBool("isReady", false);
+            _animator.SetBool("isAiming20", false);
+            _animator.SetBool("isFireFinish20", true);  // FireFinish 애니메이션 시작 = 발사!!
+
+            _animator.SetBool("isAiming30", false);
+            _animator.SetBool("isFireFinish30", true);
+
+            print("마우스 up2");
+
+            Invoke("FireFinish", 0.2f);
+      
         }
     }
 
@@ -206,25 +266,118 @@ public class Player : MonoBehaviour
         print(_aimAngle);
     }
 
-    private void ReadyCancel()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
+    void CalculateBowAngle_ReAim()
+    {
+        Vector2 t_mousePos = _mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+        Vector2 t_direction = new Vector2(t_mousePos.x - arrowDirection.position.x,
+                                          t_mousePos.y - arrowDirection.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
+
+        _ReAimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
+        _ReAimAngle = Mathf.Abs(90 - _ReAimAngle);
+        print(_ReAimAngle);
+        
+        if(_ReAimAngle < 20)
+        {
+            _ReAimAngleType = 20;
+        }
+        if (_ReAimAngle >= 20 &&_ReAimAngle < 30)
+        {
+            _ReAimAngleType = 30;
+        }
+
+        if (_currnetAngleType != _ReAimAngleType)
+        {
+            print("aim 각도type : " + _currnetAngleType);
+            print("재조준 각도type : "+ _ReAimAngleType);
+            _angleChange = true;
+        }
+    }
+
+    private void ReadyToAim()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
     {
         _animator.SetBool("isReady", false);
 
         if (_aimAngle >= 0 && _aimAngle < 20) //마우스 각도가 0~20도 일때 Aiming20 애니메이션 시작
         {
             _animator.SetBool("isAiming20", true);
+
+            _currnetAngleType = 20;
+            _aiming = true;
+            //현재 조준중인 상태이므로 여기서 마우스 이동시  스프라이트가 '각도별angle2'로 계속 업데이트 되야 함
+
         }
         if (_aimAngle >= 20 && _aimAngle < 30)
         {
             _animator.SetBool("isAiming30", true);
+
+            _currnetAngleType = 30;
+
+            _aiming = true;
+
         }
     }
 
-    private void AimingCancel()
+    private void FireFinish()
     {
         _animator.SetBool("isFireFinish20", false);
 
+  
+        _animator.SetBool("isFireFinish30", false);
+
+        _aiming = false;
+        _angleChange = false;
     }
+
+    private void ReAiming()
+    {
+        if (_aiming )
+        {
+            CalculateBowAngle_ReAim(); //재조준 활 각도계산
+
+            if (_angleChange)
+            {
+                if (_ReAimAngleType == 20)
+                {
+                    print("여기 들어와? 20");
+
+                //    gameObject.GetComponent<Animator>().speed = 0;
+
+
+                    gameObject.GetComponent<Animator>().enabled = false;
+                    _animator.SetBool("isAiming20", false);
+                    gameObject.GetComponent<SpriteRenderer>().sprite = sprites[1];
+                }
+
+
+                if (_ReAimAngleType == 30)
+                {
+                    print("여기 들어와? 30");
+
+               //     gameObject.GetComponent<Animator>().speed = 0;
+
+                    gameObject.GetComponent<Animator>().enabled = false;
+
+                    _animator.SetBool("isAiming30", false);
+                    gameObject.GetComponent<SpriteRenderer>().sprite = sprites[4];
+
+                     
+                }
+            }
+        }
+    }
+
+    private void ImageSet()
+    {
+        sprites  =  Resources.LoadAll<Sprite>("Sprites/FireAngle_anim");
+      //  print(sprites.Length);
+   // 
+   //    for (int i = 0; i < sprites.Length; i++)
+   //    {
+   //        //들어간 배열 수 만큼 반복하여 이름 콘솔 창에 띄움.
+   //        Debug.Log(sprites[i].name);
+   //    }
+    }
+
 
     private void RopeMove()
     {
@@ -246,5 +399,9 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+   
+
+  
 }
 
