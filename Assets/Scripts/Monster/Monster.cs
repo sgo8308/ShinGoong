@@ -15,7 +15,7 @@ public abstract class Monster : MonoBehaviour
     protected float speed;
     protected float hp;
     protected float defensivePower;
-    protected float experiencePoint;
+    public float expPoint { get; protected set; }
     public GameObject coin;
     public UnityEvent OnDead;
 
@@ -128,7 +128,7 @@ public abstract class Monster : MonoBehaviour
             hpBar.fillAmount = hp / 100;
     }
 
-    protected virtual void Dead()
+    public virtual void Dead()
     {
         OnDead.Invoke();
 
@@ -136,6 +136,10 @@ public abstract class Monster : MonoBehaviour
         gameObject.transform.Find("Body").tag = "Untagged";
 
         speed = 0;
+
+        PlayerInfo.instance.AddExpPoint(this);
+
+        StageManager.instance.AddNumOfMonsterKilled();
 
         CancelInvoke();
         Invoke("Destroy", 3);

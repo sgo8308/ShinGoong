@@ -47,6 +47,7 @@ public class MonsterSpider : Monster
 
         speed = 2;
         hp = 100;
+        expPoint = 30.0f;
         defensivePower = 30;
     }
 
@@ -122,7 +123,7 @@ public class MonsterSpider : Monster
         anim.speed = 1;
     }
 
-    protected override void Dead()
+    public override void Dead()
     {
         base.Dead();
         Instantiate(coin, this.transform.position, transform.rotation);

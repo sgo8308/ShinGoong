@@ -55,7 +55,7 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         if (!canShoot || playerMove.isJumping ||
-                playerMove.isRopeMoving || Inventory.instance.GetArrowCount() < 0 ||
+                playerMove.isRopeMoving || Inventory.instance.GetArrowCount() <= 0 ||
                 isRopeArrowMoving)
             return;
 

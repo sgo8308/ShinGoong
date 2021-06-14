@@ -30,7 +30,7 @@ public class MonsterMite : Monster
         speed = 1;
         hp = 100;
         defensivePower = 0;
-
+        expPoint = 10.0f;
         Invoke("Think", 5);
     }
 
@@ -90,7 +90,7 @@ public class MonsterMite : Monster
         anim.speed = 1;
     }
 
-    protected override void Dead()
+    public override void Dead()
     {
         base.Dead();
         Instantiate(coin, this.transform.position, transform.rotation);

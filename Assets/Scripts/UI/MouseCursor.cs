@@ -25,11 +25,13 @@ public class MouseCursor : MonoBehaviour
 
     public GameObject gameOverPanel;
 
+    public GameObject mainMenuPanel;
+
     private bool IsAimCursorNeeded()
     {
         bool isAimCursorNeeded = true;
 
-        if (inventoryPanel.activeSelf || gameOverPanel.activeSelf)
+        if (inventoryPanel.activeSelf || gameOverPanel.activeSelf || mainMenuPanel.activeSelf)
             isAimCursorNeeded = false;
 
         return isAimCursorNeeded;
