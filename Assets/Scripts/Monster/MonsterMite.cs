@@ -31,10 +31,17 @@ public class MonsterMite : Monster
         hp = 100;
         defensivePower = 0;
         expPoint = 10.0f;
-        Invoke("Think", 5);
+        Invoke("ThinkAndMove", 5);
+    }
+    protected override void OnDetectPlayer()
+    {
+        GetAngry();
+        CancelInvoke("GetPeaceful");
+        Invoke("GetPeaceful", 5);
     }
 
-    protected override void Think()
+    #region Move
+    protected override void ThinkAndMove()
     {
         nextMove = Random.Range(-1, 2);
 
@@ -44,7 +51,7 @@ public class MonsterMite : Monster
 
         //Recursive
         float nextThinkTime = Random.Range(2f, 5f);
-        Invoke("Think", nextThinkTime);
+        Invoke("ThinkAndMove", nextThinkTime);
     }
 
     void Turn()
@@ -52,13 +59,25 @@ public class MonsterMite : Monster
         nextMove = nextMove * -1;
         FlipSprite();
 
-        CancelInvoke("Think");
-        Invoke("Think", 3);
-    }
+        CancelInvoke("ThinkAndMove");
+        Invoke("ThinkAndMove", 3);
+    } 
+    #endregion
 
-    protected override void OnDetectPlayer()
+    #region When Monster get hit by arrow
+    protected override void OnHit(float damage)
     {
-        GetAngry();
+        ReduceHp(damage);
+
+        hpBarFrame.SetActive(true);
+        CancelInvoke("HideHpBarFrame");
+        Invoke("HideHpBarFrame", 3);
+
+        if (hp <= 30)
+            GetAngry();
+
+        CheckIfDead();
+
         CancelInvoke("GetPeaceful");
         Invoke("GetPeaceful", 5);
     }
@@ -79,8 +98,8 @@ public class MonsterMite : Monster
         anim.SetInteger("WalkSpeed", nextMove);
         anim.speed = 1.3f;
 
-        CancelInvoke("Think");
-        Invoke("Think", 3);
+        CancelInvoke("ThinkAndMove");
+        Invoke("ThinkAndMove", 3);
     }
 
     public override void GetPeaceful()
@@ -94,5 +113,6 @@ public class MonsterMite : Monster
     {
         base.Dead();
         Instantiate(coin, this.transform.position, transform.rotation);
-    }
+    } 
+    #endregion
 }

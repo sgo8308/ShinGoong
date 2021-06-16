@@ -56,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (!canShoot || playerMove.isJumping ||
                 playerMove.isRopeMoving || Inventory.instance.GetArrowCount() <= 0 ||
-                isRopeArrowMoving)
+                isRopeArrowMoving || UIOpener.isOpened)
             return;
 
         SetArrowDirection();

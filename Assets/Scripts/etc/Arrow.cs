@@ -8,7 +8,8 @@ public class Arrow : MonoBehaviour
 
     private const float ORIGINAL_DAMAGE = 70;
     private const float BOMB_SHOT_DAMAGE = 30;
-    private const int USED_ARROW_LAYER_NUM = 14;
+    private const int LAYER_NUM_ARROW_ON_PLATFORM = 14;
+    private const int LAYER_NUM_ARROW_ON_MONSTER = 17;
     private bool arrowState = true;
     private Vector2 zeroVelocity;
     private List<Vector2> arrowColList = new List<Vector2>();
@@ -44,46 +45,59 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "MonsterBody" || collision.gameObject.tag == "Platform") 
+        if (collision.gameObject.tag != "MonsterBody" && collision.gameObject.tag != "Platform")
+            return;
+
+        Debug.Log("들어옴 콜리전 엔터");
+
+        if (!isZeroGravityArrow()) //곡사가 충돌할때 화살이 박힌다.
         {
-            if (collision.gameObject.tag == "MonsterBody")
-            {
-                RegisterDetachEvent(collision);
+            if (playerSkill.IsSkillOn()) {
+                ShowSkillEffect();
+                Invoke("Destroy", 2);
             }
 
-            if (!isZeroGravityArrow()) //곡사가 충돌할때 화살이 박힌다.
-            {
-                if (playerSkill.IsSkillOn()) {
-                    ShowSkillEffect();
-                    Invoke("Destroy", 2);
-                }
+            Stop();
 
+            if (!playerSkill.IsSkillOn())  //폭발샷이 아니라면 레이어를 14로 하여 이후에 화살 회수가 가능하도록 한다.
+                gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
+        }
+
+        if (isZeroGravityArrow())  //직사가 충돌할때 화살이 반사된다.
+        {
+            Reflect(collision);
+
+            arrowColList.Add(collision.contacts[0].point);  //매 충돌시 리스트에 충돌 좌표를 담는다. 
+
+            //화살의 충돌 횟수가 ArrowCol_MaxCount와 같아지면 더이상 반사되지 않고 멈춘다.
+            if (arrowColList.Count == arrowColMaxCount)
+            {
                 Stop();
 
-                if (!playerSkill.IsSkillOn())  //폭발샷이 아니라면 레이어를 14로 하여 이후에 화살 회수가 가능하도록 한다.
-                    gameObject.layer = USED_ARROW_LAYER_NUM;
-            }
-
-            if (isZeroGravityArrow())  //직사가 충돌할때 화살이 반사된다.
-            {
-                Reflect(collision);
-
-                arrowColList.Add(collision.contacts[0].point);  //매 충돌시 리스트에 충돌 좌표를 담는다. 
-
-                //화살의 충돌 횟수가 ArrowCol_MaxCount와 같아지면 더이상 반사되지 않고 멈춘다.
-                if (arrowColList.Count == arrowColMaxCount)
-                {
-                    Stop();
-
-                    gameObject.layer = USED_ARROW_LAYER_NUM;
-                }
+                gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
             }
         }
-    }
 
+        if (collision.gameObject.tag == "MonsterBody")
+        {
+            Monster monster = collision.transform.parent.GetComponent<Monster>();
+            RegisterDetachEvent(monster);
+            gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
+        }
+    }
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player" && this.gameObject.layer == USED_ARROW_LAYER_NUM)
+        if (collision.tag == "MonsterBody")
+        {
+            Stop();
+            Monster monster = collision.transform.parent.GetComponent<Monster>();
+            RegisterDetachEvent(monster);
+            gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
+        }
+
+        if (collision.gameObject.name == "Player" && 
+            (gameObject.layer == LAYER_NUM_ARROW_ON_PLATFORM || gameObject.layer == LAYER_NUM_ARROW_ON_MONSTER))
         {
             Destroy(this.gameObject);
 
@@ -127,9 +141,8 @@ public class Arrow : MonoBehaviour
         return false;
     }
 
-    private void RegisterDetachEvent(Collision2D collision)
+    private void RegisterDetachEvent(Monster monster)
     {
-        Monster monster = collision.transform.parent.GetComponent<Monster>();
         if (monster.OnDead.GetPersistentEventCount() == 0)
             monster.OnDead.AddListener(DetachFromMonster);
     }
@@ -137,6 +150,7 @@ public class Arrow : MonoBehaviour
     private void DetachFromMonster()
     {
         transform.parent = null;
+        gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 

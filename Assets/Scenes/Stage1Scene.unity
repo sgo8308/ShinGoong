@@ -686,7 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &65631759
@@ -1189,7 +1189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &117772907
@@ -36383,7 +36383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -36696,7 +36697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &218525886
@@ -36828,7 +36829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &265888296
@@ -37099,7 +37100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22895e72c26da24a960b36aa3ea1553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -37252,7 +37254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22895e72c26da24a960b36aa3ea1553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -37502,7 +37505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &319945942
@@ -37703,7 +37706,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -37874,7 +37878,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -38045,7 +38050,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -38849,7 +38855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &509401469
@@ -74459,7 +74465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &618952081
@@ -107801,7 +107807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -108218,7 +108225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -108321,7 +108329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -108790,7 +108799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &1050941729
@@ -109092,7 +109101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &1060185343
@@ -109672,7 +109681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -110151,7 +110161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -110397,7 +110408,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -111300,7 +111312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &1360419512
@@ -111402,7 +111414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &1392478092
@@ -112056,7 +112068,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -112900,7 +112913,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22895e72c26da24a960b36aa3ea1553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -113368,7 +113382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1669330192
@@ -117956,7 +117970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &1934853515
@@ -118276,7 +118290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748618ca82292934b890380c6d7f3070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  speed: 0
+  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -118644,7 +118659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &2034036940
@@ -118969,7 +118984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02f5c934a5b8d24488e2d3a9a3d9ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnMonsterHit:
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!60 &2093440257

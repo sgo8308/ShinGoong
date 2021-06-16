@@ -146,7 +146,8 @@ public class PlayerMove : MonoBehaviour
 
             this.GetComponent<Rigidbody2D>().gravityScale = 0; //플레이어의 중력을 0으로 한다.
 
-            transform.position = Vector2.MoveTowards(gameObject.transform.position, ropeArrow_Position, ropeMoveSpeed);  //로프화살 좌표까지 이동한다.
+            transform.position = Vector2.MoveTowards(transform.position, 
+                                        ropeArrow_Position, ropeMoveSpeed);  //로프화살 좌표까지 이동한다.
 
             Vector2 p_Position = transform.position;
 

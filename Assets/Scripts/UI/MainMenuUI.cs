@@ -9,8 +9,6 @@ public class MainMenuUI : UIOpener
 
     public GameObject gameOverPanel;
 
-    public PlayerMove playerMove;
-
     GameObject mainMenuPanel;
 
     GameObject exitStageButton;
