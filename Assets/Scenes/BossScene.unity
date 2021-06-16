@@ -654,7 +654,7 @@ Transform:
   m_LocalScale: {x: 0.036911987, y: 0.036911987, z: 0.036911987}
   m_Children: []
   m_Father: {fileID: 1431706875}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &76547121
 PrefabInstance:
@@ -5106,7 +5106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455991625}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.27, y: -29.73, z: 0}
+  m_LocalPosition: {x: -26.27, y: -22.71, z: 0}
   m_LocalScale: {x: 0.49940065, y: 0.49940065, z: 0.49940065}
   m_Children:
   - {fileID: 324635331}
@@ -6789,7 +6789,7 @@ RectTransform:
   - {fileID: 1608857946}
   - {fileID: 1032812745}
   m_Father: {fileID: 1431706875}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -52456,7 +52456,7 @@ Transform:
   m_LocalScale: {x: 0.09021287, y: 0.092817165, z: 0.028762814}
   m_Children: []
   m_Father: {fileID: 1431706875}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1108437661
 SpriteRenderer:
@@ -53824,7 +53824,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 260919
+    m_Bits: 785207
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -53914,7 +53914,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259741598}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.27, y: -28.982399, z: -10}
+  m_LocalPosition: {x: -26.27, y: -22.71, z: -10}
   m_LocalScale: {x: 1.1948497, y: 1.1948497, z: 1.1948497}
   m_Children:
   - {fileID: 1523565754}
@@ -56011,11 +56011,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431706870}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32.33, y: -22.73, z: 0}
+  m_LocalPosition: {x: -33.84, y: -22.53, z: 0}
   m_LocalScale: {x: 9.514334, y: 9.514334, z: 9.514334}
   m_Children:
   - {fileID: 2143975657}
-  - {fileID: 1959386586}
   - {fileID: 1108437660}
   - {fileID: 537529035}
   - {fileID: 72060137}
@@ -56050,13 +56049,8 @@ MonoBehaviour:
   - {fileID: 1042601236}
   nowPlatform: {fileID: 0}
   platformToGo: {fileID: 0}
-  targetPosToFly: {x: 0, y: 0, z: 0}
   flySpeed: 0.1
   floatSpeed: 0.05
-  isFlying: 0
-  isFloating: 0
-  direction: 0
-  rayDistance: 2
 --- !u!251 &1431706877
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -56760,7 +56754,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523565753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.6256858, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.83692527, y: 0.83692527, z: 0.83692527}
   m_Children:
   - {fileID: 657437509}
@@ -96149,77 +96143,6 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!1 &1959386585
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1959386586}
-  - component: {fileID: 1959386587}
-  m_Layer: 12
-  m_Name: TriggerWhenFlying
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1959386586
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959386585}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.036911987, y: 0.036911987, z: 0.036911987}
-  m_Children: []
-  m_Father: {fileID: 1431706875}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &1959386587
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959386585}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.07, y: 2.97}
-    newSize: {x: 4.07, y: 2.97}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1.0878785, y: -0.8444333}
-      - {x: 1.9178357, y: -0.837057}
-      - {x: 2.1617012, y: -0.25161195}
-      - {x: 2.134929, y: 1.8891732}
-      - {x: 1.0898682, y: 1.9311602}
-      - {x: 0.81665325, y: 2.9664989}
-      - {x: -2.1498873, y: 2.9716964}
-      - {x: -2.1976264, y: 0.050217092}
-      - {x: -1.9272196, y: -0.26135173}
-      - {x: -1.9455111, y: -1.5994445}
-      - {x: -1.6559435, y: -1.6570735}
-      - {x: -1.590811, y: -3.212494}
-      - {x: 1.5937173, y: -3.2096004}
-      - {x: 1.6014876, y: -1.9354556}
-      - {x: 1.0943898, y: -1.3614582}
 --- !u!1001 &1963480248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98586,19 +98509,20 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 1.0878785, y: -0.8444333}
-      - {x: 1.9178357, y: -0.837057}
-      - {x: 2.1617012, y: -0.25161195}
-      - {x: 2.134929, y: 1.8891732}
-      - {x: 1.0898682, y: 1.9311602}
-      - {x: 0.81665325, y: 2.9664989}
-      - {x: -2.1498873, y: 2.9716964}
-      - {x: -2.1976264, y: 0.050217092}
-      - {x: -1.9272196, y: -0.26135173}
-      - {x: -1.9455111, y: -1.5994445}
-      - {x: -1.6559435, y: -1.6570735}
-      - {x: -1.590811, y: -3.212494}
-      - {x: 1.5937173, y: -3.2096004}
-      - {x: 1.6014876, y: -1.9354556}
+      - {x: 1.0287284, y: -0.549803}
+      - {x: 1.5324917, y: -0.6072592}
+      - {x: 1.5372938, y: -0.13629407}
+      - {x: 1.5740964, y: 1.3967392}
+      - {x: 0.61522645, y: 1.8866636}
+      - {x: 0.6460855, y: 2.573448}
+      - {x: -1.7494175, y: 2.5712266}
+      - {x: -1.8094741, y: 0.33671618}
+      - {x: -1.7178198, y: -0.4487123}
+      - {x: -1.581815, y: -1.4231089}
+      - {x: -1.3880349, y: -1.7134695}
+      - {x: -1.4075074, y: -2.9163928}
+      - {x: 1.1848131, y: -2.9698954}
+      - {x: 1.2489794, y: -2.1046546}
       - {x: 1.0943898, y: -1.3614582}
 --- !u!50 &2143975660
 Rigidbody2D:

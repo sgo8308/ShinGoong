@@ -72,7 +72,7 @@ public class StageManager : MonoBehaviour
                 break;
             case "BossScene":
                 stageState = StageState.UNCLEAR;
-                totalNumOfMosters = 1;
+                totalNumOfMosters = 2;
                 break;
             default:
                 break;
@@ -137,8 +137,8 @@ public class StageManager : MonoBehaviour
         if (CheckStageClear())
         {
             numOfMonstersKilled = 0;
-            onStageClear.Invoke();
             stageState = StageState.CLEAR;
+            onStageClear.Invoke();
         }
     }
     #region Stage1Boss

@@ -19,8 +19,11 @@ public class MonsterBody : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("콜맂런엔터 들어옴" + collision.collider.tag + gameObject.tag);
         if (collision.collider.tag == "Arrow" && gameObject.tag == "MonsterBody")
         {
+            Debug.Log("콜맂런엔터 if 들어옴");
+
             collision.gameObject.transform.parent = this.transform.parent.transform;
 
             Arrow arrow = collision.gameObject.GetComponent<Arrow>();
@@ -31,6 +34,8 @@ public class MonsterBody : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("트리거엔터 들어옴" + collision.tag + gameObject.tag);
+
         if (collision.tag == "Arrow" && gameObject.tag == "MonsterBody")
         {
             collision.gameObject.transform.parent = this.transform.parent.transform;

@@ -63,9 +63,9 @@ public class Player : MonoBehaviour
 
     #endregion
     
-    public void AcquireCoin()
+    public void AcquireCoin(int amount)
     {
-        Inventory.instance.AddCoin(1);
+        Inventory.instance.AddCoin(amount);
 
         MainUI.instance.UpdateCoinUI();
 

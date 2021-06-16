@@ -40,7 +40,7 @@ public abstract class Monster : MonoBehaviour
     protected abstract void Initialize();
 
     #region Move
-    abstract protected void ThinkAndWalkAround();
+    abstract protected void ThinkAndMove();
 
     protected void FlipSprite()
     {

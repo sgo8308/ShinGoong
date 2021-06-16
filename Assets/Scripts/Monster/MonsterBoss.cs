@@ -10,12 +10,12 @@ public class MonsterBoss : Monster
     /// <summary>
     /// Position over the platform that monster wants to go.
     /// </summary>
-    public Vector3 targetPosToFly;
     public float flySpeed;
     public float floatSpeed;
-    public bool isFlying = false;
-    public bool isFloating = false;
-    public int direction;
+    private bool isFlying = false;
+    private bool isFloating = false;
+    private bool isHit = false;
+    private int direction;
 
     protected override void Awake()
     {
@@ -23,11 +23,19 @@ public class MonsterBoss : Monster
         Initialize();
     }
 
-    public int rayDistance;
+    protected override void Initialize()
+    {
+        speed = 2;
+        flySpeed = 0.15f;
+        floatSpeed = 0.05f;
+        hp = 100;
+        defensivePower = 0;
+        expPoint = 70.0f;
+    }
 
     private void Start()
     {
-        LoopTest();
+        Invoke("ThinkAndMove", 5);
     }
 
     void FixedUpdate()
@@ -38,61 +46,38 @@ public class MonsterBoss : Monster
         //Move
         rigid.velocity = new Vector2(direction * speed, rigid.velocity.y);
 
-        ////Check - Wall
-        //Vector2 frontVecHorizontal = new Vector2(rigid.position.x + 2 * nextMove, rigid.position.y);
-        //Debug.DrawRay(frontVecHorizontal, 2 * Vector3.left, new Color(0, 1, 0), 10.0f, false);
-
-        //RaycastHit2D rayHit2 = Physics2D.Raycast(frontVecHorizontal,
-        //                        2 * Vector3.left, 1, LayerMask.GetMask("Platform"));
-
-        //if (rayHit2.collider != null)
-        //{
-        //    CancelInvoke();
-        //    LoopTest();
-        //}
+        CheckIfWall();
     }
 
-    protected override void Initialize()
+    private void CheckIfWall()
     {
-        speed = 2;
-        flySpeed = 0.15f;
-        floatSpeed = 0.05f;
-        hp = 100;
-        defensivePower = 65;
-        expPoint = 70.0f;
-        //Invoke("ThinkAndWalkAround", 5);
+        Vector2 frontVecHorizontal = new Vector2(rigid.position.x + 2 * direction, rigid.position.y);
+        Debug.DrawRay(frontVecHorizontal, 2 * Vector3.left, new Color(0, 1, 0), 10.0f, false);
+
+        RaycastHit2D rayHit2 = Physics2D.Raycast(frontVecHorizontal,
+                                2 * Vector3.left, 1, LayerMask.GetMask("Platform"));
+
+        if (rayHit2.collider != null)
+        {
+            CancelInvoke();
+            ThinkAndMove();
+        }
     }
 
-    protected override void OnDetectPlayer()
+    /// <summary>
+    /// 동작이 4개 있다
+    /// 왼쪽으로 움직이기
+    /// 오른쪽으로 움직이기
+    /// 멈춰서 쉬기
+    /// 다른 플랫폼으로 날아가기
+    /// 날아가다가 방향 바꿔서 플레이어가 있는 플랫폼으로 날아가기
+    /// </summary>
+
+    protected override void ThinkAndMove()
     {
-        //GetAngry();
-        //CancelInvoke("GetPeaceful");
-        //Invoke("GetPeaceful", 5);
-    }
+        CancelInvoke("ThinkAndMove");
 
-    protected override void ThinkAndWalkAround()
-    {
-        //nextMove = Random.Range(2, 3);
-
-
-        //if (nextMove == 2)
-        //{
-        //    ChoosePlatformToGo(false);
-        //    isFloating = true;
-        //    GetComponent<Animator>().enabled = false;
-        //    return;
-        //}
-
-        //FlipSprite();
-
-        ////Recursive
-        //float nextThinkAndWalkAroundTime = Random.Range(3f, 6f);
-        //Invoke("ThinkAndWalkAround", nextThinkAndWalkAroundTime);
-    }
-
-    private void LoopTest()
-    {
-        nextMove = Random.Range(2, 3);
+        nextMove = ChooseBehaviour();
 
         switch (nextMove)
         {
@@ -106,20 +91,42 @@ public class MonsterBoss : Monster
                 MoveRight();
                 break;
             case 2:
-                ChoosePlatformToGo(false);
-                isFloating = true;
-                Invoke("Float", 0.7f);
-                Invoke("SetIsFloatingFalse", 1.5f);
+                RunFlyRoutine(true);
                 return;
-
+            case 3:
+                RunFlyRoutine(false);
+                return;
             default:
                 break;
         }
 
         FlipSprite();
 
-        float nextThinkAndWalkAroundTime = Random.Range(3f, 6f);
-        Invoke("LoopTest", nextThinkAndWalkAroundTime);
+        float nextThinkTime = Random.Range(3f, 6f);
+        Invoke("ThinkAndMove", nextThinkTime);
+    }
+
+    private int ChooseBehaviour()
+    {
+        if (isHit)
+        {
+            if (isFloating || isFlying)
+                return 3;
+
+            switch (FindPlayer())
+            {
+                case "left":
+                    return -1;
+                case "right":
+                    return 1;
+                case "other platform":
+                    return 2;
+                default:
+                    break;
+            }
+        }
+
+        return Random.Range(-1, 2);
     }
 
     private void MoveLeft()
@@ -143,7 +150,22 @@ public class MonsterBoss : Monster
         anim.SetBool("isWalking", false);
     }
 
-    private void ChoosePlatformToGo(bool isHit)
+    private void RunFlyRoutine(bool isOnTheGround)
+    {
+        ChoosePlatformToGo();
+        
+        if (isOnTheGround)
+        {
+            isFloating = true;
+            Invoke("Float", 0.7f);
+            Invoke("SetIsFloatingFalse", 1.5f);
+            return;
+        }
+
+        SetIsFloatingFalse();
+    }
+
+    private void ChoosePlatformToGo()
     {
         if (isHit)
         {
@@ -194,14 +216,7 @@ public class MonsterBoss : Monster
 
     private void Fly()
     {
-        if (transform.position == targetPosToFly)
-        {
-            isFlying = false;
-            Invoke("Land", 0.5f);
-            return;
-        }
-
-        targetPosToFly = new Vector3(platformToGo.position.x, platformToGo.position.y + 3,
+        Vector3 targetPosToFly = new Vector3(platformToGo.position.x, platformToGo.position.y + 3,
                                 transform.position.z);
 
         transform.position = Vector3.MoveTowards(transform.position,
@@ -215,6 +230,13 @@ public class MonsterBoss : Monster
         anim.enabled = true;
         anim.SetBool("isFlying", true);
 
+        if (transform.position == targetPosToFly)
+        {
+            isFlying = false;
+            Invoke("Land", 0.5f);
+            return;
+        }
+
         Invoke("Fly", 0.02f);
     }
 
@@ -227,57 +249,74 @@ public class MonsterBoss : Monster
         anim.SetBool("isFlying", false);
         anim.enabled = false;
 
-        Invoke("LoopTest", 1.0f);
+        Invoke("ThinkAndMove", 1.0f);
+    }
+
+    protected override void OnDetectPlayer()
+    {
+        //GetAngry();
+        //CancelInvoke("GetPeaceful");
+        //Invoke("GetPeaceful", 5);
     }
 
     #region When Monster get hit by arrow
     protected override void OnHit(float damage)
     {
+        isHit = true;
+
         ReduceHp(damage);
 
         hpBarFrame.SetActive(true);
         CancelInvoke("HideHpBarFrame");
         Invoke("HideHpBarFrame", 3);
 
-        //---- 여기부터 보스 행동 
-        GetAngry();
-
-        if (isFloating || isFlying)
-        {
-            ChoosePlatformToGo(true);
-            SetIsFloatingFalse();
-        }
-
         CheckIfDead();
 
+        GetAngry();
+
+        CancelInvoke("ThinkAndMove");
+        ThinkAndMove();
+
         CancelInvoke("GetPeaceful");
-        Invoke("GetPeaceful", 5);
+        Invoke("GetPeaceful", 7);
+    }
+
+    private string FindPlayer()
+    {
+        if (StageManager.instance.platformPlayerSteppingOn.name == nowPlatform.name)
+        {
+            if (StageManager.instance.player.transform.position.x >= transform.position.x)
+                return "right";
+
+            if (StageManager.instance.player.transform.position.x < transform.position.x)
+                return "left";
+        }
+
+        return "other platform";
     }
 
     public override void GetAngry()
     {
         radar.GetComponent<Image>().color = new Color(1, 0, 0, 0.75f);
         speed = 3;
-        flySpeed = 0.17f;
-
-        //anim.SetInteger("WalkSpeed", nextMove);
-        //anim.speed = 1.0f;
-
-        //CancelInvoke("ThinkAndWalkAround");
-        //Invoke("ThinkAndWalkAround", 3);
+        flySpeed = 0.13f;
     }
 
     public override void GetPeaceful()
     {
-        //radar.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
-        //speed = 2;
-        //anim.speed = 1;
+        isHit = false;
+        radar.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
+        speed = 2;
     }
 
     public override void Dead()
     {
         base.Dead();
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         Instantiate(coin, this.transform.position, transform.rotation);
+        CancelInvoke();
+        Invoke("Destroy", 1);
+
     }
     #endregion
 

@@ -31,7 +31,7 @@ public class MonsterMite : Monster
         hp = 100;
         defensivePower = 0;
         expPoint = 10.0f;
-        Invoke("ThinkAndWalkAround", 5);
+        Invoke("ThinkAndMove", 5);
     }
     protected override void OnDetectPlayer()
     {
@@ -41,7 +41,7 @@ public class MonsterMite : Monster
     }
 
     #region Move
-    protected override void ThinkAndWalkAround()
+    protected override void ThinkAndMove()
     {
         nextMove = Random.Range(-1, 2);
 
@@ -50,8 +50,8 @@ public class MonsterMite : Monster
         FlipSprite();
 
         //Recursive
-        float nextThinkAndWalkAroundTime = Random.Range(2f, 5f);
-        Invoke("ThinkAndWalkAround", nextThinkAndWalkAroundTime);
+        float nextThinkTime = Random.Range(2f, 5f);
+        Invoke("ThinkAndMove", nextThinkTime);
     }
 
     void Turn()
@@ -59,8 +59,8 @@ public class MonsterMite : Monster
         nextMove = nextMove * -1;
         FlipSprite();
 
-        CancelInvoke("ThinkAndWalkAround");
-        Invoke("ThinkAndWalkAround", 3);
+        CancelInvoke("ThinkAndMove");
+        Invoke("ThinkAndMove", 3);
     } 
     #endregion
 
@@ -98,8 +98,8 @@ public class MonsterMite : Monster
         anim.SetInteger("WalkSpeed", nextMove);
         anim.speed = 1.3f;
 
-        CancelInvoke("ThinkAndWalkAround");
-        Invoke("ThinkAndWalkAround", 3);
+        CancelInvoke("ThinkAndMove");
+        Invoke("ThinkAndMove", 3);
     }
 
     public override void GetPeaceful()
