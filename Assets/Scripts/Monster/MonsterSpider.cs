@@ -21,22 +21,12 @@ public class MonsterSpider : Monster
 
         //Check - floor
         Vector2 frontVecVertical = new Vector2(rigid.position.x + nextMove * 2, rigid.position.y);
-        Debug.DrawRay(frontVecVertical, Vector3.down, new Color(0, 1, 0), 0.1f, false);
+        Debug.DrawRay(frontVecVertical, 2 * Vector3.down, new Color(0, 1, 0), 0.1f, false);
 
         RaycastHit2D rayHit = Physics2D.Raycast(frontVecVertical,
-                                Vector3.down, 1, LayerMask.GetMask("Platform"));
+                                Vector3.down, 2, LayerMask.GetMask("Platform"));
 
         if (rayHit.collider == null)
-            Turn();
-
-        //Check - Wall
-        Vector2 frontVecHorizontal = new Vector2(rigid.position.x + 2 * nextMove, rigid.position.y);
-        Debug.DrawRay(frontVecHorizontal, 2 * Vector3.left, new Color(0, 1, 0), 10.0f, false);
-
-        RaycastHit2D rayHit2 = Physics2D.Raycast(frontVecHorizontal,
-                                2 * Vector3.left, 1, LayerMask.GetMask("Platform"));
-
-        if (rayHit2.collider != null)
             Turn();
     }
 
