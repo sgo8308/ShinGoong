@@ -1,55 +1,43 @@
 fileFormatVersion: 2
-guid: 5ad76817df29e4048a85f1e6211d28bf
+guid: a16aa26b61d2cb340bb9b2dcf3665989
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4104462294945971279
-    second: Effect95_0
+      213: 3533988528531222856
+    second: DogMonster_0
   - first:
-      213: 47077338654103221
-    second: Effect95_1
+      213: 1678901639466794419
+    second: DogMonster_1
   - first:
-      213: 2548507695587086096
-    second: Effect95_2
+      213: 6437135566176013662
+    second: DogMonster_2
   - first:
-      213: -7018121369784222783
-    second: Effect95_3
+      213: -2842315981090013179
+    second: DogMonster_3
   - first:
-      213: -1084200832878825332
-    second: Effect95_4
+      213: 2907057035636293617
+    second: DogMonster_4
   - first:
-      213: 5563706911224248036
-    second: Effect95_5
+      213: -5473576965936203713
+    second: DogMonster_5
   - first:
-      213: 320645321409570427
-    second: Effect95_6
+      213: -796583127662153370
+    second: DogMonster_6
   - first:
-      213: -219078215538112020
-    second: Effect95_7
+      213: -438074609130515529
+    second: DogMonster_7
   - first:
-      213: 8898373198642033757
-    second: Effect95_8
+      213: -5356823609092277918
+    second: DogMonster_8
   - first:
-      213: -570330887669786893
-    second: Effect95_9
+      213: -6286924966891389058
+    second: DogMonster_9
   - first:
-      213: 3906873324499518426
-    second: Effect95_10
+      213: -8965598855520091521
+    second: DogMonster_10
   - first:
-      213: 705800256897679763
-    second: Effect95_11
-  - first:
-      213: -5725287630129814280
-    second: Effect95_12
-  - first:
-      213: -86667107077639106
-    second: Effect95_13
-  - first:
-      213: -9003068624152191204
-    second: Effect95_14
-  - first:
-      213: 3573669577080909016
-    second: Effect95_15
+      213: 1605168554649095130
+    second: DogMonster_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -147,13 +135,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Effect95_0
+      name: DogMonster_0
       rect:
         serializedVersion: 2
-        x: 49
-        y: 440
-        width: 23
-        height: 22
+        x: 6
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +149,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b3c2c30a450a07c0800000000000000
-      internalID: -4104462294945971279
+      spriteID: 841b863c7df3b0130800000000000000
+      internalID: 3533988528531222856
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_1
+      name: DogMonster_1
       rect:
         serializedVersion: 2
-        x: 172
-        y: 435
-        width: 33
-        height: 32
+        x: 22
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +170,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b6d27f079047a000800000000000000
-      internalID: 47077338654103221
+      spriteID: 3bd3d395528ac4710800000000000000
+      internalID: 1678901639466794419
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_2
+      name: DogMonster_2
       rect:
         serializedVersion: 2
-        x: 295
-        y: 430
-        width: 43
-        height: 42
+        x: 38
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,20 +191,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01f41de1f3e1e5320800000000000000
-      internalID: 2548507695587086096
+      spriteID: e5d44f821bc455950800000000000000
+      internalID: 6437135566176013662
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_3
+      name: DogMonster_3
       rect:
         serializedVersion: 2
-        x: 419
-        y: 425
-        width: 52
-        height: 51
+        x: 54
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,20 +212,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1cbfe6b3ccf9a9e90800000000000000
-      internalID: -7018121369784222783
+      spriteID: 500c6b7aca01e88d0800000000000000
+      internalID: -2842315981090013179
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_4
+      name: DogMonster_4
       rect:
         serializedVersion: 2
-        x: 31
-        y: 293
-        width: 60
-        height: 58
+        x: 86
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,20 +233,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c80331b361524f0f0800000000000000
-      internalID: -1084200832878825332
+      spriteID: 1ffb6eeb8f0f75820800000000000000
+      internalID: 2907057035636293617
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_5
+      name: DogMonster_5
       rect:
         serializedVersion: 2
-        x: 155
-        y: 289
-        width: 68
-        height: 66
+        x: 102
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,20 +254,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e638ed35f1463d40800000000000000
-      internalID: 5563706911224248036
+      spriteID: f38bc9eefb2f904b0800000000000000
+      internalID: -5473576965936203713
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_6
+      name: DogMonster_6
       rect:
         serializedVersion: 2
-        x: 281
-        y: 285
-        width: 74
-        height: 74
+        x: 118
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -287,20 +275,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7622819839237400800000000000000
-      internalID: 320645321409570427
+      spriteID: 661b0a9add7f1f4f0800000000000000
+      internalID: -796583127662153370
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_7
+      name: DogMonster_7
       rect:
         serializedVersion: 2
-        x: 405
-        y: 282
-        width: 82
-        height: 80
+        x: 134
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -308,20 +296,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce903d0168da5fcf0800000000000000
-      internalID: -219078215538112020
+      spriteID: 7b358a9c675abe9f0800000000000000
+      internalID: -438074609130515529
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_8
+      name: DogMonster_8
       rect:
         serializedVersion: 2
-        x: 18
-        y: 151
-        width: 89
-        height: 86
+        x: 150
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -329,20 +317,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d543aef474f5d7b70800000000000000
-      internalID: 8898373198642033757
+      spriteID: 269f0a72f4db8a5b0800000000000000
+      internalID: -5356823609092277918
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_9
+      name: DogMonster_9
       rect:
         serializedVersion: 2
-        x: 143
-        y: 148
-        width: 95
-        height: 92
+        x: 166
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -350,20 +338,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f652045417c518f0800000000000000
-      internalID: -570330887669786893
+      spriteID: e7f77ea5d0b50c8a0800000000000000
+      internalID: -6286924966891389058
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_10
+      name: DogMonster_10
       rect:
         serializedVersion: 2
-        x: 268
-        y: 145
-        width: 102
-        height: 98
+        x: 182
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -371,20 +359,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad34e31d690083630800000000000000
-      internalID: 3906873324499518426
+      spriteID: f72831ab75bc39380800000000000000
+      internalID: -8965598855520091521
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Effect95_11
+      name: DogMonster_11
       rect:
         serializedVersion: 2
-        x: 393
-        y: 142
-        width: 108
-        height: 103
+        x: 198
+        y: 1
+        width: 13
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -392,92 +380,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39104ca18918bc900800000000000000
-      internalID: 705800256897679763
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Effect95_12
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 11
-        width: 113
-        height: 108
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8f4ac29fb31bb80b0800000000000000
-      internalID: -5725287630129814280
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Effect95_13
-      rect:
-        serializedVersion: 2
-        x: 132
-        y: 8
-        width: 119
-        height: 113
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e343deca9b81ccef0800000000000000
-      internalID: -86667107077639106
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Effect95_14
-      rect:
-        serializedVersion: 2
-        x: 258
-        y: 5
-        width: 124
-        height: 118
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c1f91f069ccae0380800000000000000
-      internalID: -9003068624152191204
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Effect95_15
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 3
-        width: 128
-        height: 121
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8dc2786db89389130800000000000000
-      internalID: 3573669577080909016
+      spriteID: adb8c70cb44b64610800000000000000
+      internalID: 1605168554649095130
       vertices: []
       indices: 
       edges: []

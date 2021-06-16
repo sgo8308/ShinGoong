@@ -20,7 +20,7 @@ public class StageManager : MonoBehaviour
     public int totalNumOfMosters;
 
     public int numOfMonstersKilled;
-    
+
     Stopwatch stopWatch;
 
     public GameObject player;
@@ -115,7 +115,7 @@ public class StageManager : MonoBehaviour
     #endregion
 
     #region Shelter
-   
+
     public GameObject storePanel;
     public GameObject mainMenuPanel;
     public void InitializeStore()
@@ -141,4 +141,11 @@ public class StageManager : MonoBehaviour
             stageState = StageState.CLEAR;
         }
     }
+    #region Stage1Boss
+    public Transform platformPlayerSteppingOn { get; private set; }
+    public void SetPlatformPlayerSteppingOn(Transform platform)
+    {
+        platformPlayerSteppingOn = platform;
+    }
+    #endregion
 }

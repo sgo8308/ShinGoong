@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public abstract class Monster : MonoBehaviour
 {
-    GameObject hpBarFrame;
     Image hpBar;
+    protected GameObject hpBarFrame;
     protected GameObject radar;
     protected Animator anim;
     protected Rigidbody2D rigid;
     protected int nextMove; // -1 , 0 , 1 -> left, stop, right
-    protected float speed;
+    public float speed;
     protected float hp;
     protected float defensivePower;
     public float expPoint { get; protected set; }
@@ -40,26 +40,36 @@ public abstract class Monster : MonoBehaviour
     protected abstract void Initialize();
 
     #region Move
-    abstract protected void Think();
+    abstract protected void ThinkAndWalkAround();
 
     protected void FlipSprite()
     {
-        // Flip Monster Sprite and Radar image 
+        // Flip Monster Sprite and HpHarFrame
         if (nextMove != 0)
         {
             if (nextMove == 1)
             {
-                this.transform.rotation = Quaternion.Euler(0, 0, 0);
-                hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 180, 0);
+                FlipSpriteToRight();
             }
             else
             {
-                this.transform.rotation = Quaternion.Euler(0, 180, 0);
-                hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, 0);
+                FlipSpriteToLeft();
             }
         }
     }
     #endregion
+
+    protected void FlipSpriteToRight()
+    {
+        this.transform.rotation = Quaternion.Euler(0, 0, 0);
+        hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 180, 0);
+    }
+
+    protected void FlipSpriteToLeft()
+    {
+        this.transform.rotation = Quaternion.Euler(0, 180, 0);
+        hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, 0);
+    }
 
     #region RadarDetection
     private void OnTriggerEnter2D(Collider2D col)
@@ -75,40 +85,18 @@ public abstract class Monster : MonoBehaviour
     abstract public void GetAngry();
 
     abstract public void GetPeaceful();
-    
+
     #endregion
-
-    #region When Monster get hit by arrow
-    void OnHit(Collision2D collision)
-    {
-        if (collision.collider.tag == "Arrow" && gameObject.tag == "Monster")
-        {
-            collision.gameObject.transform.parent = this.transform;
-
-            hpBarFrame.SetActive(true);
-            CancelInvoke("HideHpBarFrame");
-            Invoke("HideHpBarFrame", 3);
-
-            Arrow arrow = collision.gameObject.GetComponent<Arrow>();
-            ReduceHp(arrow.damage);
-
-            if (hp <= 30)
-                GetAngry();
-
-            CheckIfDead();
-
-            CancelInvoke("GetPeaceful");
-            Invoke("GetPeaceful", 5);
-        }
-    }
-
     void AddHitEvent()
     {
         MonsterBody monsterBody = this.transform.Find("Body").GetComponent<MonsterBody>();
-        monsterBody.OnMonsterHit.AddListener(OnHit);
+        monsterBody.onHit.AddListener(OnHit);
     }
 
-    void CheckIfDead()
+    #region When Monster get hit by arrow
+    protected abstract void OnHit(float damage);
+
+    protected void CheckIfDead()
     {
         if ((hp / 100) <= 0)
         {
@@ -117,7 +105,7 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    void ReduceHp(float damage)
+    protected void ReduceHp(float damage)
     {
         hp -= damage - defensivePower;
         anim.SetFloat("Hp", hp);

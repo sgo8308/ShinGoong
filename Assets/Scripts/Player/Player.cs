@@ -34,32 +34,32 @@ public class Player : MonoBehaviour
         playerAttack.SetCanShoot(true);
     }
         
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "Radar")
-            Invoke("Dead", 0.1f); // dead after 0.1 seconds
-    }
+    //private void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    if (col.gameObject.tag == "Radar")
+    //        Invoke("Dead", 0.1f); // dead after 0.1 seconds
+    //}
 
-    private void OnTriggerExit2D(Collider2D col)
-    {
-        if(col.gameObject.tag == "Radar")
-            CancelInvoke("Dead");
-    }
+    //private void OnTriggerExit2D(Collider2D col)
+    //{
+    //    if(col.gameObject.tag == "Radar")
+    //        CancelInvoke("Dead");
+    //}
 
-    void Dead()
-    {
-        if (isDead)
-            return;
+    //void Dead()
+    //{
+    //    if (isDead)
+    //        return;
 
-        isDead = true;
-        animator.SetBool("isHit", true);
+    //    isDead = true;
+    //    animator.SetBool("isHit", true);
         
-        if(onPlayerDead != null)
-            onPlayerDead.Invoke();
+    //    if(onPlayerDead != null)
+    //        onPlayerDead.Invoke();
 
-        playerMove.SetCanMove(false);
-        playerAttack.SetCanShoot(false);
-    }
+    //    playerMove.SetCanMove(false);
+    //    playerAttack.SetCanShoot(false);
+    //}
 
     #endregion
     

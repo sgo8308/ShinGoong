@@ -25,10 +25,10 @@ TagManager:
   - Platform
   - Monster
   - MonsterBody
-  - UsedArrow
+  - ArrowOnPlatform
   - RopeArrow
   - Rope
-  - 
+  - ArrowOnMonster
   - 
   - 
   - 

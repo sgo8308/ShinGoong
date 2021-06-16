@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RopeArrow : MonoBehaviour
 {
-    const int USED_ARROW_LAYER_NUM = 14;
+    const int ARROW_ON_PLATFORM_LAYER_NUM = 14;
    
     public static List<Vector2> currentRopeArrowPositionList = new List<Vector2>();
 
@@ -38,13 +38,13 @@ public class RopeArrow : MonoBehaviour
 
             currentRopeArrowPositionList.Add(transform.position);
 
-            this.gameObject.layer = USED_ARROW_LAYER_NUM;
+            this.gameObject.layer = ARROW_ON_PLATFORM_LAYER_NUM;
         }
     }
 
    private void OnTriggerEnter2D(Collider2D collision)
    {
-       if (this.gameObject.layer == USED_ARROW_LAYER_NUM)
+       if (this.gameObject.layer == ARROW_ON_PLATFORM_LAYER_NUM)
        {
             if (collision.gameObject.name == "Player")
             {

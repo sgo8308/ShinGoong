@@ -51,7 +51,7 @@ public class MonsterSpider : Monster
         defensivePower = 30;
     }
 
-    protected override void Think()
+    protected override void ThinkAndWalkAround()
     {
         nextMove = Random.Range(-1, 2);
 
@@ -62,8 +62,8 @@ public class MonsterSpider : Monster
         FindOriginalPosition();
 
         //Recursive
-        float nextThinkTime = Random.Range(2f, 5f);
-        Invoke("Think", nextThinkTime);
+        float nextThinkAndWalkAroundTime = Random.Range(2f, 5f);
+        Invoke("ThinkAndWalkAround", nextThinkAndWalkAroundTime);
     }
 
     void FindOriginalPosition()
@@ -74,7 +74,7 @@ public class MonsterSpider : Monster
             transform.rotation = _rotation;
             nextMove = 0;
             anim.SetInteger("WalkSpeed", nextMove);
-            CancelInvoke("Think");
+            CancelInvoke("ThinkAndWalkAround");
         }
 
         if (nextMove != 0) 
@@ -89,13 +89,30 @@ public class MonsterSpider : Monster
         nextMove = nextMove * -1;
         FlipSprite();
 
-        CancelInvoke("Think");
-        Invoke("Think", 3);
+        CancelInvoke("ThinkAndWalkAround");
+        Invoke("ThinkAndWalkAround", 3);
     }
 
     protected override void OnDetectPlayer()
     {
         GetAngry();
+        CancelInvoke("GetPeaceful");
+        Invoke("GetPeaceful", 5);
+    }
+
+    protected override void OnHit(float damage)
+    {
+        ReduceHp(damage);
+
+        hpBarFrame.SetActive(true);
+        CancelInvoke("HideHpBarFrame");
+        Invoke("HideHpBarFrame", 3);
+
+        if (hp <= 30)
+            GetAngry();
+
+        CheckIfDead();
+
         CancelInvoke("GetPeaceful");
         Invoke("GetPeaceful", 5);
     }
@@ -112,8 +129,8 @@ public class MonsterSpider : Monster
         anim.SetInteger("WalkSpeed", nextMove);
         anim.speed = 1.5f;
 
-        CancelInvoke("Think");
-        Invoke("Think", 5);
+        CancelInvoke("ThinkAndWalkAround");
+        Invoke("ThinkAndWalkAround", 5);
     }
 
     public override void GetPeaceful()
