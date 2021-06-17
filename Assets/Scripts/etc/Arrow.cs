@@ -18,11 +18,13 @@ public class Arrow : MonoBehaviour
     Animator anim;
 
     PlayerSkill playerSkill;
+    CameraShake cameraShake;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         playerSkill = GameObject.Find("Player").GetComponent<PlayerSkill>();
+        cameraShake = Camera.main.transform.Find("CameraShake").GetComponent<CameraShake>();
     }
 
     void Start()
@@ -81,6 +83,7 @@ public class Arrow : MonoBehaviour
             Monster monster = collision.transform.parent.GetComponent<Monster>();
             RegisterDetachEvent(monster);
             gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
+            cameraShake.StartShake();
         }
     }
     
@@ -92,6 +95,7 @@ public class Arrow : MonoBehaviour
             Monster monster = collision.transform.parent.GetComponent<Monster>();
             RegisterDetachEvent(monster);
             gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
+            cameraShake.StartShake();
         }
 
         if (collision.gameObject.name == "Player" && 
