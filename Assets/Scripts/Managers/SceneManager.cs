@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public enum SceneType
 {
     SHELTER,
@@ -25,16 +25,19 @@ public class SceneManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeArrowCount;
+    }
 
     public void GoTo(string sceneName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-        InitializeArrowCount(sceneName);
     }
 
-    void InitializeArrowCount(string sceneName)
+    void InitializeArrowCount(Scene scene, LoadSceneMode sceneMode)
     {
-        switch (sceneName)
+        switch (scene.name)
         {
             case "ShelterScene":
                 Inventory.instance.InitializeArrowCount(SHELTER_ARROW_COUNT);

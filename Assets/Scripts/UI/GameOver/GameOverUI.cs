@@ -40,12 +40,12 @@ public class GameOverUI : UIOpener
 
         player.onPlayerDead += SetPlayTime;
         player.onPlayerDead += SetExpFillInfo;
-        player.onPlayerDead += Open;
+        player.onPlayerDead += DelayedOpen;
         player.onPlayerDead += InvokeFillExpBar;
 
         StageManager.instance.onStageClear += SetPlayTime;
         StageManager.instance.onStageClear += SetExpFillInfo;
-        StageManager.instance.onStageClear += Open;
+        StageManager.instance.onStageClear += DelayedOpen;
         StageManager.instance.onStageClear += InvokeFillExpBar;
 
         exitStageButtonInMainMenu.onClick.AddListener(SetPlayTime);
@@ -145,6 +145,11 @@ public class GameOverUI : UIOpener
         lev++;
 
         this.level.text = lev.ToString();
+    }
+
+    private void DelayedOpen()
+    {
+        Invoke("Open", 1f);
     }
 
     protected override void Open()

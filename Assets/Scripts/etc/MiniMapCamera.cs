@@ -21,7 +21,7 @@ public class MiniMapCamera : MonoBehaviour
     Vector2 stage1ImageSize;
     Vector2 bossImageSize;
 
-    void Start()
+    private void Awake()
     {
         var obj = FindObjectsOfType<MiniMapCamera>();
 
@@ -34,7 +34,10 @@ public class MiniMapCamera : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
+    void Start()
+    {
         miniMapCamera = GetComponent<Camera>();
         miniMapVCam = transform.Find("MiniMapVCam").GetComponent<CinemachineVirtualCamera>();
         miniMap = GameObject.Find("MainUI").transform

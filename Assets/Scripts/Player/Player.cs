@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private PlayerAttack playerAttack;
     private PlayerSkill playerSkill;
     private Animator animator;
+    private GameObject bulletExplosion; 
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
@@ -18,6 +19,8 @@ public class Player : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
         playerSkill = GetComponent<PlayerSkill>();
         animator = GetComponent<Animator>();
+        bulletExplosion = transform.Find("BulletExplosion").gameObject;
+
         Cursor.visible = true;
 
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += Revive;
@@ -33,36 +36,46 @@ public class Player : MonoBehaviour
 
         playerAttack.SetCanShoot(true);
     }
-        
-    //private void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if (col.gameObject.tag == "Radar")
-    //        Invoke("Dead", 0.1f); // dead after 0.1 seconds
-    //}
 
-    //private void OnTriggerExit2D(Collider2D col)
-    //{
-    //    if(col.gameObject.tag == "Radar")
-    //        CancelInvoke("Dead");
-    //}
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Radar")
+            Invoke("Dead", 0.1f); // dead after 0.1 seconds
+    }
 
-    //void Dead()
-    //{
-    //    if (isDead)
-    //        return;
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Radar")
+            CancelInvoke("Dead");
+    }
 
-    //    isDead = true;
-    //    animator.SetBool("isHit", true);
-        
-    //    if(onPlayerDead != null)
-    //        onPlayerDead.Invoke();
+    void Dead()
+    {
+        if (isDead)
+            return;
 
-    //    playerMove.SetCanMove(false);
-    //    playerAttack.SetCanShoot(false);
-    //}
+        isDead = true;
+
+        bulletExplosion.SetActive(true);
+        Invoke("HideBulletExplosion", 0.5f);
+        SoundManager.instance.PlaySound(Sounds.PLAYER_HIT);
+
+        animator.SetBool("isHit", true);
+
+        if (onPlayerDead != null)
+            onPlayerDead.Invoke();
+
+        playerMove.SetCanMove(false);
+        playerAttack.SetCanShoot(false);
+    }
+
+    void HideBulletExplosion()
+    {
+        bulletExplosion.SetActive(false);
+    }
 
     #endregion
-    
+
     public void AcquireCoin(int amount)
     {
         Inventory.instance.AddCoin(amount);
