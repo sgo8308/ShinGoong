@@ -65,7 +65,7 @@ public class SoundManager : MonoBehaviour
             case Sounds.PLAYER_ACQUIRE_COIN:
                 break;
             case Sounds.PLAYER_HIT:
-                effect.volume = 0.5f;
+                effect.volume = 0.1f;
                 effect.PlayOneShot(playerHit);
                 break;
             case Sounds.DOG_MONSTER_DIE:

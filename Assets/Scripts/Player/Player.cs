@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         Invoke("HideBulletExplosion", 0.5f);
         SoundManager.instance.PlaySound(Sounds.PLAYER_HIT);
 
-        animator.SetBool("isHit", true);
+        Invoke("StartHitAnimation", 0.3f);
 
         if (onPlayerDead != null)
             onPlayerDead.Invoke();
@@ -72,6 +72,11 @@ public class Player : MonoBehaviour
     void HideBulletExplosion()
     {
         bulletExplosion.SetActive(false);
+    }
+
+    void StartHitAnimation()
+    {
+        animator.SetBool("isHit", true);
     }
 
     #endregion
