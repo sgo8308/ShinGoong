@@ -129,9 +129,6 @@ public abstract class Monster : MonoBehaviour
 
         StageManager.instance.AddNumOfMonsterKilled();
 
-        CancelInvoke();
-        Invoke("Destroy", 3);
-
         Destroy(radar);
     }
 
