@@ -62,13 +62,13 @@ public abstract class Monster : MonoBehaviour
     protected void FlipSpriteToRight()
     {
         this.transform.rotation = Quaternion.Euler(0, 0, 0);
-        hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 180, 0);
+        hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, 0);
     }
 
     protected void FlipSpriteToLeft()
     {
         this.transform.rotation = Quaternion.Euler(0, 180, 0);
-        hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, 0);
+        hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 180, 0);
     }
 
     #region RadarDetection

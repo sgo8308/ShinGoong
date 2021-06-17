@@ -19,7 +19,6 @@ public class MainCamera : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     void AssignCameraConfiner(Scene scene, LoadSceneMode mode)
