@@ -29,7 +29,7 @@ public class MonsterBoss : Monster
         flySpeed = 0.15f;
         floatSpeed = 0.05f;
         hp = 100;
-        defensivePower = 0;
+        defensivePower = 50;
         expPoint = 70.0f;
     }
 
@@ -65,7 +65,6 @@ public class MonsterBoss : Monster
     }
 
     /// <summary>
-    /// 동작이 4개 있다
     /// 왼쪽으로 움직이기
     /// 오른쪽으로 움직이기
     /// 멈춰서 쉬기
@@ -126,7 +125,7 @@ public class MonsterBoss : Monster
             }
         }
 
-        return Random.Range(-1, 2);
+        return Random.Range(-1, 3);
     }
 
     private void MoveLeft()
@@ -254,9 +253,9 @@ public class MonsterBoss : Monster
 
     protected override void OnDetectPlayer()
     {
-        //GetAngry();
-        //CancelInvoke("GetPeaceful");
-        //Invoke("GetPeaceful", 5);
+        GetAngry();
+        CancelInvoke("GetPeaceful");
+        Invoke("GetPeaceful", 7);
     }
 
     #region When Monster get hit by arrow

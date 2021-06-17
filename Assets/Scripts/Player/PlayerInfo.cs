@@ -46,18 +46,24 @@ public class PlayerInfo : MonoBehaviour
 
         if (nowExpPoint >= maxExpPoint)
         {
-            LevelUp();
-
-            nowExpPoint -= maxExpPoint;
-
-            maxExpPoint += 30;
+            while (true)
+            {
+                if (nowExpPoint >= maxExpPoint)
+                {
+                    LevelUp();
+                    levelUpCount++;
+                    nowExpPoint -= maxExpPoint;
+                    maxExpPoint += 30;
+                    continue;
+                }
+                break;
+            }
         }
     }
 
     private void LevelUp()
     {
         level++;
-        levelUpCount++;
     }
 
     private void OnApplicationQuit()

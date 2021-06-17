@@ -1,31 +1,22 @@
 fileFormatVersion: 2
-guid: 8d189bcdda223da4c9e3db5fe03e1508
+guid: 29978cba3b10db641b1fcd23659741b6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7624567676348293440
-    second: OctopusMonster_0
+      213: 6697483916140095054
+    second: ImpactMetal8LtBlue _0
   - first:
-      213: -8374890377035850845
-    second: OctopusMonster_1
+      213: 5373903518273165560
+    second: ImpactMetal8LtBlue _1
   - first:
-      213: -7430803760430730747
-    second: OctopusMonster_2
+      213: -4897805730447436741
+    second: ImpactMetal8LtBlue _2
   - first:
-      213: -2896895879772890670
-    second: OctopusMonster_3
+      213: -4571670029596708779
+    second: ImpactMetal8LtBlue _3
   - first:
-      213: 8948582593465211363
-    second: OctopusMonster_4
-  - first:
-      213: 8150100955010535099
-    second: OctopusMonster_5
-  - first:
-      213: -8871572354513524287
-    second: OctopusMonster_6
-  - first:
-      213: -190943987045469199
-    second: OctopusMonster_7
+      213: -6253399656964404722
+    second: ImpactMetal8LtBlue _11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -55,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -123,13 +114,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OctopusMonster_0
+      name: ImpactMetal8LtBlue _0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 3
-        width: 16
-        height: 26
+        x: 54
+        y: 54
+        width: 85
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +128,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0416aaaa7e7efc960800000000000000
-      internalID: 7624567676348293440
+      spriteID: e462c6e032e32fc50800000000000000
+      internalID: 6697483916140095054
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OctopusMonster_1
+      name: ImpactMetal8LtBlue _1
       rect:
         serializedVersion: 2
-        x: 21
-        y: 3
-        width: 16
-        height: 26
+        x: 222
+        y: 27
+        width: 135
+        height: 142
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +149,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3abd0fbf29966cb80800000000000000
-      internalID: -8374890377035850845
+      spriteID: 8f8d4e717c0f39a40800000000000000
+      internalID: 5373903518273165560
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OctopusMonster_2
+      name: ImpactMetal8LtBlue _2
       rect:
         serializedVersion: 2
-        x: 37
-        y: 3
-        width: 16
-        height: 26
+        x: 406
+        y: 11
+        width: 160
+        height: 176
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +170,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 502b3e7995b70e890800000000000000
-      internalID: -7430803760430730747
+      spriteID: b34dec943af770cb0800000000000000
+      internalID: -4897805730447436741
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OctopusMonster_3
+      name: ImpactMetal8LtBlue _3
       rect:
         serializedVersion: 2
-        x: 53
-        y: 3
-        width: 16
-        height: 26
+        x: 588
+        y: 0
+        width: 180
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +191,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d918d6bb882cc7d0800000000000000
-      internalID: -2896895879772890670
+      spriteID: 550b69f645a2e80c0800000000000000
+      internalID: -4571670029596708779
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OctopusMonster_4
+      name: ImpactMetal8LtBlue _11
       rect:
         serializedVersion: 2
-        x: 85
-        y: 3
-        width: 16
-        height: 26
+        x: 773
+        y: 4
+        width: 182
+        height: 182
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,71 +212,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e9dcb60570cf2c70800000000000000
-      internalID: 8948582593465211363
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: OctopusMonster_5
-      rect:
-        serializedVersion: 2
-        x: 101
-        y: 3
-        width: 16
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bbe89f233a9fa1170800000000000000
-      internalID: 8150100955010535099
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: OctopusMonster_6
-      rect:
-        serializedVersion: 2
-        x: 117
-        y: 3
-        width: 16
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1c9ab0a72f7d1e480800000000000000
-      internalID: -8871572354513524287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: OctopusMonster_7
-      rect:
-        serializedVersion: 2
-        x: 133
-        y: 3
-        width: 16
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f378289471a95df0800000000000000
-      internalID: -190943987045469199
+      spriteID: e0a4618d4267739a0800000000000000
+      internalID: -6253399656964404722
       vertices: []
       indices: 
       edges: []
