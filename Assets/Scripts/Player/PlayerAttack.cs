@@ -20,14 +20,9 @@ public class PlayerAttack : MonoBehaviour
 
 
     private Animator animator;
-
     private Camera mainCamera;
-
     private Transform arrowDirection = null;
-
     private Vector2 mousePosition;
-
-
 
     private bool canShoot = true;
 
@@ -39,7 +34,10 @@ public class PlayerAttack : MonoBehaviour
     int currnetAngleType;
     int ReAimAngleType;
 
-    Sprite[] sprites;
+
+    Sprite[] sprites2;
+    Sprite[] sprites3;
+    SpriteRenderer spriteReAim;
 
     private void Start()
     {
@@ -50,6 +48,7 @@ public class PlayerAttack : MonoBehaviour
         arrowDirection = transform.Find("ArrowDirection");
 
         ImageSet();
+        spriteReAim = gameObject.GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -61,19 +60,6 @@ public class PlayerAttack : MonoBehaviour
 
         SetArrowDirection();
 
-        if (Input.GetMouseButton(0))
-        {
-        //   playerMove.StopPlayer();
-        //   playerMove.FlipPlayer();
-        //   playerMove.SetCanMove(false);
-        //   ControlPower();
-        }
-
-        if (Input.GetMouseButtonUp(0) && !Input.GetKey(KeyCode.R))
-        {
-         //   playerMove.SetCanMove(true);
-         //   Invoke("ShootArrow", 0.1f);
-        }
 
         if (Input.GetKey(KeyCode.R))
         {
@@ -93,7 +79,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void AttackReady()
     {
-        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") &&!Input.GetKey(KeyCode.E))  //down -> ready애니메이션 시작
+        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E))  //down -> ready애니메이션 시작
         {
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
@@ -106,7 +92,7 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping" ) && !Input.GetKey(KeyCode.E))
+        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E))
         {
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
@@ -163,19 +149,20 @@ public class PlayerAttack : MonoBehaviour
                                           t_mousePos.y - arrowDirection.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
 
         ReAimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
-       // print("재조준각도1: " + ReAimAngle);
+                                                                                  // print("재조준각도1: " + ReAimAngle);
 
         if (ReAimAngle >= 0)
         {
             ReAimAngle = Mathf.Abs(90 - ReAimAngle);
         }
-        else if (ReAimAngle < 0 && ReAimAngle >= -90)            
+        else if (ReAimAngle < 0 && ReAimAngle >= -90)
         {
-            ReAimAngle = Mathf.Abs(  ReAimAngle - 90 );
+            ReAimAngle = Mathf.Abs(ReAimAngle - 90);
 
-        }else if (ReAimAngle < -90 && ReAimAngle >= -180)
+        }
+        else if (ReAimAngle < -90 && ReAimAngle >= -180)
         {
-            ReAimAngle = 270 - Mathf.Abs(ReAimAngle );
+            ReAimAngle = 270 - Mathf.Abs(ReAimAngle);
         }
 
 
@@ -184,28 +171,26 @@ public class PlayerAttack : MonoBehaviour
         {
             ReAimAngleType = 20;
         }
-        if (ReAimAngle >= 20 )   //20도 이상 일때 재조준각 타입 정하기
+        if (ReAimAngle >= 20)   //20도 이상 일때 재조준각 타입 정하기
         {
-            ReAimAngleType = (int)(Mathf.Floor(ReAimAngle / 10) + 1 ) * 10 ;
+            ReAimAngleType = (int)(Mathf.Floor(ReAimAngle / 10) + 1) * 10;
         }
 
         if (currnetAngleType != ReAimAngleType)   //재조준 해서 각도타입이 달라졌을 때
         {
-          //  print("aim 각도type : " + currnetAngleType);
-          //  print("재조준 각도type : " + ReAimAngleType);
+            print("aim 각도type : " + currnetAngleType);
+            print("재조준 각도type : " + ReAimAngleType);
             angleChange = true;
         }
 
         if (currnetAngleType == ReAimAngleType)  //재조준 하였지만 다시 원래 각도 타입로 돌아왔을 때
         {
             angleChange = false;
-
         }
     }
 
     private void ReadyToAim()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
     {
-        animator.SetBool("isReady", false);
 
         if (aimAngle >= 0 && aimAngle < 20) //마우스 각도가 0~20도 일때 Aiming20 애니메이션 시작
         {
@@ -262,145 +247,101 @@ public class PlayerAttack : MonoBehaviour
             animator.SetBool("isAiming120", true);
             currnetAngleType = 120;
         }
-        if (aimAngle >= 120 )
+        if (aimAngle >= 120)
         {
             animator.SetBool("isAiming130", true);
             currnetAngleType = 130;
         }
-       
         aiming = true;
-
     }
 
     private void FireFinish()
     {
+        animator.enabled = false;
+
+
         //각도별 조건 달기
         if (currnetAngleType == 20)
         {
-            animator.SetBool("isAiming20", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish20", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[0];
         }
         if (currnetAngleType == 30)
         {
-            animator.SetBool("isAiming30", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish30", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[1];
         }
         if (currnetAngleType == 40)
         {
-            animator.SetBool("isAiming40", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish40", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[2];
         }
         if (currnetAngleType == 50)
         {
-            animator.SetBool("isAiming50", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish50", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[3];
         }
         if (currnetAngleType == 60)
         {
-            animator.SetBool("isAiming60", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish60", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[4];
         }
         if (currnetAngleType == 70)
         {
-            animator.SetBool("isAiming70", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish70", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[5];
         }
         if (currnetAngleType == 80)
         {
-            animator.SetBool("isAimin80", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish80", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[6];
         }
         if (currnetAngleType == 90)
         {
-            animator.SetBool("isAiming90", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish90", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[7];
         }
         if (currnetAngleType == 100)
         {
-            animator.SetBool("isAiming100", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish100", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[8];
         }
         if (currnetAngleType == 110)
         {
-            animator.SetBool("isAiming110", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish110", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[9];
         }
         if (currnetAngleType == 120)
         {
-            animator.SetBool("isAiming120", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish120", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[10];
         }
         if (currnetAngleType == 130)
         {
-            animator.SetBool("isAiming130", false);
-            ReAimCancel();
-            animator.SetBool("isFireFinish130", true);  // FireFinish 애니메이션 시작 = 발사!!
+            spriteReAim.sprite = sprites3[11];
         }
 
-
-
-
-
-        Invoke("AttackToIdle", 0.2f);
-
+        //    Invoke("AttackToIdle", 0.2f);
 
         aiming = false;
         angleChange = false;
 
-    }
-
-    void ReAimCancel()
-    {
-        animator.SetBool("20to30", false);
-        animator.SetBool("30to20", false);
-        animator.SetBool("30to40", false);
-        animator.SetBool("40to30", false);
-        animator.SetBool("40to50", false);
-        animator.SetBool("50to40", false);
-        animator.SetBool("50to60", false);
-        animator.SetBool("60to50", false);
-        animator.SetBool("60to70", false);
-        animator.SetBool("70to60", false);
-        animator.SetBool("70to80", false);
-        animator.SetBool("80to70", false);
-        animator.SetBool("80to90", false);
-        animator.SetBool("90to80", false);
-        animator.SetBool("90to100", false);
-        animator.SetBool("100to90", false);
-        animator.SetBool("100to110", false);
-        animator.SetBool("110to100", false);
-        animator.SetBool("110to120", false);
-        animator.SetBool("120to110", false);
-        animator.SetBool("120to130", false);
-        animator.SetBool("130to120", false);   
+        Invoke("FinishtoIdle", 0.5f);
 
     }
 
-    private void AttackToIdle()
+    void FinishtoIdle()
     {
-        animator.SetBool("isFireFinish20", false);
-        animator.SetBool("isFireFinish30", false);
-        animator.SetBool("isFireFinish40", false);
-        animator.SetBool("isFireFinish50", false);
-        animator.SetBool("isFireFinish60", false);
-        animator.SetBool("isFireFinish70", false); 
-        animator.SetBool("isFireFinish80", false);
-        animator.SetBool("isFireFinish90", false);
-        animator.SetBool("isFireFinish100", false);
-        animator.SetBool("isFireFinish110", false);
-        animator.SetBool("isFireFinish120", false);
-        animator.SetBool("isFireFinish130", false);
+        animator.enabled = true;
+        animator.SetBool("isReady", false);
+        AimCancel();
+    }
+
+
+
+    void AimCancel()
+    {
+        animator.SetBool("isAiming20", false);
+        animator.SetBool("isAiming30", false);
+        animator.SetBool("isAiming40", false);
+        animator.SetBool("isAiming50", false);
+        animator.SetBool("isAiming60", false);
+        animator.SetBool("isAiming70", false);
+        animator.SetBool("isAiming80", false);
+        animator.SetBool("isAiming90", false);
+        animator.SetBool("isAiming100", false);
+        animator.SetBool("isAiming110", false);
+        animator.SetBool("isAiming120", false);
+        animator.SetBool("isAiming130", false);
     }
 
 
@@ -415,201 +356,110 @@ public class PlayerAttack : MonoBehaviour
             {
                 if (ReAimAngleType == 20)
                 {
-                    print("여기 들어와? 20");
-                    animator.SetBool("isAiming30", false);
-
-                    animator.SetBool("20to30", false);
-
-                    animator.SetBool("30to20", true);
-
                     currnetAngleType = 20;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[0];
                 }
 
 
                 if (ReAimAngleType == 30)
                 {
-                    print("여기 들어와? 30");
-                    animator.SetBool("isAiming20", false);
-                    animator.SetBool("isAiming40", false);
-
-                    animator.SetBool("30to20", false);
-                    animator.SetBool("30to40", false);
-
-                    animator.SetBool("20to30", true);
-                    animator.SetBool("40to30", true);
-
-
                     currnetAngleType = 30;
-                    angleChange = false;
+
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[1];
 
                 }
 
                 if (ReAimAngleType == 40)
                 {
-                    print("여기 들어와? 40");
-                    animator.SetBool("isAiming30", false);
-                    animator.SetBool("isAiming50", false);
-
-                    animator.SetBool("40to30", false);
-                    animator.SetBool("40to50", false);
-
-                    animator.SetBool("30to40", true);
-                    animator.SetBool("50to40", true);
-
                     currnetAngleType = 40;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[2];
                 }
+
                 if (ReAimAngleType == 50)
                 {
-                    print("여기 들어와? 50");
-                    animator.SetBool("isAiming40", false);
-                    animator.SetBool("isAiming60", false);
-
-                    animator.SetBool("50to40", false);
-                    animator.SetBool("50to60", false);
-
-                    animator.SetBool("40to50", true);
-                    animator.SetBool("60to50", true);
-
                     currnetAngleType = 50;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[3];
                 }
                 if (ReAimAngleType == 60)
                 {
-                    print("여기 들어와? 60");
-                    animator.SetBool("isAiming50", false);
-                    animator.SetBool("isAiming70", false);
-
-                    animator.SetBool("60to50", false);
-                    animator.SetBool("60to70", false);
-
-                    animator.SetBool("50to60", true);
-                    animator.SetBool("70to60", true);
-
                     currnetAngleType = 60;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[4];
                 }
                 if (ReAimAngleType == 70)
                 {
-                    print("여기 들어와? 70");
-                    animator.SetBool("isAiming60", false);
-                    animator.SetBool("isAiming80", false);
-
-                    animator.SetBool("70to60", false);
-                    animator.SetBool("70to80", false);
-
-                    animator.SetBool("60to70", true);
-                    animator.SetBool("80to70", true);
-
                     currnetAngleType = 70;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[5];
                 }
                 if (ReAimAngleType == 80)
                 {
-                    print("여기 들어와? 80");
-                    animator.SetBool("isAiming70", false);
-                    animator.SetBool("isAiming90", false);
-
-                    animator.SetBool("80to70", false);
-                    animator.SetBool("80to90", false);
-
-                    animator.SetBool("70to80", true);
-                    animator.SetBool("90to80", true);
-
                     currnetAngleType = 80;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[6];
                 }
                 if (ReAimAngleType == 90)
                 {
-                    print("여기 들어와? 90");
-                    animator.SetBool("isAiming80", false);
-                    animator.SetBool("isAiming100", false);
-
-                    animator.SetBool("90to80", false);
-                    animator.SetBool("90to100", false);
-
-                    animator.SetBool("80to90", true);
-                    animator.SetBool("100to90", true);
-
                     currnetAngleType = 90;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[7];
                 }
                 if (ReAimAngleType == 100)
                 {
-                    print("여기 들어와? 100");
-                    animator.SetBool("isAiming90", false);
-                    animator.SetBool("isAiming110", false);
-
-                    animator.SetBool("100to90", false);
-                    animator.SetBool("100to110", false);
-
-                    animator.SetBool("90to100", true);
-                    animator.SetBool("110to100", true);
-
                     currnetAngleType = 100;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[8];
                 }
                 if (ReAimAngleType == 110)
                 {
-                    print("여기 들어와? 110");
-                    animator.SetBool("isAiming100", false);
-                    animator.SetBool("isAiming120", false);
-
-                    animator.SetBool("110to100", false);
-                    animator.SetBool("110to120", false);
-
-                    animator.SetBool("100to110", true);
-                    animator.SetBool("120to110", true);
-
                     currnetAngleType = 110;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[9];
                 }
                 if (ReAimAngleType == 120)
                 {
-                    print("여기 들어와? 120");
-                    animator.SetBool("isAiming110", false);
-                    animator.SetBool("isAiming130", false);
-
-                    animator.SetBool("120to110", false);
-                    animator.SetBool("120to130", false);
-
-                    animator.SetBool("110to120", true);
-                    animator.SetBool("130to120", true);
-
                     currnetAngleType = 120;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[10];
                 }
                 if (ReAimAngleType == 130)
                 {
-                    print("여기 들어와? 130");
-                    animator.SetBool("isAiming120", false);
-
-                    animator.SetBool("130to120", false);
-                    animator.SetBool("120to130", true);
-
                     currnetAngleType = 130;
-                    angleChange = false;
 
+                    animator.enabled = false;
+
+                    spriteReAim.sprite = sprites2[11];
                 }
             }
 
 
         }
     }
-
-
-
 
 
     private void SetArrowDirection()
@@ -619,7 +469,7 @@ public class PlayerAttack : MonoBehaviour
                                           mousePosition.y - arrowDirection.transform.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
 
         arrowDirection.transform.right = direction;  //화살의 x축 방향을 '바라볼 방향'으로 정한다
-        arrowDirection.transform.position = new Vector2(player.transform.position.x, player.transform.position.y ); // 플레이어 목 근처에서 화살이 나가게  y값 조정
+        arrowDirection.transform.position = new Vector2(player.transform.position.x, player.transform.position.y); // 플레이어 목 근처에서 화살이 나가게  y값 조정
     }
 
     private void ControlPower()
@@ -660,7 +510,9 @@ public class PlayerAttack : MonoBehaviour
 
     private void ImageSet()
     {
-        sprites = Resources.LoadAll<Sprite>("Sprites/FireAngle_anim");
+        sprites2 = Resources.LoadAll<Sprite>("Sprites/FireAngle_anim/Angle2");
+
+        sprites3 = Resources.LoadAll<Sprite>("Sprites/FireAngle_anim/Angle3");
     }
 
 }

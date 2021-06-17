@@ -6,6 +6,7 @@ public class Hook : MonoBehaviour
 {
 
     public LineRenderer line;
+
     public GameObject hook;
     public GameObject ropeArrow;
 
@@ -20,11 +21,13 @@ public class Hook : MonoBehaviour
 
     Transform arrowDirection;
 
+    
 
-    // Start is called before the first frame update
     void Start()
     {
-        //   hook.SetActive(false);
+       
+
+        hook.SetActive(false);
 
         hook.transform.position = transform.position;
 
@@ -36,7 +39,6 @@ public class Hook : MonoBehaviour
         isAttach = false;
 
         arrowDirection = transform.Find("ArrowDirection");
-        //    arrowDirection.transform.position = transform.position;
     }
 
     float angle;
@@ -50,6 +52,8 @@ public class Hook : MonoBehaviour
 
         if (!HookCollider.ropePull)
         {
+            
+
             line.SetPosition(0, transform.position);
             line.SetPosition(1, hook.transform.position);
 
@@ -60,7 +64,7 @@ public class Hook : MonoBehaviour
                
 
                 hook.SetActive(true);
-                hook.transform.position = transform.position;
+             //   hook.transform.position = transform.position;
 
                 line.SetPosition(0, transform.position);
                 line.SetPosition(1, hook.transform.position);
@@ -71,14 +75,13 @@ public class Hook : MonoBehaviour
                 isHookActive = true;
                 isLineMax = false;
 
-                //        hook.gameObject.SetActive(true);
+                hook.gameObject.SetActive(true);
 
 
             }
 
             if (isHookActive && !isLineMax && !isAttach)
             {
-
 
                 hook.transform.Translate(mousedir.normalized * Time.deltaTime * 15);
 
@@ -114,24 +117,29 @@ public class Hook : MonoBehaviour
 
         if (HookCollider.ropePull)  //로프가 충돌했을때
         {
+     
+            hook.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            print("여기?");
+     
             GetComponent<Rigidbody2D>().gravityScale = 0;
             transform.position = Vector2.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * 12);
             isHookActive = false;
-
+     
             if (Vector2.Distance(transform.position, hook.transform.position) < 2.0f)
             {
                 isHookActive = false;
                 isLineMax = false;
                 hook.gameObject.SetActive(false);
                 hook.transform.position = transform.position;
-
+     
                 HookCollider.ropePull = false;
                 GetComponent<Rigidbody2D>().gravityScale = 3;
-                //                GetComponent<SpriteRenderer>().enabled = false;
+
+                hook.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
                 hook.SetActive(false);
-
-
+     
+     
             }
         }
 
@@ -142,6 +150,9 @@ public class Hook : MonoBehaviour
 
     private void SetRopeArrowDirection()
     {
+        hook.transform.position = transform.position;
+
+
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
         direction = new Vector2(mousePosition.x - hook.transform.position.x,
                                           mousePosition.y - hook.transform.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
