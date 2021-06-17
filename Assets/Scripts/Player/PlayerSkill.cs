@@ -47,9 +47,11 @@ public class PlayerSkill : MonoBehaviour
 
     public void UnSetSkill()
     {
+        skillImage.gameObject.SetActive(false);
         skillImage.sprite = null;
         skillName = null;
         hasSkill = false;
+        isSkillOn = false;
     }
 
     public string GetSkillName()

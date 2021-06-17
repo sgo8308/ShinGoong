@@ -1,16 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class StoreOpener : MonoBehaviour
+public class StoreOpener : UIOpener
 {
     public GameObject storePanel;
-    public InventoryOpener inventoryOpener;
+    public GameObject mainMenuPanel;
 
     public delegate void OnStoreOpened();
     public OnStoreOpened onStoreOpened;
 
+    public delegate void OnStoreClosed();
+    public OnStoreOpened onStoreClosed;
+
+
     bool isPlayerInTrigger;
+
+
+    protected override void Start()
+    {
+        base.Start();
+        StageManager.instance.InitializeStore();
+    }
 
     //Interact with store
     private void OnTriggerStay2D(Collider2D collision)
@@ -26,34 +35,34 @@ public class StoreOpener : MonoBehaviour
         isPlayerInTrigger = false;
     }
 
-    private void Start()
-    {
-        StageManager.instance.InitializeStore();
-
-    }
-
     private void Update()
     {
+        if (mainMenuPanel.activeSelf)
+            return;
+
         if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.F))
         {
-            OpenStore();
+            Open();
         }
 
         if (Input.GetKeyUp(KeyCode.Escape) && storePanel.activeSelf)
         {
-            CloseStore();
+            Close();
         }
     }
 
-    private void OpenStore()
+    protected override void Open()
     {
+        base.Open();
         storePanel.SetActive(true);
-        inventoryOpener.OpenInventory();
+        isOpened = false;
+        onStoreOpened.Invoke();
     }
 
-    private void CloseStore()
+    protected override void Close()
     {
+        base.Close();
         storePanel.SetActive(false);
-        inventoryOpener.CloseInventory();
+        onStoreClosed.Invoke();
     }
 }

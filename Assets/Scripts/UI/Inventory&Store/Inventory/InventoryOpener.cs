@@ -1,45 +1,56 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class InventoryOpener : MonoBehaviour
+public class InventoryOpener : UIOpener
 {
     public GameObject inventoryPanel;
 
     public GameObject storePanel;
 
-    public PlayerMove playerMove;
-
-    public PlayerAttack playerAttck;
-
     public ItemToolTipOpener itemToolTipOpener;
 
+    public GameObject mainMenuPanel;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        StoreOpener storeOpener = GameObject.Find("StoreNpc").GetComponent<StoreOpener>();
+        storeOpener.onStoreOpened += Open;
+        storeOpener.onStoreClosed += Close;
+
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += RegisterToStoreEvent;
+    }
+    
     private void Update()
     {
+        if (mainMenuPanel.activeSelf)
+            return;
+
         if (Input.GetKeyDown(KeyCode.I) && CanOpen())
         {
             if (inventoryPanel.activeSelf)
-                CloseInventory();
+                Close();
             else
-                OpenInventory();
+                Open();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && CanClose())
         {
-            CloseInventory();
+            Close();
         }
     }
 
-    public void OpenInventory()
+    protected override void Open()
     {
+        base.Open();
         inventoryPanel.SetActive(true);
-        playerMove.SetCanMove(false);
-        playerAttck.SetCanShoot(false);
     }
 
-    public void CloseInventory()
+    protected override void Close()
     {
+        base.Close();
         inventoryPanel.SetActive(false);
-        playerMove.SetCanMove(true);
-        playerAttck.SetCanShoot(true);
         itemToolTipOpener.CloseToolTip();
     }
 
@@ -63,5 +74,14 @@ public class InventoryOpener : MonoBehaviour
 
         return canClose;
     }
-    
+
+    private void RegisterToStoreEvent(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "ShelterScene")
+        {
+            StoreOpener storeOpener = GameObject.Find("StoreNpc").GetComponent<StoreOpener>();
+            storeOpener.onStoreOpened += Open;
+            storeOpener.onStoreClosed += Close;
+        }
+    }
 }

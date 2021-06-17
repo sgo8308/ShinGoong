@@ -37,9 +37,6 @@ public class InventoryEquipSlot : MonoBehaviour, IPointerUpHandler, IPointerEnte
         return info.isItemSet;
     }
 
-
-
-
     public Player player;
     public void OnPointerUp(PointerEventData eventData)
     {

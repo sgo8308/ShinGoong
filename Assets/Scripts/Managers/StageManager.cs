@@ -17,9 +17,16 @@ public class StageManager : MonoBehaviour
 
     public StageState stageState;
 
-    int _monsterCount;
+    public int totalNumOfMosters;
 
-    Stopwatch _stopWatch;
+    public int numOfMonstersKilled;
+
+    Stopwatch stopWatch;
+
+    public GameObject player;
+
+    public delegate void OnStageClear();
+    public OnStageClear onStageClear;
 
     private void Awake()
     {
@@ -35,89 +42,114 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializePlayerPosition;
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStageState;
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += RegisterOnPlayerDead;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += ResetStopWatch;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStage;
 
-        _stopWatch = new Stopwatch();
+        stopWatch = new Stopwatch();
+
+        player = GameObject.Find("Player");
+
+        player.GetComponent<Player>().onPlayerDead += StopStopWatch;
     }
 
+    public bool CheckStageClear()
+    {
+        return numOfMonstersKilled >= totalNumOfMosters;
+    }
+
+    public void InitializeStage(Scene scene, LoadSceneMode mode)
+    {
+        switch (scene.name)
+        {
+            case "ShelterScene":
+                stageState = StageState.CLEAR;
+                InitializePlayerPosition();
+                break;
+            case "Stage1Scene":
+                stageState = StageState.UNCLEAR;
+                totalNumOfMosters = 10;
+                break;
+            case "newStage1":
+                stageState = StageState.UNCLEAR;
+                totalNumOfMosters = 10;
+                break;
+            case "BossScene":
+                stageState = StageState.UNCLEAR;
+                totalNumOfMosters = 1;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void InitializePlayerPosition()
+    {
+        Transform playerStartPosition = GameObject.Find("PlayerStartPosition").transform;
+        player.transform.position = playerStartPosition.position;
+    }
+
+    #region StopWatch
     void StartStopWatch(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "ShelterScene")
             return;
 
-        if (_stopWatch.IsRunning)
-            return;
-
-        _stopWatch.Start();
-    }
-
-    void RegisterOnPlayerDead(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "ShelterScene")
-            return;
-
-        Player _player = GameObject.Find("Player").GetComponent<Player>();
-        _player.onPlayerDead += StopStopWatch;
+        stopWatch.Start();
     }
 
     void StopStopWatch()
     {
-        _stopWatch.Stop();
+        stopWatch.Stop();
     }
 
     void ResetStopWatch(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "ShelterScene")
-            _stopWatch.Reset();
+        stopWatch.Reset();
     }
 
     public string GetPlayTime()
     {
-        TimeSpan ts = _stopWatch.Elapsed;
+        TimeSpan ts = stopWatch.Elapsed;
         string playTime = String.Format("{0:00}:{1:00}:{2:00}",
             ts.Hours, ts.Minutes, ts.Seconds);
 
         return playTime;
     }
-
-    public void InitializeStageState(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "ShelterScene")
-            stageState = StageState.CLEAR;
-        else
-            stageState = StageState.UNCLEAR;
-    }
-
-    public void UpdateStageState()
-    {
-        //몬스터 다 잡으면 클리어로 변경
-    }
-
-    public GameObject player;
-    public void InitializePlayerPosition(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "ShelterScene")
-        {
-            Transform playerStartPosition = GameObject.Find("PlayerStartPosition").transform;
-            player.transform.position = playerStartPosition.position;
-        }
-    }
-
+    #endregion
 
     #region Shelter
-   
-    public InventoryOpener inventoryOpener;
-    public GameObject storePanel;
 
+    public GameObject storePanel;
+    public GameObject mainMenuPanel;
     public void InitializeStore()
     {
-        GameObject.Find("StoreNpc").GetComponent<StoreOpener>().inventoryOpener = inventoryOpener;
-        GameObject.Find("StoreNpc").GetComponent<StoreOpener>().storePanel = storePanel;
+        GameObject.Find("StoreNpc").GetComponent<StoreOpener>().storePanel = this.storePanel;
+        GameObject.Find("StoreNpc").GetComponent<StoreOpener>().mainMenuPanel = this.mainMenuPanel;
     }
-    
+    #endregion
+
+    public void AddNumOfMonsterKilled()
+    {
+        numOfMonstersKilled++;
+
+        ClearStage();
+    }
+
+    public void ClearStage()
+    {
+        if (CheckStageClear())
+        {
+            numOfMonstersKilled = 0;
+            stageState = StageState.CLEAR;
+            onStageClear.Invoke();
+        }
+    }
+    #region Stage1Boss
+    public Transform platformPlayerSteppingOn { get; private set; }
+    public void SetPlatformPlayerSteppingOn(Transform platform)
+    {
+        platformPlayerSteppingOn = platform;
+    }
     #endregion
 }

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
+    private bool isDead; 
 
     void Start()
     {
@@ -22,43 +23,49 @@ public class Player : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += Revive;
     }
 
+    #region Revive And Die
     public void Revive(Scene scene, LoadSceneMode mode)
     {
         animator.SetBool("isHit", false);
+        isDead = false;
 
         playerMove.SetCanMove(true);
 
         playerAttack.SetCanShoot(true);
     }
         
-    #region Dead
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "Radar")
-            Invoke("Dead", 0.1f); // dead after 0.1 seconds
-    }
+    //private void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    if (col.gameObject.tag == "Radar")
+    //        Invoke("Dead", 0.1f); // dead after 0.1 seconds
+    //}
 
-    private void OnTriggerExit2D(Collider2D col)
-    {
-        if(col.gameObject.tag == "Radar")
-            CancelInvoke("Dead");
-    }
+    //private void OnTriggerExit2D(Collider2D col)
+    //{
+    //    if(col.gameObject.tag == "Radar")
+    //        CancelInvoke("Dead");
+    //}
 
-    void Dead()
-    {
-        animator.SetBool("isHit", true);
+    //void Dead()
+    //{
+    //    if (isDead)
+    //        return;
+
+    //    isDead = true;
+    //    animator.SetBool("isHit", true);
         
-        if(onPlayerDead != null)
-            onPlayerDead.Invoke();
-        
-        playerMove.SetCanMove(false);
-        playerAttack.SetCanShoot(false);
-    }
+    //    if(onPlayerDead != null)
+    //        onPlayerDead.Invoke();
+
+    //    playerMove.SetCanMove(false);
+    //    playerAttack.SetCanShoot(false);
+    //}
+
     #endregion
     
-    public void AcquireCoin()
+    public void AcquireCoin(int amount)
     {
-        Inventory.instance.AddCoin(1);
+        Inventory.instance.AddCoin(amount);
 
         MainUI.instance.UpdateCoinUI();
 
@@ -114,6 +121,8 @@ public class Player : MonoBehaviour
         {
             Inventory.instance.AddItem(equipSlot.GetItem());
             equipSlot.RemoveItem();
+
+            playerSkill.UnSetSkill();
         }
     }
 

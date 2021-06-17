@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainUI : MonoBehaviour
 {
@@ -40,8 +41,9 @@ public class MainUI : MonoBehaviour
                                  .GetComponent<Image>();
 
         UpdateCoinUI();
-        UpdateLevelUI();
         UpdateArrowCountUI();
+
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += UpdateLevelUI;
     }
 
     public void UpdateCoinUI()
@@ -49,9 +51,12 @@ public class MainUI : MonoBehaviour
         _coinCountUI.text = Inventory.instance.GetCoinCount().ToString();
     }
 
-    public void UpdateLevelUI()
+    public void UpdateLevelUI(Scene scene, LoadSceneMode mode)
     {
-        _levelUI.text = playerInfo.level.ToString();
+        if (scene.name == "ShelterScene")
+        {
+            _levelUI.text = playerInfo.level.ToString();
+        }
     }
 
     public void UpdateArrowCountUI()
