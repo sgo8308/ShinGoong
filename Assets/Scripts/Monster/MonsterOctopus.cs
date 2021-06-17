@@ -16,6 +16,9 @@ public class MonsterOctopus : Monster
 
     void FixedUpdate()
     {
+        if (rigid.bodyType == RigidbodyType2D.Static)
+            return;
+
         //Move
         rigid.velocity = new Vector2(nextMove * speed, rigid.velocity.y);
 

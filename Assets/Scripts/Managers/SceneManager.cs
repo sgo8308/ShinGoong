@@ -36,8 +36,6 @@ public class SceneManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
-
-
     void InitializeArrowCount(Scene scene, LoadSceneMode sceneMode)
     {
         switch (scene.name)

@@ -21,12 +21,6 @@ public class Inventory : MonoBehaviour
         ui = GetComponent<InventoryUI>();
     }
 
-    private void Start()
-    {
-        info = GetComponent<InventoryInfo>();
-        ui = GetComponent<InventoryUI>();
-    }
-
     public int GetSlotCount()
     {
         return info.inventorySlotCount;

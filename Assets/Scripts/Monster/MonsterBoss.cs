@@ -43,6 +43,9 @@ public class MonsterBoss : Monster
         if (isFloating || isFlying)
             return;
 
+        if (rigid.bodyType == RigidbodyType2D.Static)
+            return;
+
         //Move
         rigid.velocity = new Vector2(direction * speed, rigid.velocity.y);
 
