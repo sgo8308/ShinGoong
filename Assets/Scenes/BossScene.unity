@@ -2845,6 +2845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   line: {fileID: 364077621}
   hook: {fileID: 1542018695}
+  ropeArrow: {fileID: 0}
   isHookActive: 0
   isLineMax: 0
   isAttach: 0
