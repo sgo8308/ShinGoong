@@ -7,6 +7,21 @@ public class HookCollider : MonoBehaviour
 
     public static bool ropePull = false;
 
+    public GameObject ropeArrow;
+
+    public static HookCollider instance;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         
@@ -23,5 +38,6 @@ public class HookCollider : MonoBehaviour
     {
         print("충돌123");
         ropePull = true;
+       
     }
 }

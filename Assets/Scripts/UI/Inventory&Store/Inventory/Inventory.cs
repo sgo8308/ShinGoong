@@ -16,6 +16,9 @@ public class Inventory : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(transform.root.gameObject);
+
+        info = GetComponent<InventoryInfo>();
+        ui = GetComponent<InventoryUI>();
     }
 
     private void Start()

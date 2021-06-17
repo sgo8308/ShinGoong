@@ -68,7 +68,7 @@ public class StageManager : MonoBehaviour
                 break;
             case "Stage1Scene":
                 stageState = StageState.UNCLEAR;
-                totalNumOfMosters = 10;
+                totalNumOfMosters = 1;
                 break;
             case "BossScene":
                 stageState = StageState.UNCLEAR;
