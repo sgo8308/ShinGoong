@@ -503,9 +503,9 @@ public class PlayerAttack : MonoBehaviour
 
     private void ImageSet()
     {
-        sprites2 = Resources.LoadAll<Sprite>("Sprites/FireAngle_anim/Angle2");
+        sprites2 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle2");
 
-        sprites3 = Resources.LoadAll<Sprite>("Sprites/FireAngle_anim/Angle3");
+        sprites3 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle3");
     }
 
 }
