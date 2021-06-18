@@ -3961,29 +3961,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 267414333}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 203170143}
-        m_MethodName: HideUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2091473693}
-        m_MethodName: UpdateStageStateClear
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &267414333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4542,7 +4520,12 @@ MonoBehaviour:
   playerRun: {fileID: 0}
   playerJump: {fileID: 0}
   playerLand: {fileID: 0}
+  playerBuy: {fileID: 8300000, guid: 5373198abdb8b90498abe3d55c8ac3be, type: 3}
+  playerSell: {fileID: 8300000, guid: b857d30700630734e95cf65de8df7ec8, type: 3}
+  playerEquip: {fileID: 8300000, guid: cd9348dce943ffe41bd0969c008f5cf5, type: 3}
+  playerUnEquip: {fileID: 8300000, guid: 49fe7a82bd2a48e46a20f2b002913d1c, type: 3}
   acquireCoin: {fileID: 0}
+  openInventory: {fileID: 8300000, guid: 921c2860b16165c418bdbdb987fa1611, type: 3}
   playerHit: {fileID: 8300000, guid: 6fe7e4cdc904a1d4984fc538d9427a2a, type: 3}
   dogMonsterDie: {fileID: 0}
   octopusMonsterDie: {fileID: 0}
@@ -6450,7 +6433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 7
   jumpPower: 23
-  level: 1
+  level: 3
   levelUpCount: 0
   maxExpPoint: 20
   nowExpPoint: 0
@@ -14694,29 +14677,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1485156615}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1259524515}
-        m_MethodName: GoTo
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ShelterScene
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 203170138}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1485156615
 MonoBehaviour:
   m_ObjectHideFlags: 0

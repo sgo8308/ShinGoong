@@ -100,6 +100,8 @@ public class Player : MonoBehaviour
         Inventory.instance.UpdateCoin();
 
         Inventory.instance.RemoveItem(slot.GetSlotNum());
+
+        SoundManager.instance.PlaySound(Sounds.PLAYER_SELL);
     }
 
     public void Buy(StoreSlot storeSlot)
@@ -109,8 +111,11 @@ public class Player : MonoBehaviour
         Inventory.instance.UpdateCoin();
 
         Inventory.instance.AddItem(storeSlot.item);
+
+        SoundManager.instance.PlaySound(Sounds.PLAYER_BUY);
+
     }
-    
+
     public void Equip(InventorySlot inventorySlot, InventoryEquipSlot equipSlot)
     {
         Item tempItem = inventorySlot.GetItem();
@@ -132,6 +137,8 @@ public class Player : MonoBehaviour
         }
 
         playerSkill.SetSkill(equipSlot.GetItem());
+        
+        SoundManager.instance.PlaySound(Sounds.PLAYER_EQUIP);
     }
 
     public void UnEquip(InventoryEquipSlot equipSlot)
@@ -142,6 +149,8 @@ public class Player : MonoBehaviour
             equipSlot.RemoveItem();
 
             playerSkill.UnSetSkill();
+
+            SoundManager.instance.PlaySound(Sounds.PLAYER_UNEQUIP);
         }
     }
 

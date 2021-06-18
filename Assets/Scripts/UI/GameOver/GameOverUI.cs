@@ -84,6 +84,7 @@ public class GameOverUI : UIOpener
         continueButton.onClick.AddListener(Close);
 
         exitButton.onClick.AddListener(Close);
+        exitButton.onClick.AddListener(GoToShelterScene);
 
         gameOverPanel = transform.Find("GameOverPanel").gameObject;
 
@@ -176,5 +177,10 @@ public class GameOverUI : UIOpener
         gameOverPanel.SetActive(false);
         canFillExpBar = true;
         Time.timeScale = 1;
+    }
+
+    private void GoToShelterScene()
+    {
+        SceneManager.instance.GoTo("ShelterScene");
     }
 }
