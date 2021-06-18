@@ -128,7 +128,7 @@ public class MonsterBoss : Monster
             }
         }
 
-        return Random.Range(-1, 3);
+        return Random.Range(2, 3);
     }
 
     private void MoveLeft()
@@ -155,7 +155,9 @@ public class MonsterBoss : Monster
     private void RunFlyRoutine(bool isOnTheGround)
     {
         ChoosePlatformToGo();
-        
+
+        ShowBubble();
+
         if (isOnTheGround)
         {
             isFloating = true;
@@ -321,6 +323,17 @@ public class MonsterBoss : Monster
 
     }
     #endregion
+
+    /// <summary>
+    /// Show bubble on platform to go
+    /// </summary>
+    private void ShowBubble()
+    {
+        if (platformToGo == null)
+            return;
+
+        platformToGo.GetComponent<Platform>().ShowBubble();
+    }
 
     private void SetIsFloatingFalse()
     {

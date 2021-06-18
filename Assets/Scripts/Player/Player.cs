@@ -51,23 +51,23 @@ public class Player : MonoBehaviour
 
     void Dead()
     {
-        if (isDead)
-            return;
+        //if (isDead)
+        //    return;
 
-        isDead = true;
+        //isDead = true;
 
-        bulletExplosion.SetActive(true);
-        Invoke("HideBulletExplosion", 0.5f);
-        SoundManager.instance.PlaySound(Sounds.PLAYER_HIT);
+        //bulletExplosion.SetActive(true);
+        //Invoke("HideBulletExplosion", 0.5f);
+        //SoundManager.instance.PlaySound(Sounds.PLAYER_HIT);
 
-        animator.enabled = true;
-        Invoke("StartHitAnimation", 0.3f);
+        //animator.enabled = true;
+        //Invoke("StartHitAnimation", 0.3f);
 
-        if (onPlayerDead != null)
-            onPlayerDead.Invoke();
+        //if (onPlayerDead != null)
+        //    onPlayerDead.Invoke();
 
-        playerMove.SetCanMove(false);
-        playerAttack.SetCanShoot(false);
+        //playerMove.SetCanMove(false);
+        //playerAttack.SetCanShoot(false);
     }
 
     void HideBulletExplosion()

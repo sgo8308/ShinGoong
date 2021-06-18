@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Platform : MonoBehaviour
 {
+    public GameObject bubble;
+    static Platform platformNowBubbleOn;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "BossScene")
@@ -14,6 +17,18 @@ public class Platform : MonoBehaviour
             StageManager.instance.SetPlatformPlayerSteppingOn(this.transform);
 
         if (collision.gameObject.tag == "Monster")
+        {
             collision.gameObject.GetComponent<MonsterBoss>().nowPlatform = this.transform;
+            bubble.SetActive(false);
+        }
+    }
+
+    public void ShowBubble()
+    {
+        if (platformNowBubbleOn != null)
+            platformNowBubbleOn.GetComponent<Platform>().bubble.SetActive(false);
+        
+        bubble.SetActive(true);
+        platformNowBubbleOn = this;
     }
 }
