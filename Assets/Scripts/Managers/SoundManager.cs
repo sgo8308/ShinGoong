@@ -119,7 +119,7 @@ public class SoundManager : MonoBehaviour
                 break;
 
             case Sounds.PLAYER_READY_ARROW:
-                effect.volume = 1f;
+                effect.volume = 0.5f;
                 effect.clip = readyArrow;
                 effect.Play();
                 break;
@@ -130,7 +130,6 @@ public class SoundManager : MonoBehaviour
                 break;
 
             case Sounds.PLAYER_ACQUIRE_ARROW:
-                effect.volume = 0.6f;
                 effect.PlayOneShot(acquireArrow);
                 break;
 

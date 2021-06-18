@@ -110,6 +110,7 @@ public class Arrow : MonoBehaviour
 
             Inventory.instance.AddArrow();
             MainUI.instance.UpdateArrowCountUI();
+            SoundManager.instance.PlaySound(Sounds.PLAYER_ACQUIRE_ARROW);
         }
 
         if (collision.tag == "Platform")

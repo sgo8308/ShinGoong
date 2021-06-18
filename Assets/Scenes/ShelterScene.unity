@@ -4244,7 +4244,7 @@ MonoBehaviour:
   playerLevelUp: {fileID: 8300000, guid: 97b47cd6cefda7d4da1ee4fcdd76461b, type: 3}
   readyArrow: {fileID: 8300000, guid: 5dad4d93bd43bfa46b3188a865c37efc, type: 3}
   shootArrow: {fileID: 8300000, guid: 53add283033e3734090c0f9afb5156f5, type: 3}
-  acquireArrow: {fileID: 0}
+  acquireArrow: {fileID: 8300000, guid: fe9df97acdb228c438c306567058ca4e, type: 3}
   acquireCoin: {fileID: 8300000, guid: 086a9a42e4298df419a723308396b1e4, type: 3}
   openInventory: {fileID: 8300000, guid: 921c2860b16165c418bdbdb987fa1611, type: 3}
   playerHit: {fileID: 8300000, guid: 6fe7e4cdc904a1d4984fc538d9427a2a, type: 3}
@@ -4657,7 +4657,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.8962264, g: 0.36677086, b: 0.15641688, a: 1}
+      key0: {r: 0.7019608, g: 0.4627451, b: 0.34509805, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
