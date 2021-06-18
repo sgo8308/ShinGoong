@@ -89,6 +89,8 @@ public class Player : MonoBehaviour
         MainUI.instance.UpdateCoinUI();
 
         Inventory.instance.UpdateCoin();
+
+        SoundManager.instance.PlaySound(Sounds.PLAYER_ACQUIRE_COIN);
     }
     
 

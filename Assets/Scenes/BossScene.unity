@@ -15887,7 +15887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: b19382ba96998e74d8711031101ad389, type: 3}
+  coin: {fileID: 4281434763448516092, guid: b19382ba96998e74d8711031101ad389, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []

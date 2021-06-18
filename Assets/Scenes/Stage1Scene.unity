@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -1476,7 +1476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -6571,6 +6571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0c8a45136cf814c818b5dea08f9cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubble: {fileID: 0}
 --- !u!61 &511979712
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6870,7 +6871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -7453,6 +7454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0c8a45136cf814c818b5dea08f9cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubble: {fileID: 0}
 --- !u!61 &559278649
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7947,6 +7949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0c8a45136cf814c818b5dea08f9cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubble: {fileID: 0}
 --- !u!61 &624023691
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17081,6 +17084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0c8a45136cf814c818b5dea08f9cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubble: {fileID: 0}
 --- !u!61 &850250801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17307,6 +17311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0c8a45136cf814c818b5dea08f9cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubble: {fileID: 0}
 --- !u!61 &858624024
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17748,6 +17753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0c8a45136cf814c818b5dea08f9cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubble: {fileID: 0}
 --- !u!61 &879746819
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20845,7 +20851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -22347,7 +22353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -22709,7 +22715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -25609,7 +25615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -26433,7 +26439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -27244,7 +27250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -27714,6 +27720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0c8a45136cf814c818b5dea08f9cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubble: {fileID: 0}
 --- !u!61 &1684354547
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28825,6 +28832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0c8a45136cf814c818b5dea08f9cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubble: {fileID: 0}
 --- !u!61 &1760986083
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29077,7 +29085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
@@ -31880,7 +31888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  coin: {fileID: 8364606443533136374, guid: 5c08d5512e9aae041808119d6b707a20, type: 3}
+  coin: {fileID: 4281434763448516092, guid: fd6ed351b3ff2604d8a7be2dcc8809c0, type: 3}
   OnDead:
     m_PersistentCalls:
       m_Calls: []
