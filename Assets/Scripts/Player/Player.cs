@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
 
         Inventory.instance.UpdateCoin();
 
-        SoundManager.instance.PlaySound(Sounds.PLAYER_ACQUIRE_COIN);
+        SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ACQUIRE_COIN);
     }
     
 
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
 
         Inventory.instance.RemoveItem(slot.GetSlotNum());
 
-        SoundManager.instance.PlaySound(Sounds.PLAYER_SELL);
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SELL);
     }
 
     public void Buy(StoreSlot storeSlot)
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
 
         Inventory.instance.AddItem(storeSlot.item);
 
-        SoundManager.instance.PlaySound(Sounds.PLAYER_BUY);
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_BUY);
 
     }
 
@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
 
         playerSkill.SetSkill(equipSlot.GetItem());
         
-        SoundManager.instance.PlaySound(Sounds.PLAYER_EQUIP);
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_EQUIP);
     }
 
     public void UnEquip(InventoryEquipSlot equipSlot)
@@ -152,7 +152,7 @@ public class Player : MonoBehaviour
 
             playerSkill.UnSetSkill();
 
-            SoundManager.instance.PlaySound(Sounds.PLAYER_UNEQUIP);
+            SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_UNEQUIP);
         }
     }
 

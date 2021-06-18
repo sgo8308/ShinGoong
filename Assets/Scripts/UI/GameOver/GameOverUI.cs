@@ -112,7 +112,7 @@ public class GameOverUI : UIOpener
             UpdateLevelUI();
             timesExpBarIsFilled++;
 
-            SoundManager.instance.PlaySound(Sounds.PLAYER_LEVEL_UP);
+            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.LEVEL_UP);
         }
 
         if (timesExpBarIsFilled == timesExpBarToBeFilled)

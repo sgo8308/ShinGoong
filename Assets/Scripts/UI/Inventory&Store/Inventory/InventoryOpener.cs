@@ -45,7 +45,7 @@ public class InventoryOpener : UIOpener
     {
         base.Open();
         inventoryPanel.SetActive(true);
-        SoundManager.instance.PlaySound(Sounds.PLAYER_OPEN_INVENTORY);
+        SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.OPEN_INVENTORY);
     }
 
     protected override void Close()

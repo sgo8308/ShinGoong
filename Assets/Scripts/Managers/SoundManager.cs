@@ -1,20 +1,26 @@
 ﻿using UnityEngine;
 
-public enum Sounds
+public enum PlayerSounds
 {
+    PLAYER_RUN,
     PLAYER_JUMP,
     PLAYER_LAND,
-    PLAYER_ACQUIRE_COIN,
     PLAYER_BUY,
     PLAYER_SELL,
     PLAYER_EQUIP,
     PLAYER_UNEQUIP,
     PLAYER_HIT,
-    PLAYER_OPEN_INVENTORY,
-    PLAYER_LEVEL_UP,
     PLAYER_READY_ARROW,
     PLAYER_SHOOT_ARROW,
-    PLAYER_ACQUIRE_ARROW,
+    
+}
+
+public enum NonPlayerSounds
+{
+    ACQUIRE_COIN,
+    ACQUIRE_ARROW,
+    OPEN_INVENTORY,
+    LEVEL_UP,
     DOG_MONSTER_DIE,
     OCTOPUS_MOSTER_DIE,
     BOSS_MONSTER_DIE,
@@ -22,12 +28,14 @@ public enum Sounds
     ARROW_PIERCE_MONSTER,
     SKILL_BOMB_SHOT
 }
+
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
-    public AudioSource bgm;
-    public AudioSource effect;
+    private AudioSource bgm;
+    public AudioSource playerSound;
+    private AudioSource nonPlayerSound;
 
     public AudioClip playerRun;
     public AudioClip playerJump;
@@ -69,99 +77,134 @@ public class SoundManager : MonoBehaviour
     void Initialize()
     {
         bgm = transform.Find("Bgm").GetComponent<AudioSource>();
-        effect = transform.Find("Effect").GetComponent<AudioSource>();
+        playerSound = transform.Find("PlayerSound").GetComponent<AudioSource>();
+        nonPlayerSound = transform.Find("NonPlayerSound").GetComponent<AudioSource>();
     }
 
-    public void PlaySound(Sounds sounds)
+    public void PlayPlayerSound(PlayerSounds sounds)
+    {
+        playerSound.Stop();
+        playerSound.loop = false;
+        playerSound.mute = false;
+
+        switch (sounds)
+        {
+            case PlayerSounds.PLAYER_RUN:
+                playerSound.volume = 3f;
+                playerSound.clip = playerRun;
+                playerSound.loop = true;
+                playerSound.Play();
+                break;
+
+            case PlayerSounds.PLAYER_JUMP:
+                playerSound.PlayOneShot(playerJump, 1.5f);
+                break;
+
+            case PlayerSounds.PLAYER_LAND:
+                playerSound.PlayOneShot(playerLand, 2.0f);
+                break;
+
+            case PlayerSounds.PLAYER_BUY:
+                playerSound.PlayOneShot(playerBuy, 0.6f);
+                break;
+
+            case PlayerSounds.PLAYER_SELL:
+                playerSound.PlayOneShot(playerSell, 0.6f);
+                break;
+
+            case PlayerSounds.PLAYER_EQUIP:
+                playerSound.PlayOneShot(playerEquip, 0.6f);
+                break;
+
+            case PlayerSounds.PLAYER_UNEQUIP:
+                playerSound.PlayOneShot(playerUnEquip, 0.6f);
+                break;
+
+            case PlayerSounds.PLAYER_HIT:
+                playerSound.PlayOneShot(playerHit, 0.08f);
+                break;
+
+            case PlayerSounds.PLAYER_READY_ARROW:
+                playerSound.volume = 0.5f;
+                playerSound.clip = readyArrow;
+                playerSound.Play();
+                break;
+
+            case PlayerSounds.PLAYER_SHOOT_ARROW:
+                playerSound.PlayOneShot(shootArrow, 0.5f);
+                break;
+        }
+    }
+
+    public void PlayNonPlayerSound(NonPlayerSounds sounds)
     {
         switch (sounds)
         {
-            case Sounds.PLAYER_JUMP:
+            case NonPlayerSounds.ACQUIRE_COIN:
+                nonPlayerSound.PlayOneShot(acquireCoin, 1.3f);
+                break;
+
+            case NonPlayerSounds.ACQUIRE_ARROW:
+                nonPlayerSound.PlayOneShot(acquireArrow);
+                break;
+
+            case NonPlayerSounds.OPEN_INVENTORY:
+                nonPlayerSound.PlayOneShot(openInventory, 0.6f);
+                break;
+
+            case NonPlayerSounds.LEVEL_UP:
+                nonPlayerSound.PlayOneShot(playerLevelUp, 1.5f);
+                break;
+
+            case NonPlayerSounds.DOG_MONSTER_DIE:
                 //effect.volume = 0.3f
-                effect.PlayOneShot(playerJump, 0.3f);
+                nonPlayerSound.PlayOneShot(dogMonsterDie);
                 break;
 
-            case Sounds.PLAYER_LAND:
+            case NonPlayerSounds.OCTOPUS_MOSTER_DIE:
                 //effect.volume = 0.3f
-                effect.PlayOneShot(playerLand);
+                nonPlayerSound.PlayOneShot(octopusMonsterDie);
                 break;
-
-            case Sounds.PLAYER_ACQUIRE_COIN:
-                effect.PlayOneShot(acquireCoin, 1.3f);
-                break;
-
-            case Sounds.PLAYER_BUY:
-                effect.PlayOneShot(playerBuy, 0.6f);
-                break;
-
-            case Sounds.PLAYER_SELL:
-                effect.PlayOneShot(playerSell, 0.6f);
-                break;
-
-            case Sounds.PLAYER_EQUIP:
-                effect.PlayOneShot(playerEquip, 0.6f);
-                break;
-
-            case Sounds.PLAYER_UNEQUIP:
-                effect.PlayOneShot(playerUnEquip, 0.6f);
-                break;
-
-            case Sounds.PLAYER_HIT:
-                effect.PlayOneShot(playerHit, 0.08f);
-                break;
-
-            case Sounds.PLAYER_OPEN_INVENTORY:
-                effect.PlayOneShot(openInventory, 0.6f);
-                break;
-
-            case Sounds.PLAYER_LEVEL_UP:
-                effect.PlayOneShot(playerLevelUp, 1.5f);
-                break;
-
-            case Sounds.PLAYER_READY_ARROW:
-                effect.volume = 0.5f;
-                effect.clip = readyArrow;
-                effect.Play();
-                break;
-
-            case Sounds.PLAYER_SHOOT_ARROW:
-                effect.Stop();
-                effect.PlayOneShot(shootArrow, 0.5f);
-                break;
-
-            case Sounds.PLAYER_ACQUIRE_ARROW:
-                effect.PlayOneShot(acquireArrow);
-                break;
-
-            case Sounds.DOG_MONSTER_DIE:
+            case NonPlayerSounds.BOSS_MONSTER_DIE:
                 //effect.volume = 0.3f
-                effect.PlayOneShot(dogMonsterDie);
+                nonPlayerSound.PlayOneShot(bossMonsterDie);
                 break;
 
-            case Sounds.OCTOPUS_MOSTER_DIE:
+            case NonPlayerSounds.ARROW_PIERCE_PLATFORM:
+                nonPlayerSound.PlayOneShot(arrowPiercePlatform, 0.5f);
+                break;
+
+            case NonPlayerSounds.ARROW_PIERCE_MONSTER:
+                nonPlayerSound.PlayOneShot(arrowPierceMonster, 0.5f);
+                break;
+
+            case NonPlayerSounds.SKILL_BOMB_SHOT:
                 //effect.volume = 0.3f
-                effect.PlayOneShot(octopusMonsterDie);
-                break;
-            case Sounds.BOSS_MONSTER_DIE:
-                //effect.volume = 0.3f
-                effect.PlayOneShot(bossMonsterDie);
-                break;
-
-            case Sounds.ARROW_PIERCE_PLATFORM:
-                effect.PlayOneShot(arrowPiercePlatform, 0.5f);
-                break;
-
-            case Sounds.ARROW_PIERCE_MONSTER:
-                effect.PlayOneShot(arrowPierceMonster, 0.5f);
-                break;
-
-            case Sounds.SKILL_BOMB_SHOT:
-                //effect.volume = 0.3f
-                effect.PlayOneShot(bombShot);
+                nonPlayerSound.PlayOneShot(bombShot);
                 break;
 
             default:
                 break;
         }
+    }
+
+    public void StopPlayerSound()
+    {
+        playerSound.Stop();
+    }
+
+    public void StopNonPlayerSound()
+    {
+        nonPlayerSound.Stop();
+    }
+
+    public void MutePlayerSound()
+    {
+        playerSound.mute = true;
+    }
+
+    public void UnMutePlayerSound()
+    {
+        playerSound.mute = false;
     }
 }

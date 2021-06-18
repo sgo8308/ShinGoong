@@ -21,6 +21,7 @@ public abstract class UIOpener : MonoBehaviour
         isOpened = true;
         playerMove.SetCanMove(false);
         playerAttack.SetCanShoot(false);
+        SoundManager.instance.MutePlayerSound();
     }
 
     protected virtual void Close()
@@ -28,6 +29,7 @@ public abstract class UIOpener : MonoBehaviour
         Invoke("SetIsOpenedFalse", 0.5f);
         playerMove.SetCanMove(true);
         playerAttack.SetCanShoot(true);
+        SoundManager.instance.UnMutePlayerSound();
     }
 
     private void SetIsOpenedFalse()

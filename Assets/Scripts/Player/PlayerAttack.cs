@@ -90,7 +90,7 @@ public class PlayerAttack : MonoBehaviour
             animator.SetBool("isReady", true);
             Invoke("ReadyToAim", 0.4f);  //0.7초 후에 준비자세에서 조준자세로 바꿔준다.
 
-            SoundManager.instance.PlaySound(Sounds.PLAYER_READY_ARROW);
+            SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_READY_ARROW);
         }
 
         if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E))
@@ -114,7 +114,7 @@ public class PlayerAttack : MonoBehaviour
             
             FireFinish();
 
-            SoundManager.instance.PlaySound(Sounds.PLAYER_SHOOT_ARROW);
+            SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
         }
     }
 

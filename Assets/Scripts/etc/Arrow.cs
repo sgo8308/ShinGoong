@@ -86,7 +86,7 @@ public class Arrow : MonoBehaviour
             gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
             cameraShake.StartShake();
 
-            PlaySound(Sounds.ARROW_PIERCE_MONSTER);
+            PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }
     }
     
@@ -100,7 +100,7 @@ public class Arrow : MonoBehaviour
             gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
             cameraShake.StartShake();
 
-            PlaySound(Sounds.ARROW_PIERCE_MONSTER);
+            PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }
 
         if (collision.gameObject.name == "Player" && 
@@ -110,27 +110,27 @@ public class Arrow : MonoBehaviour
 
             Inventory.instance.AddArrow();
             MainUI.instance.UpdateArrowCountUI();
-            SoundManager.instance.PlaySound(Sounds.PLAYER_ACQUIRE_ARROW);
+            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ACQUIRE_ARROW);
         }
 
         if (collision.tag == "Platform")
-            PlaySound(Sounds.ARROW_PIERCE_PLATFORM);
+            PlaySound(NonPlayerSounds.ARROW_PIERCE_PLATFORM);
     }
 
-    private void PlaySound(Sounds sound)
+    private void PlaySound(NonPlayerSounds sound)
     {
 
         if (isSoundPlayed) 
         {
-            if (sound == Sounds.ARROW_PIERCE_MONSTER)
+            if (sound == NonPlayerSounds.ARROW_PIERCE_MONSTER)
             {
-                SoundManager.instance.PlaySound(sound);
+                SoundManager.instance.PlayNonPlayerSound(sound);
                 isSoundPlayed = true;
             }
             return;
         }
 
-        SoundManager.instance.PlaySound(sound);
+        SoundManager.instance.PlayNonPlayerSound(sound);
         isSoundPlayed = true;
     }
 
