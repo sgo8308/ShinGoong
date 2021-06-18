@@ -88,7 +88,7 @@ public class PlayerAttack : MonoBehaviour
 
             CalculateBowAngle();
             animator.SetBool("isReady", true);
-            Invoke("ReadyToAim", 0.7f);  //0.7초 후에 준비자세에서 조준자세로 바꿔준다.
+            Invoke("ReadyToAim", 0.4f);  //0.7초 후에 준비자세에서 조준자세로 바꿔준다.
 
         }
 
@@ -137,9 +137,6 @@ public class PlayerAttack : MonoBehaviour
         {
             aimAngle = 270 - Mathf.Abs(aimAngle);
         }
-
-
-        print(aimAngle);
     }
 
     void CalculateBowAngle_ReAim()
@@ -150,7 +147,6 @@ public class PlayerAttack : MonoBehaviour
 
         ReAimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
                                                                                   // print("재조준각도1: " + ReAimAngle);
-
         if (ReAimAngle >= 0)
         {
             ReAimAngle = Mathf.Abs(90 - ReAimAngle);
@@ -165,15 +161,13 @@ public class PlayerAttack : MonoBehaviour
             ReAimAngle = 270 - Mathf.Abs(ReAimAngle);
         }
 
-
-
         if (ReAimAngle < 20)  //20도 미만 일때 재조준각 타입 정하기
         {
             ReAimAngleType = 20;
         }
         if (ReAimAngle >= 20)   //20도 이상 일때 재조준각 타입 정하기
         {
-            ReAimAngleType = (int)(Mathf.Floor(ReAimAngle / 10) + 1) * 10;
+            ReAimAngleType = (int)(Mathf.Floor(ReAimAngle / 10) + 0.5) * 10;
         }
 
         if (currnetAngleType != ReAimAngleType)   //재조준 해서 각도타입이 달라졌을 때
@@ -192,62 +186,62 @@ public class PlayerAttack : MonoBehaviour
     private void ReadyToAim()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
     {
 
-        if (aimAngle >= 0 && aimAngle < 20) //마우스 각도가 0~20도 일때 Aiming20 애니메이션 시작
+        if (aimAngle >= 0 && aimAngle < 25) //마우스 각도가 0~25도 일때 Aiming20 애니메이션 시작
         {
             animator.SetBool("isAiming20", true);
             currnetAngleType = 20;
         }
-        if (aimAngle >= 20 && aimAngle < 30)
+        if (aimAngle >= 25 && aimAngle < 35)
         {
             animator.SetBool("isAiming30", true);
             currnetAngleType = 30;
         }
-        if (aimAngle >= 30 && aimAngle < 40)
+        if (aimAngle >= 35 && aimAngle < 45)
         {
             animator.SetBool("isAiming40", true);
             currnetAngleType = 40;
         }
-        if (aimAngle >= 40 && aimAngle < 50)
+        if (aimAngle >= 45 && aimAngle < 55)
         {
             animator.SetBool("isAiming50", true);
             currnetAngleType = 50;
         }
-        if (aimAngle >= 50 && aimAngle < 60)
+        if (aimAngle >= 55 && aimAngle < 65)
         {
             animator.SetBool("isAiming60", true);
             currnetAngleType = 60;
         }
-        if (aimAngle >= 60 && aimAngle < 70)
+        if (aimAngle >= 65 && aimAngle < 75)
         {
             animator.SetBool("isAiming70", true);
             currnetAngleType = 70;
         }
-        if (aimAngle >= 70 && aimAngle < 80)
+        if (aimAngle >= 75 && aimAngle < 85)
         {
             animator.SetBool("isAiming80", true);
             currnetAngleType = 80;
         }
-        if (aimAngle >= 80 && aimAngle < 90)
+        if (aimAngle >= 85 && aimAngle < 95)
         {
             animator.SetBool("isAiming90", true);
             currnetAngleType = 90;
         }
-        if (aimAngle >= 90 && aimAngle < 100)
+        if (aimAngle >= 95 && aimAngle < 105)
         {
             animator.SetBool("isAiming100", true);
             currnetAngleType = 100;
         }
-        if (aimAngle >= 100 && aimAngle < 110)
+        if (aimAngle >= 105 && aimAngle < 115)
         {
             animator.SetBool("isAiming110", true);
             currnetAngleType = 110;
         }
-        if (aimAngle >= 110 && aimAngle < 120)
+        if (aimAngle >= 115 && aimAngle < 125)
         {
             animator.SetBool("isAiming120", true);
             currnetAngleType = 120;
         }
-        if (aimAngle >= 120)
+        if (aimAngle >= 125)
         {
             animator.SetBool("isAiming130", true);
             currnetAngleType = 130;
@@ -469,7 +463,6 @@ public class PlayerAttack : MonoBehaviour
                                           mousePosition.y - arrowDirection.transform.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
 
         arrowDirection.transform.right = direction;  //화살의 x축 방향을 '바라볼 방향'으로 정한다
-        arrowDirection.transform.position = new Vector2(player.transform.position.x, player.transform.position.y); // 플레이어 목 근처에서 화살이 나가게  y값 조정
     }
 
     private void ControlPower()

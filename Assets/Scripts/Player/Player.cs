@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
         Invoke("HideBulletExplosion", 0.5f);
         SoundManager.instance.PlaySound(Sounds.PLAYER_HIT);
 
+        animator.enabled = true;
         Invoke("StartHitAnimation", 0.3f);
 
         if (onPlayerDead != null)
