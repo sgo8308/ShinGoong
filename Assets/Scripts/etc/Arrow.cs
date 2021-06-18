@@ -20,6 +20,7 @@ public class Arrow : MonoBehaviour
     PlayerSkill playerSkill;
     CameraShake cameraShake;
 
+    private bool isSoundPlayed;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -53,7 +54,7 @@ public class Arrow : MonoBehaviour
         if (!isZeroGravityArrow()) //곡사가 충돌할때 화살이 박힌다.
         {
             if (playerSkill.IsSkillOn()) {
-                ShowSkillEffect();
+                Invoke("ShowSkillEffect", 0.2f);
                 Invoke("Destroy", 2);
             }
 
@@ -84,6 +85,8 @@ public class Arrow : MonoBehaviour
             RegisterDetachEvent(monster);
             gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
             cameraShake.StartShake();
+
+            PlaySound(Sounds.ARROW_PIERCE_MONSTER);
         }
     }
     
@@ -96,6 +99,8 @@ public class Arrow : MonoBehaviour
             RegisterDetachEvent(monster);
             gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
             cameraShake.StartShake();
+
+            PlaySound(Sounds.ARROW_PIERCE_MONSTER);
         }
 
         if (collision.gameObject.name == "Player" && 
@@ -106,6 +111,19 @@ public class Arrow : MonoBehaviour
             Inventory.instance.AddArrow();
             MainUI.instance.UpdateArrowCountUI();
         }
+
+        if (collision.tag == "Platform")
+            PlaySound(Sounds.ARROW_PIERCE_PLATFORM);
+    }
+
+    private void PlaySound(Sounds sound)
+    {
+        if (isSoundPlayed)
+            return;
+
+        SoundManager.instance.PlaySound(sound);
+
+        isSoundPlayed = true;
     }
 
     private void Stop()

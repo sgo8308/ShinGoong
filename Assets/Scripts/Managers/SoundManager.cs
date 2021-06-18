@@ -9,7 +9,8 @@ public enum Sounds
     DOG_MONSTER_DIE,
     OCTOPUS_MOSTER_DIE,
     BOSS_MONSTER_DIE,
-    ARROW_PIERCE,
+    ARROW_PIERCE_PLATFORM,
+    ARROW_PIERCE_MONSTER,
     SKILL_BOMB_SHOT
 }
 public class SoundManager : MonoBehaviour
@@ -27,10 +28,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip dogMonsterDie;
     public AudioClip octopusMonsterDie;
     public AudioClip bossMonsterDie;
-    public AudioClip arrowPierce;
+    public AudioClip arrowPiercePlatform;
+    public AudioClip arrowPierceMonster;
     public AudioClip bombShot;
-
-
 
     private void Awake()
     {
@@ -65,7 +65,7 @@ public class SoundManager : MonoBehaviour
             case Sounds.PLAYER_ACQUIRE_COIN:
                 break;
             case Sounds.PLAYER_HIT:
-                effect.volume = 0.1f;
+                effect.volume = 0.08f;
                 effect.PlayOneShot(playerHit);
                 break;
             case Sounds.DOG_MONSTER_DIE:
@@ -74,7 +74,14 @@ public class SoundManager : MonoBehaviour
                 break;
             case Sounds.BOSS_MONSTER_DIE:
                 break;
-            case Sounds.ARROW_PIERCE:
+            case Sounds.ARROW_PIERCE_PLATFORM:
+                effect.volume = 0.3f;
+                effect.PlayOneShot(arrowPiercePlatform);
+                Debug.Log("사운드 재생 ");
+                break;
+            case Sounds.ARROW_PIERCE_MONSTER:
+                effect.volume = 0.1f;
+                effect.PlayOneShot(arrowPierceMonster);
                 break;
             case Sounds.SKILL_BOMB_SHOT:
                 break;

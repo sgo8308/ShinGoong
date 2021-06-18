@@ -4547,7 +4547,8 @@ MonoBehaviour:
   dogMonsterDie: {fileID: 0}
   octopusMonsterDie: {fileID: 0}
   bossMonsterDie: {fileID: 0}
-  arrowPierce: {fileID: 0}
+  arrowPiercePlatform: {fileID: 8300000, guid: 94d242a67d5f6bd45871ac66d3685063, type: 3}
+  arrowPierceMonster: {fileID: 8300000, guid: 6e43303bef6161f498ed4b8e6879c567, type: 3}
   bombShot: {fileID: 0}
 --- !u!1 &411243852
 GameObject:
@@ -14602,7 +14603,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.599
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -15356,7 +15357,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
