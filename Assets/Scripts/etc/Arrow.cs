@@ -118,11 +118,18 @@ public class Arrow : MonoBehaviour
 
     private void PlaySound(Sounds sound)
     {
-        if (isSoundPlayed)
+
+        if (isSoundPlayed) 
+        {
+            if (sound == Sounds.ARROW_PIERCE_MONSTER)
+            {
+                SoundManager.instance.PlaySound(sound);
+                isSoundPlayed = true;
+            }
             return;
+        }
 
         SoundManager.instance.PlaySound(sound);
-
         isSoundPlayed = true;
     }
 

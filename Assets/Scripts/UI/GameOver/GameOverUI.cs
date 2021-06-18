@@ -111,6 +111,8 @@ public class GameOverUI : UIOpener
             expBar.fillAmount = 0;
             UpdateLevelUI();
             timesExpBarIsFilled++;
+
+            SoundManager.instance.PlaySound(Sounds.PLAYER_LEVEL_UP);
         }
 
         if (timesExpBarIsFilled == timesExpBarToBeFilled)
@@ -125,7 +127,7 @@ public class GameOverUI : UIOpener
 
         expBar.fillAmount += 0.02f;
 
-        Invoke("FillExpBar", 0.02f);
+        Invoke("FillExpBar", 0.04f);
     }
 
     private void SetExpFillInfo()

@@ -4241,6 +4241,10 @@ MonoBehaviour:
   playerSell: {fileID: 8300000, guid: b857d30700630734e95cf65de8df7ec8, type: 3}
   playerEquip: {fileID: 8300000, guid: cd9348dce943ffe41bd0969c008f5cf5, type: 3}
   playerUnEquip: {fileID: 8300000, guid: 49fe7a82bd2a48e46a20f2b002913d1c, type: 3}
+  playerLevelUp: {fileID: 8300000, guid: 97b47cd6cefda7d4da1ee4fcdd76461b, type: 3}
+  readyArrow: {fileID: 8300000, guid: 5dad4d93bd43bfa46b3188a865c37efc, type: 3}
+  shootArrow: {fileID: 8300000, guid: 53add283033e3734090c0f9afb5156f5, type: 3}
+  acquireArrow: {fileID: 0}
   acquireCoin: {fileID: 8300000, guid: 086a9a42e4298df419a723308396b1e4, type: 3}
   openInventory: {fileID: 8300000, guid: 921c2860b16165c418bdbdb987fa1611, type: 3}
   playerHit: {fileID: 8300000, guid: 6fe7e4cdc904a1d4984fc538d9427a2a, type: 3}
@@ -5324,7 +5328,7 @@ PrefabInstance:
     - target: {fileID: 4281434763448516065, guid: b19382ba96998e74d8711031101ad389,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.41226
+      value: -8.07
       objectReference: {fileID: 0}
     - target: {fileID: 4281434763448516065, guid: b19382ba96998e74d8711031101ad389,
         type: 3}
@@ -14244,7 +14248,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

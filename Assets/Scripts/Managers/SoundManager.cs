@@ -11,6 +11,10 @@ public enum Sounds
     PLAYER_UNEQUIP,
     PLAYER_HIT,
     PLAYER_OPEN_INVENTORY,
+    PLAYER_LEVEL_UP,
+    PLAYER_READY_ARROW,
+    PLAYER_SHOOT_ARROW,
+    PLAYER_ACQUIRE_ARROW,
     DOG_MONSTER_DIE,
     OCTOPUS_MOSTER_DIE,
     BOSS_MONSTER_DIE,
@@ -32,6 +36,10 @@ public class SoundManager : MonoBehaviour
     public AudioClip playerSell;
     public AudioClip playerEquip;
     public AudioClip playerUnEquip;
+    public AudioClip playerLevelUp;
+    public AudioClip readyArrow;
+    public AudioClip shootArrow;
+    public AudioClip acquireArrow;
     public AudioClip acquireCoin;
     public AudioClip openInventory;
     public AudioClip playerHit;
@@ -70,7 +78,7 @@ public class SoundManager : MonoBehaviour
         {
             case Sounds.PLAYER_JUMP:
                 //effect.volume = 0.3f
-                effect.PlayOneShot(playerJump);
+                effect.PlayOneShot(playerJump, 0.3f);
                 break;
 
             case Sounds.PLAYER_LAND:
@@ -79,38 +87,51 @@ public class SoundManager : MonoBehaviour
                 break;
 
             case Sounds.PLAYER_ACQUIRE_COIN:
-                //effect.volume = 0.3f
-                effect.PlayOneShot(acquireCoin);
+                effect.PlayOneShot(acquireCoin, 1.3f);
                 break;
 
             case Sounds.PLAYER_BUY:
-                effect.volume = 0.6f;
-                effect.PlayOneShot(playerBuy);
+                effect.PlayOneShot(playerBuy, 0.6f);
                 break;
 
             case Sounds.PLAYER_SELL:
-                effect.volume = 0.6f;
-                effect.PlayOneShot(playerSell);
+                effect.PlayOneShot(playerSell, 0.6f);
                 break;
 
             case Sounds.PLAYER_EQUIP:
-                effect.volume = 0.6f;
-                effect.PlayOneShot(playerEquip);
+                effect.PlayOneShot(playerEquip, 0.6f);
                 break;
 
             case Sounds.PLAYER_UNEQUIP:
-                effect.volume = 0.6f;
-                effect.PlayOneShot(playerUnEquip);
+                effect.PlayOneShot(playerUnEquip, 0.6f);
                 break;
 
             case Sounds.PLAYER_HIT:
-                effect.volume = 0.08f;
-                effect.PlayOneShot(playerHit);
+                effect.PlayOneShot(playerHit, 0.08f);
                 break;
 
             case Sounds.PLAYER_OPEN_INVENTORY:
+                effect.PlayOneShot(openInventory, 0.6f);
+                break;
+
+            case Sounds.PLAYER_LEVEL_UP:
+                effect.PlayOneShot(playerLevelUp, 1.5f);
+                break;
+
+            case Sounds.PLAYER_READY_ARROW:
+                effect.volume = 1f;
+                effect.clip = readyArrow;
+                effect.Play();
+                break;
+
+            case Sounds.PLAYER_SHOOT_ARROW:
+                effect.Stop();
+                effect.PlayOneShot(shootArrow, 0.5f);
+                break;
+
+            case Sounds.PLAYER_ACQUIRE_ARROW:
                 effect.volume = 0.6f;
-                effect.PlayOneShot(openInventory);
+                effect.PlayOneShot(acquireArrow);
                 break;
 
             case Sounds.DOG_MONSTER_DIE:
@@ -128,13 +149,11 @@ public class SoundManager : MonoBehaviour
                 break;
 
             case Sounds.ARROW_PIERCE_PLATFORM:
-                effect.volume = 0.3f;
-                effect.PlayOneShot(arrowPiercePlatform);
+                effect.PlayOneShot(arrowPiercePlatform, 0.5f);
                 break;
 
             case Sounds.ARROW_PIERCE_MONSTER:
-                effect.volume = 0.1f;
-                effect.PlayOneShot(arrowPierceMonster);
+                effect.PlayOneShot(arrowPierceMonster, 0.5f);
                 break;
 
             case Sounds.SKILL_BOMB_SHOT:
