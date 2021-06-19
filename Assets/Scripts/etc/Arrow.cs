@@ -55,7 +55,7 @@ public class Arrow : MonoBehaviour
         {
             if (playerSkill.IsSkillOn()) {
                 Invoke("ShowSkillEffect", 0.2f);
-                Invoke("Destroy", 2);
+                Destroy(this.gameObject, 2f);
             }
 
             Stop();
@@ -180,10 +180,5 @@ public class Arrow : MonoBehaviour
         transform.parent = null;
         gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-    }
-
-    private void Destroy()
-    {
-        Destroy(gameObject);
     }
 }

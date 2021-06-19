@@ -58,16 +58,18 @@ public class Player : MonoBehaviour
 
         //bulletExplosion.SetActive(true);
         //Invoke("HideBulletExplosion", 0.5f);
-        //SoundManager.instance.PlaySound(Sounds.PLAYER_HIT);
+        //SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
 
         //animator.enabled = true;
-        //Invoke("StartHitAnimation", 0.3f);
+        //Invoke("StartHitAnimation", 0.1f);
 
         //if (onPlayerDead != null)
         //    onPlayerDead.Invoke();
 
         //playerMove.SetCanMove(false);
         //playerAttack.SetCanShoot(false);
+
+        //Time.timeScale = 0.4f;
     }
 
     void HideBulletExplosion()

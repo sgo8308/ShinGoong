@@ -312,16 +312,6 @@ public class MonsterBoss : Monster
         radar.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
         speed = 2;
     }
-
-    public override void Dead()
-    {
-        base.Dead();
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        Instantiate(coin, this.transform.position, transform.rotation);
-        CancelInvoke();
-        Invoke("Destroy", 1);
-
-    }
     #endregion
 
     /// <summary>

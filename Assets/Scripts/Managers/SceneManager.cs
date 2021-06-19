@@ -34,6 +34,9 @@ public class SceneManager : MonoBehaviour
     public void GoTo(string sceneName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+
+        SoundManager.instance.MutePlayerSound();
+        SoundManager.instance.StopNonPlayerSound();
     }
 
     void InitializeArrowCount(Scene scene, LoadSceneMode sceneMode)
