@@ -45,7 +45,6 @@ public class StageManager : MonoBehaviour
     {
         TPStashEvent myStashEvent = new TPStashEvent();
 
-
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += ResetStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStage;
@@ -156,7 +155,6 @@ public class StageManager : MonoBehaviour
     #region TentuPlayMethod
     void PlayStage()
     {
-        TPStashEvent.PlayStage("");
     }
 
 
