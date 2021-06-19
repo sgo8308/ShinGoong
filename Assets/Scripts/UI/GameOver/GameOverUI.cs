@@ -211,8 +211,6 @@ public class GameOverUI : UIOpener
         gameOverPanel.SetActive(false);
         canFillExpBar = true;
         Time.timeScale = 1;
-
-        SoundManager.instance.StopNonPlayerSound();
     }
 
     private void GoToShelterScene()

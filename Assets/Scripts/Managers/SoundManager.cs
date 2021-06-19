@@ -165,10 +165,6 @@ public class SoundManager : MonoBehaviour
                 nonPlayerSound.PlayOneShot(openInventory, 0.6f);
                 break;
 
-            case NonPlayerSounds.CLICK:
-                nonPlayerSound.PlayOneShot(openInventory, 0.6f);
-                break;
-
             case NonPlayerSounds.LEVEL_UP:
                 nonPlayerSound.PlayOneShot(playerLevelUp, 1.5f);
                 break;
@@ -189,7 +185,7 @@ public class SoundManager : MonoBehaviour
                 nonPlayerSound.PlayOneShot(bombShot, 0.7f);
                 break;
             case NonPlayerSounds.TELEPORT:
-                nonPlayerSound.PlayOneShot(teleport, 0.7f);
+                nonPlayerSound.PlayOneShot(teleport, 0.4f);
                 break;
 
             default:
@@ -262,5 +258,10 @@ public class SoundManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void PlayClickSound()
+    {
+        nonPlayerSound.PlayOneShot(click, 1.0f);
     }
 }
