@@ -27,7 +27,7 @@ public class InventoryOpener : UIOpener
         if (mainMenuPanel.activeSelf)
             return;
 
-        if (Input.GetKeyDown(KeyCode.I) && CanOpen())
+        if (Input.GetKeyDown(KeyCode.V) && CanOpen())
         {
             if (inventoryPanel.activeSelf)
                 Close();

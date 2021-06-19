@@ -263,7 +263,7 @@ public class MonsterBoss : Monster
         Invoke("GetPeaceful", 7);
     }
 
-    #region When Monster get hit by arrow
+    #region When Monster gets hit
     protected override void OnHit(float damage)
     {
         isHit = true;

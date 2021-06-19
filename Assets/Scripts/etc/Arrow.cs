@@ -5,35 +5,33 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     public float damage;
+    private int arrowColMaxCount = 4;
 
     private const float ORIGINAL_DAMAGE = 70;
-    private const float BOMB_SHOT_DAMAGE = 30;
     private const int LAYER_NUM_ARROW_ON_PLATFORM = 14;
     private const int LAYER_NUM_ARROW_ON_MONSTER = 17;
+
     private bool arrowState = true;
+    private bool isSoundPlayed;
+    private bool isSkillPlayed= false;
+
     private Vector2 zeroVelocity;
     private List<Vector2> arrowColList = new List<Vector2>();
-    private int arrowColMaxCount = 4;
+    private PlayerSkill playerSkill;
+    private CameraShake cameraShake;
+    private GameObject bombShotEffect;
     
-    Animator anim;
 
-    PlayerSkill playerSkill;
-    CameraShake cameraShake;
-
-    private bool isSoundPlayed;
     private void Awake()
     {
-        anim = GetComponent<Animator>();
         playerSkill = GameObject.Find("Player").GetComponent<PlayerSkill>();
         cameraShake = Camera.main.transform.Find("CameraShake").GetComponent<CameraShake>();
+        bombShotEffect = transform.Find("BombShotEffect").gameObject;
     }
 
     void Start()
     {
         damage = ORIGINAL_DAMAGE;
-
-        if (playerSkill.IsSkillOn())
-            damage += BOMB_SHOT_DAMAGE;
 
         zeroVelocity = new Vector2(0, 0);
     }
@@ -54,8 +52,8 @@ public class Arrow : MonoBehaviour
         if (!isZeroGravityArrow()) //곡사가 충돌할때 화살이 박힌다.
         {
             if (playerSkill.IsSkillOn()) {
-                Invoke("ShowSkillEffect", 0.2f);
-                Destroy(this.gameObject, 2f);
+                Invoke("PlaySkillEffect", 0.2f);
+                Destroy(this.gameObject, 0.2f);
             }
 
             Stop();
@@ -94,6 +92,12 @@ public class Arrow : MonoBehaviour
     {
         if (collision.tag == "MonsterBody")
         {
+            if (playerSkill.IsSkillOn())
+            {
+                Invoke("PlaySkillEffect", 0.2f);
+                Destroy(this.gameObject, 0.2f);
+            }
+
             Stop();
             Monster monster = collision.transform.parent.GetComponent<Monster>();
             RegisterDetachEvent(monster);
@@ -141,17 +145,27 @@ public class Arrow : MonoBehaviour
         arrowState = false; //화살촉 방향 변화를 멈추게 한다.
     }
 
-    private void ShowSkillEffect()
+    private void PlaySkillEffect()
     {
+        if (isSkillPlayed)
+            return;
+
         switch (playerSkill.GetSkillName())
         {
             case "Bomb Shot":
-                anim.SetBool("isExploding", true);
+                bombShotEffect.transform.parent = null;
+                bombShotEffect.SetActive(true);
+
+                Destroy(bombShotEffect.gameObject, 1f);
+
+                SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.SKILL_BOMB_SHOT);
                 break;
 
             default:
                 break;
         }
+
+        isSkillPlayed = true;
     }
 
     private void Reflect(Collision2D collision)

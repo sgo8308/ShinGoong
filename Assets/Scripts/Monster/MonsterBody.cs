@@ -19,25 +19,50 @@ public class MonsterBody : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Arrow" && gameObject.tag == "MonsterBody")
+        if ((collision.collider.tag == "Arrow" || collision.collider.tag == "Skill") && gameObject.tag == "MonsterBody")
         {
-            collision.gameObject.transform.parent = this.transform.parent.transform;
+            if (collision.collider.tag == "Arrow")
+            {
+                collision.gameObject.transform.parent = this.transform.parent.transform;
 
-            Arrow arrow = collision.gameObject.GetComponent<Arrow>();
+                Arrow arrow = collision.gameObject.GetComponent<Arrow>();
 
-            onHit.Invoke(arrow.damage);
+                onHit.Invoke(arrow.damage);
+            }
+
+            if (collision.collider.tag == "Skill")
+            {
+                Debug.Log("콜리전엔터 스킬 몬스터 들어옴");
+
+                Skill skill = collision.transform.GetComponent<Skill>();
+
+                onHit.Invoke(skill.damage);
+            }
+
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Arrow" && gameObject.tag == "MonsterBody")
+        if ((collision.tag == "Arrow" || collision.tag == "Skill") && gameObject.tag == "MonsterBody")
         {
-            collision.gameObject.transform.parent = this.transform.parent.transform;
+            if (collision.tag == "Arrow")
+            {
+                collision.gameObject.transform.parent = this.transform.parent.transform;
 
-            Arrow arrow = collision.gameObject.GetComponent<Arrow>();
+                Arrow arrow = collision.gameObject.GetComponent<Arrow>();
 
-            onHit.Invoke(arrow.damage);
+                onHit.Invoke(arrow.damage);
+            }
+
+            if (collision.tag == "Skill")
+            {
+                Debug.Log("트리거엔터 스킬 몬스터 들어옴");
+
+                Skill skill = collision.transform.GetComponent<Skill>();
+
+                onHit.Invoke(skill.damage);
+            }
         }
     }
 }

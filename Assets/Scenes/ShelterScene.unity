@@ -4235,6 +4235,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSound: {fileID: 1586965241}
+  shelterSceneMusic: {fileID: 8300000, guid: 2089ad25883535149a40ac45b6865a1b, type: 3}
+  stage1SceneMusic: {fileID: 8300000, guid: bcc2cf5d1d9836c4ba7bd975182edbc4, type: 3}
+  bossSceneMusic: {fileID: 0}
   playerRun: {fileID: 8300000, guid: 92578fee64baa114fa457dd3829bd8d5, type: 3}
   playerJump: {fileID: 8300000, guid: f3d606756bb5f604d8278e788210c0b4, type: 3}
   playerLand: {fileID: 8300000, guid: 979be2c791ffb1e40a177106cc6cca8b, type: 3}
@@ -4252,7 +4255,7 @@ MonoBehaviour:
   monsterDie: {fileID: 8300000, guid: 7c50ece60800bc845b390997cd5ced4d, type: 3}
   arrowPiercePlatform: {fileID: 8300000, guid: 94d242a67d5f6bd45871ac66d3685063, type: 3}
   arrowPierceMonster: {fileID: 8300000, guid: adf485bacd96fb24cb1f7800bc591d57, type: 3}
-  bombShot: {fileID: 0}
+  bombShot: {fileID: 8300000, guid: 0f69bcc4f256e6d4f83508a6d567819f, type: 3}
   shelterWindSound: {fileID: 8300000, guid: 2fe472d2a8f8e404e8a865a014cccaa8, type: 3}
   stageWindSound: {fileID: 8300000, guid: ac29d6d21548c44419e7d4b7b5579381, type: 3}
 --- !u!1 &411243852
@@ -5144,7 +5147,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 785207
+    m_Bits: 1833783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6165,7 +6168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57a3d5b376402643847b7c698480220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 292545706614394705, guid: 97814c36e1f23d84c8d9393fb5997ec3,
+  arrowPrefab: {fileID: 8642793213335211314, guid: bd3e385931c56364a91ca1e91f46cc46,
     type: 3}
   ropeArrowPrefab: {fileID: 5602112689742771599, guid: 807f24dcdc912a84b9cbb51a55c46c2a,
     type: 3}

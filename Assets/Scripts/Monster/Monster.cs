@@ -75,12 +75,12 @@ public abstract class Monster : MonoBehaviour
         hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 180, 0);
     }
 
-    #region RadarDetection
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (col.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             OnDetectPlayer();
+            return;
         }
     }
 
@@ -90,7 +90,6 @@ public abstract class Monster : MonoBehaviour
 
     abstract public void GetPeaceful();
 
-    #endregion
     void AddHitEvent()
     {
         MonsterBody monsterBody = this.transform.Find("Body").GetComponent<MonsterBody>();
@@ -111,7 +110,12 @@ public abstract class Monster : MonoBehaviour
 
     protected void ReduceHp(float damage)
     {
-        hp -= damage - defensivePower;
+        float realDamage = damage - defensivePower;
+
+        if (realDamage <= 0)
+            realDamage = 10;
+
+        hp -= realDamage;
         anim.SetFloat("Hp", hp);
 
         if ((hp / 100) <= 0)

@@ -37,6 +37,10 @@ public class SoundManager : MonoBehaviour
     private AudioSource nonPlayerSound;
     private AudioSource windSound;
 
+    public AudioClip shelterSceneMusic;
+    public AudioClip stage1SceneMusic;
+    public AudioClip bossSceneMusic;
+
     public AudioClip playerRun;
     public AudioClip playerJump;
     public AudioClip playerLand;
@@ -47,6 +51,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip playerLevelUp;
     public AudioClip readyArrow;
     public AudioClip shootArrow;
+
     public AudioClip acquireArrow;
     public AudioClip acquireCoin;
     public AudioClip openInventory;
@@ -73,7 +78,8 @@ public class SoundManager : MonoBehaviour
     {
         Initialize();
 
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartWindSound;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += PlayWindSound;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += PlayBGM;
     }
 
     void Initialize()
@@ -172,13 +178,35 @@ public class SoundManager : MonoBehaviour
                 break;
 
             case NonPlayerSounds.SKILL_BOMB_SHOT:
-                //effect.volume = 0.3f
-                nonPlayerSound.PlayOneShot(bombShot);
+                nonPlayerSound.PlayOneShot(bombShot, 0.7f);
                 break;
 
             default:
                 break;
         }
+    }
+
+    public void PlayBGM(Scene scene, LoadSceneMode mode)
+    {
+        switch (scene.name)
+        {
+            case "ShelterScene":
+                bgm.clip = shelterSceneMusic;
+                break;
+
+            case "Stage1Scene":
+                bgm.clip = stage1SceneMusic;
+                break;
+
+            case "BossScene":
+                bgm.clip = bossSceneMusic;
+                
+                break;
+            default:
+                break;
+        }
+
+        bgm.Play();
     }
 
     public void StopPlayerSound()
@@ -201,7 +229,7 @@ public class SoundManager : MonoBehaviour
         playerSound.mute = false;
     }
 
-    public void StartWindSound(Scene scene, LoadSceneMode mode)
+    public void PlayWindSound(Scene scene, LoadSceneMode mode)
     {
         switch (scene.name)
         {
