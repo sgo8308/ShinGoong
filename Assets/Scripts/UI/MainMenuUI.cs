@@ -9,6 +9,8 @@ public class MainMenuUI : UIOpener
 
     public GameObject gameOverPanel;
 
+    public GameObject helpPanel;
+
     GameObject mainMenuPanel;
 
     GameObject exitStageButton;
@@ -28,6 +30,8 @@ public class MainMenuUI : UIOpener
         base.Start();
 
         mainMenuPanel = transform.Find("MainMenuPanel").gameObject;
+
+        helpPanel = transform.Find("HelpPanel").gameObject;
 
         exitStageButton = transform.Find("MainMenuPanel")
                                     .Find("ExitStageButtonHolder").gameObject;
@@ -72,6 +76,7 @@ public class MainMenuUI : UIOpener
     {
         base.Close();
         mainMenuPanel.SetActive(false);
+        helpPanel.SetActive(false);
         Time.timeScale = 1;
     }
 }
