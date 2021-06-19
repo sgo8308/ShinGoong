@@ -14,6 +14,7 @@ public class Arrow : MonoBehaviour
     private bool arrowState = true;
     private bool isSoundPlayed;
     private bool isSkillPlayed= false;
+    private bool isUsed= false;
 
     private Vector2 zeroVelocity;
     private List<Vector2> arrowColList = new List<Vector2>();
@@ -46,6 +47,9 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (isUsed)
+            return;
+
         if (collision.gameObject.tag != "MonsterBody" && collision.gameObject.tag != "Platform")
             return;
 
@@ -90,6 +94,19 @@ public class Arrow : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.name == "Player" &&
+            (gameObject.layer == LAYER_NUM_ARROW_ON_PLATFORM || gameObject.layer == LAYER_NUM_ARROW_ON_MONSTER))
+        {
+            Destroy(this.gameObject);
+
+            Inventory.instance.AddArrow();
+            MainUI.instance.UpdateArrowCountUI();
+            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ACQUIRE_ARROW);
+        }
+
+        if (isUsed)
+            return;
+
         if (collision.tag == "MonsterBody")
         {
             if (playerSkill.IsSkillOn())
@@ -107,23 +124,12 @@ public class Arrow : MonoBehaviour
             PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }
 
-        if (collision.gameObject.name == "Player" && 
-            (gameObject.layer == LAYER_NUM_ARROW_ON_PLATFORM || gameObject.layer == LAYER_NUM_ARROW_ON_MONSTER))
-        {
-            Destroy(this.gameObject);
-
-            Inventory.instance.AddArrow();
-            MainUI.instance.UpdateArrowCountUI();
-            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ACQUIRE_ARROW);
-        }
-
         if (collision.tag == "Platform")
             PlaySound(NonPlayerSounds.ARROW_PIERCE_PLATFORM);
     }
 
     private void PlaySound(NonPlayerSounds sound)
     {
-
         if (isSoundPlayed) 
         {
             if (sound == NonPlayerSounds.ARROW_PIERCE_MONSTER)
@@ -143,6 +149,7 @@ public class Arrow : MonoBehaviour
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; //오브젝트를 움직이지 않게 한다.
         GetComponent<Rigidbody2D>().velocity = zeroVelocity;
         arrowState = false; //화살촉 방향 변화를 멈추게 한다.
+        isUsed = true;
     }
 
     private void PlaySkillEffect()

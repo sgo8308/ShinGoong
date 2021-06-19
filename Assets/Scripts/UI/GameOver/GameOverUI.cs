@@ -18,10 +18,11 @@ public class GameOverUI : UIOpener
 
     TextMeshProUGUI playTime;
     TextMeshProUGUI level;
+    TextMeshProUGUI coin;
     Image expBar;
     Button continueButton;
     Button exitButton;
-
+    Player player;
     private void Awake()
     {
         var obj = FindObjectsOfType<GameOverUI>();
@@ -36,22 +37,11 @@ public class GameOverUI : UIOpener
     {
         base.Start();
 
-        Player player = GameObject.Find("Player").GetComponent<Player>();
+        player = GameObject.Find("Player").GetComponent<Player>();
 
-        player.onPlayerDead += SetPlayTime;
-        player.onPlayerDead += SetExpFillInfo;
-        player.onPlayerDead += DelayedOpen;
-        player.onPlayerDead += InvokeFillExpBar;
-
-        StageManager.instance.onStageClear += SetPlayTime;
-        StageManager.instance.onStageClear += SetExpFillInfo;
-        StageManager.instance.onStageClear += DelayedOpen;
-        StageManager.instance.onStageClear += InvokeFillExpBar;
-
-        exitStageButtonInMainMenu.onClick.AddListener(SetPlayTime);
-        exitStageButtonInMainMenu.onClick.AddListener(SetExpFillInfo);
-        exitStageButtonInMainMenu.onClick.AddListener(Open);
-        exitStageButtonInMainMenu.onClick.AddListener(InvokeFillExpBar);
+        OnPlayerDead();
+        OnStageClear();
+        OnClickExitStage();
 
         playTime = transform.Find("GameOverPanel")
                              .Find("PlayTime")
@@ -61,6 +51,11 @@ public class GameOverUI : UIOpener
         level = transform.Find("GameOverPanel")
                           .Find("Level")
                           .Find("LevelText")
+                          .GetComponent<TextMeshProUGUI>();
+
+        coin = transform.Find("GameOverPanel")
+                          .Find("Coin")
+                          .Find("CoinText")
                           .GetComponent<TextMeshProUGUI>();
 
         expBar = transform.Find("GameOverPanel")
@@ -95,6 +90,33 @@ public class GameOverUI : UIOpener
     public int timesExpBarIsFilled;
     public float expBarPercentToBeSet;
     public bool canFillExpBar = false;
+
+    private void OnPlayerDead()
+    {
+        player.onPlayerDead += SetPlayTime;
+        player.onPlayerDead += SetExpFillInfo;
+        player.onPlayerDead += DelayedOpen;
+        player.onPlayerDead += InvokeFillExpBar;
+        player.onPlayerDead += SetCoinUI;
+    }
+
+    private void OnStageClear()
+    {
+        StageManager.instance.onStageClear += SetPlayTime;
+        StageManager.instance.onStageClear += SetExpFillInfo;
+        StageManager.instance.onStageClear += DelayedOpen;
+        StageManager.instance.onStageClear += InvokeFillExpBar;
+        StageManager.instance.onStageClear += SetCoinUI;
+    }
+
+    private void OnClickExitStage()
+    {
+        exitStageButtonInMainMenu.onClick.AddListener(SetPlayTime);
+        exitStageButtonInMainMenu.onClick.AddListener(SetExpFillInfo);
+        exitStageButtonInMainMenu.onClick.AddListener(Open);
+        exitStageButtonInMainMenu.onClick.AddListener(InvokeFillExpBar);
+        exitStageButtonInMainMenu.onClick.AddListener(SetCoinUI);
+    }
 
     private void InvokeFillExpBar() 
     {
@@ -150,6 +172,11 @@ public class GameOverUI : UIOpener
         this.level.text = lev.ToString();
     }
 
+    private void SetCoinUI()
+    {
+        coin.text = Inventory.instance.GetCoinCountPerStage().ToString();
+    }
+
     private void DelayedOpen()
     {
         Invoke("Open", 1f);
@@ -161,16 +188,21 @@ public class GameOverUI : UIOpener
 
         if (StageManager.instance.stageState == StageState.CLEAR)
         {
+            if (Player.isDead)
+                return;
+
             Title.text = "STAGE CLEAR";
             continueButton.gameObject.SetActive(true);
+            gameOverPanel.SetActive(true);
+            canFillExpBar = true;
         }
         else
         {
             Title.text = "GAME OVER";
             continueButton.gameObject.SetActive(false);
+            gameOverPanel.SetActive(true);
+            canFillExpBar = true;
         }
-        gameOverPanel.SetActive(true);
-        canFillExpBar = true;
     }
 
     protected override void Close()

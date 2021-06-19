@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
-    private bool isDead; 
+    public static bool isDead; 
 
     void Start()
     {
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
 
     void Dead()
     {
-        if (isDead)
+        if (isDead || StageManager.instance.stageState == StageState.CLEAR)
             return;
 
         isDead = true;

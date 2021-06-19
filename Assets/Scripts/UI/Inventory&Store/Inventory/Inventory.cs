@@ -79,6 +79,7 @@ public class Inventory : MonoBehaviour
     {
         info.AddCoinCount(coinCount);
         ui.UpdateCoinUI();
+        info.AddCoinCountPerStage(coinCount);
     }
 
     public void SubtractCoin(int coinCount)
@@ -110,5 +111,10 @@ public class Inventory : MonoBehaviour
     public void InitializeArrowCount(int arrowCount)
     {
         info.InitializeArrowCount(arrowCount);
+    }
+
+    public int GetCoinCountPerStage()
+    {
+        return info.coinCountPerStage;
     }
 }

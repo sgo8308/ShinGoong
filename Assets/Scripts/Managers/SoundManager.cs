@@ -22,10 +22,12 @@ public enum NonPlayerSounds
     ACQUIRE_ARROW,
     OPEN_INVENTORY,
     LEVEL_UP,
+    CLICK,
     MONSTER_DIE,
     ARROW_PIERCE_PLATFORM,
     ARROW_PIERCE_MONSTER,
-    SKILL_BOMB_SHOT
+    SKILL_BOMB_SHOT,
+    TELEPORT
 }
 
 public class SoundManager : MonoBehaviour
@@ -55,6 +57,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip acquireArrow;
     public AudioClip acquireCoin;
     public AudioClip openInventory;
+    public AudioClip click;
     public AudioClip playerHit;
     public AudioClip monsterDie;
     public AudioClip arrowPiercePlatform;
@@ -62,6 +65,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip bombShot;
     public AudioClip shelterWindSound;
     public AudioClip stageWindSound;
+    public AudioClip teleport;
 
     private void Awake()
     {
@@ -161,6 +165,10 @@ public class SoundManager : MonoBehaviour
                 nonPlayerSound.PlayOneShot(openInventory, 0.6f);
                 break;
 
+            case NonPlayerSounds.CLICK:
+                nonPlayerSound.PlayOneShot(openInventory, 0.6f);
+                break;
+
             case NonPlayerSounds.LEVEL_UP:
                 nonPlayerSound.PlayOneShot(playerLevelUp, 1.5f);
                 break;
@@ -179,6 +187,9 @@ public class SoundManager : MonoBehaviour
 
             case NonPlayerSounds.SKILL_BOMB_SHOT:
                 nonPlayerSound.PlayOneShot(bombShot, 0.7f);
+                break;
+            case NonPlayerSounds.TELEPORT:
+                nonPlayerSound.PlayOneShot(teleport, 0.7f);
                 break;
 
             default:

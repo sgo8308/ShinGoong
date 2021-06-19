@@ -31,6 +31,9 @@ public class Teleport : MonoBehaviour
         if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.F) && !_isLoadingNextScene)
         {
             _isLoadingNextScene = true;
+
+            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.TELEPORT);
+
             SceneManager.instance.GoTo(sceneName);
         }
     }
