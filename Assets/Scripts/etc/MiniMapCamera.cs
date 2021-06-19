@@ -51,11 +51,11 @@ public class MiniMapCamera : MonoBehaviour
 
 
         shelterRenderTexture = new RenderTexture(684, 312, 0); ;
-        stage1RenderTexture = new RenderTexture(1092, 528, 0);
+        stage1RenderTexture = new RenderTexture(910, 440, 0);
         bossRenderTexture = new RenderTexture(732, 336, 0);
 
         shelterImageSize = new Vector2(684, 312);
-        stage1ImageSize = new Vector2(1092, 528);
+        stage1ImageSize = new Vector2(910, 440);
         bossImageSize = new Vector2(732, 336);
     }
 

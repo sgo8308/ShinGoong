@@ -10,6 +10,8 @@ public class PlayerMove : MonoBehaviour
     public bool isRopeMoving { get; private set; }
     public bool isJumping { get; private set; }
 
+    public int stopSoundCount;
+
     private PlayerInfo playerInfo;
     private Animator animator;
     private Rigidbody2D rigid;
@@ -62,15 +64,34 @@ public class PlayerMove : MonoBehaviour
         }
 
         if (Input.GetButtonDown("Jump") && !animator.GetBool("isJumping"))
+        {
             Jump();
+        }
 
         if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
             StopPlayer();
 
-        if (Mathf.Abs(rigid.velocity.x) < 0.4)
+        if (Mathf.Abs(rigid.velocity.x) < 0.4 || isJumping)
             animator.SetBool("isRunning", false);
         else
             animator.SetBool("isRunning", true);
+
+        if (animator.GetBool("isRunning"))
+        {
+            if (!SoundManager.instance.playerSound.isPlaying)
+            {
+                SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_RUN);
+                stopSoundCount = 0;
+            }
+        }
+        else
+        {
+            if (stopSoundCount == 0 && !isJumping)
+            {
+                SoundManager.instance.StopPlayerSound();
+                stopSoundCount = 1;
+            }
+        }
     }
 
     public void SetCanMove(bool value)
@@ -106,24 +127,32 @@ public class PlayerMove : MonoBehaviour
     private void Jump()
     {
         rigid.AddForce(Vector2.up * playerInfo.jumpPower, ForceMode2D.Impulse);
+        animator.SetBool("isRunning", false);
         animator.SetBool("isJumping", true);
         isJumping = true;
+
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_JUMP);
     }
 
     private void CheckIfJumping()
     {
         if (rigid.velocity.y < 0)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
         {
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+            Debug.DrawRay(rigid.position, 3 * Vector3.down, new Color(0, 1, 0));
 
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
 
             if (rayHit.collider != null)  //레이와 충돌한 오브젝트가 있다면
             {
-                if (rayHit.distance < 1.2f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
+                if (rayHit.distance < 2.2f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
                 {
                     animator.SetBool("isJumping", false);
+
+                    if (isJumping)
+                        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
+
                     isJumping = false;
+
                 }
             }
         }

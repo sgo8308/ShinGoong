@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InventoryInfo : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class InventoryInfo : MonoBehaviour
 
     public int arrowCount { get; private set; }
 
+    public int coinCountPerStage;
+
     private void Start()
     {
         slotInfos = slotHolder.GetComponentsInChildren<InventorySlotInfo>();
@@ -27,6 +30,8 @@ public class InventoryInfo : MonoBehaviour
         InitializeArrowCount(45);
 
         coinCount = 50000;
+
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeCoinCountPerStage;
     }
 
     public void AddItemInfo(Item item)
@@ -99,5 +104,15 @@ public class InventoryInfo : MonoBehaviour
         {
             slotInfos[i].AssignSlotNum(i);
         }
+    }
+
+    public void AddCoinCountPerStage(int coinCount)
+    {
+        coinCountPerStage += coinCount;
+    }
+
+    public void InitializeCoinCountPerStage(Scene scene, LoadSceneMode mode)
+    {
+        coinCountPerStage = 0;
     }
 }

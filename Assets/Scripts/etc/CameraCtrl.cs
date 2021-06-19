@@ -10,6 +10,11 @@ public class CameraCtrl : MonoBehaviour
     public int maxCamDistance;
     public int defaultCamDistance;
 
+    private void Start()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += RevertCameraView;
+    }
+
     void Update()
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ShelterScene")
@@ -29,5 +34,10 @@ public class CameraCtrl : MonoBehaviour
         {           
             GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = defaultCamDistance;
         }
+    }
+
+    private void RevertCameraView(Scene scene, LoadSceneMode mode)
+    {
+        GetComponent<CinemachineVirtualCamera>().m_Lens.OrthographicSize = defaultCamDistance;
     }
 }

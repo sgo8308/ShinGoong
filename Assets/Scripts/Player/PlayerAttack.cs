@@ -90,6 +90,7 @@ public class PlayerAttack : MonoBehaviour
             animator.SetBool("isReady", true);
             Invoke("ReadyToAim", 0.4f);  //0.7초 후에 준비자세에서 조준자세로 바꿔준다.
 
+            SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_READY_ARROW);
         }
 
         if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E))
@@ -110,8 +111,10 @@ public class PlayerAttack : MonoBehaviour
 
             playerMove.SetCanMove(true);
             Invoke("ShootArrow", 0.1f);
-
+            
             FireFinish();
+
+            SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
         }
     }
 
@@ -503,9 +506,9 @@ public class PlayerAttack : MonoBehaviour
 
     private void ImageSet()
     {
-        sprites2 = Resources.LoadAll<Sprite>("Sprites/FireAngle_anim/Angle2");
+        sprites2 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle2");
 
-        sprites3 = Resources.LoadAll<Sprite>("Sprites/FireAngle_anim/Angle3");
+        sprites3 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle3");
     }
 
 }

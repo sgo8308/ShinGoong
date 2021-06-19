@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
-    private bool isDead; 
+    public static bool isDead; 
 
     void Start()
     {
@@ -51,23 +51,25 @@ public class Player : MonoBehaviour
 
     void Dead()
     {
-        if (isDead)
+        if (isDead || StageManager.instance.stageState == StageState.CLEAR)
             return;
 
         isDead = true;
 
         bulletExplosion.SetActive(true);
         Invoke("HideBulletExplosion", 0.5f);
-        SoundManager.instance.PlaySound(Sounds.PLAYER_HIT);
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
 
         animator.enabled = true;
-        Invoke("StartHitAnimation", 0.3f);
+        Invoke("StartHitAnimation", 0.1f);
 
         if (onPlayerDead != null)
             onPlayerDead.Invoke();
 
         playerMove.SetCanMove(false);
         playerAttack.SetCanShoot(false);
+
+        Time.timeScale = 0.4f;
     }
 
     void HideBulletExplosion()
@@ -89,6 +91,8 @@ public class Player : MonoBehaviour
         MainUI.instance.UpdateCoinUI();
 
         Inventory.instance.UpdateCoin();
+
+        SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ACQUIRE_COIN);
     }
     
 
@@ -100,6 +104,8 @@ public class Player : MonoBehaviour
         Inventory.instance.UpdateCoin();
 
         Inventory.instance.RemoveItem(slot.GetSlotNum());
+
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SELL);
     }
 
     public void Buy(StoreSlot storeSlot)
@@ -109,8 +115,11 @@ public class Player : MonoBehaviour
         Inventory.instance.UpdateCoin();
 
         Inventory.instance.AddItem(storeSlot.item);
+
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_BUY);
+
     }
-    
+
     public void Equip(InventorySlot inventorySlot, InventoryEquipSlot equipSlot)
     {
         Item tempItem = inventorySlot.GetItem();
@@ -132,6 +141,8 @@ public class Player : MonoBehaviour
         }
 
         playerSkill.SetSkill(equipSlot.GetItem());
+        
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_EQUIP);
     }
 
     public void UnEquip(InventoryEquipSlot equipSlot)
@@ -142,6 +153,8 @@ public class Player : MonoBehaviour
             equipSlot.RemoveItem();
 
             playerSkill.UnSetSkill();
+
+            SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_UNEQUIP);
         }
     }
 

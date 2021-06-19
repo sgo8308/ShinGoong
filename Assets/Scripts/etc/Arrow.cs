@@ -5,34 +5,34 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     public float damage;
+    private int arrowColMaxCount = 4;
 
     private const float ORIGINAL_DAMAGE = 70;
-    private const float BOMB_SHOT_DAMAGE = 30;
     private const int LAYER_NUM_ARROW_ON_PLATFORM = 14;
     private const int LAYER_NUM_ARROW_ON_MONSTER = 17;
+
     private bool arrowState = true;
+    private bool isSoundPlayed;
+    private bool isSkillPlayed= false;
+    private bool isUsed= false;
+
     private Vector2 zeroVelocity;
     private List<Vector2> arrowColList = new List<Vector2>();
-    private int arrowColMaxCount = 4;
+    private PlayerSkill playerSkill;
+    private CameraShake cameraShake;
+    private GameObject bombShotEffect;
     
-    Animator anim;
-
-    PlayerSkill playerSkill;
-    CameraShake cameraShake;
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
         playerSkill = GameObject.Find("Player").GetComponent<PlayerSkill>();
         cameraShake = Camera.main.transform.Find("CameraShake").GetComponent<CameraShake>();
+        bombShotEffect = transform.Find("BombShotEffect").gameObject;
     }
 
     void Start()
     {
         damage = ORIGINAL_DAMAGE;
-
-        if (playerSkill.IsSkillOn())
-            damage += BOMB_SHOT_DAMAGE;
 
         zeroVelocity = new Vector2(0, 0);
     }
@@ -47,14 +47,17 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (isUsed)
+            return;
+
         if (collision.gameObject.tag != "MonsterBody" && collision.gameObject.tag != "Platform")
             return;
 
         if (!isZeroGravityArrow()) //곡사가 충돌할때 화살이 박힌다.
         {
             if (playerSkill.IsSkillOn()) {
-                ShowSkillEffect();
-                Invoke("Destroy", 2);
+                Invoke("PlaySkillEffect", 0.2f);
+                Destroy(this.gameObject, 0.2f);
             }
 
             Stop();
@@ -84,28 +87,61 @@ public class Arrow : MonoBehaviour
             RegisterDetachEvent(monster);
             gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
             cameraShake.StartShake();
+
+            PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "MonsterBody")
-        {
-            Stop();
-            Monster monster = collision.transform.parent.GetComponent<Monster>();
-            RegisterDetachEvent(monster);
-            gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
-            cameraShake.StartShake();
-        }
-
-        if (collision.gameObject.name == "Player" && 
+        if (collision.gameObject.name == "Player" &&
             (gameObject.layer == LAYER_NUM_ARROW_ON_PLATFORM || gameObject.layer == LAYER_NUM_ARROW_ON_MONSTER))
         {
             Destroy(this.gameObject);
 
             Inventory.instance.AddArrow();
             MainUI.instance.UpdateArrowCountUI();
+            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ACQUIRE_ARROW);
         }
+
+        if (isUsed)
+            return;
+
+        if (collision.tag == "MonsterBody")
+        {
+            if (playerSkill.IsSkillOn())
+            {
+                Invoke("PlaySkillEffect", 0.2f);
+                Destroy(this.gameObject, 0.2f);
+            }
+
+            Stop();
+            Monster monster = collision.transform.parent.GetComponent<Monster>();
+            RegisterDetachEvent(monster);
+            gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
+            cameraShake.StartShake();
+
+            PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
+        }
+
+        if (collision.tag == "Platform")
+            PlaySound(NonPlayerSounds.ARROW_PIERCE_PLATFORM);
+    }
+
+    private void PlaySound(NonPlayerSounds sound)
+    {
+        if (isSoundPlayed) 
+        {
+            if (sound == NonPlayerSounds.ARROW_PIERCE_MONSTER)
+            {
+                SoundManager.instance.PlayNonPlayerSound(sound);
+                isSoundPlayed = true;
+            }
+            return;
+        }
+
+        SoundManager.instance.PlayNonPlayerSound(sound);
+        isSoundPlayed = true;
     }
 
     private void Stop()
@@ -113,19 +149,30 @@ public class Arrow : MonoBehaviour
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; //오브젝트를 움직이지 않게 한다.
         GetComponent<Rigidbody2D>().velocity = zeroVelocity;
         arrowState = false; //화살촉 방향 변화를 멈추게 한다.
+        isUsed = true;
     }
 
-    private void ShowSkillEffect()
+    private void PlaySkillEffect()
     {
+        if (isSkillPlayed)
+            return;
+
         switch (playerSkill.GetSkillName())
         {
             case "Bomb Shot":
-                anim.SetBool("isExploding", true);
+                bombShotEffect.transform.parent = null;
+                bombShotEffect.SetActive(true);
+
+                Destroy(bombShotEffect.gameObject, 1f);
+
+                SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.SKILL_BOMB_SHOT);
                 break;
 
             default:
                 break;
         }
+
+        isSkillPlayed = true;
     }
 
     private void Reflect(Collision2D collision)
@@ -154,10 +201,5 @@ public class Arrow : MonoBehaviour
         transform.parent = null;
         gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-    }
-
-    private void Destroy()
-    {
-        Destroy(gameObject);
     }
 }

@@ -128,7 +128,7 @@ public class MonsterBoss : Monster
             }
         }
 
-        return Random.Range(-1, 3);
+        return Random.Range(2, 3);
     }
 
     private void MoveLeft()
@@ -155,7 +155,9 @@ public class MonsterBoss : Monster
     private void RunFlyRoutine(bool isOnTheGround)
     {
         ChoosePlatformToGo();
-        
+
+        ShowBubble();
+
         if (isOnTheGround)
         {
             isFloating = true;
@@ -261,7 +263,7 @@ public class MonsterBoss : Monster
         Invoke("GetPeaceful", 7);
     }
 
-    #region When Monster get hit by arrow
+    #region When Monster gets hit
     protected override void OnHit(float damage)
     {
         isHit = true;
@@ -310,17 +312,18 @@ public class MonsterBoss : Monster
         radar.GetComponent<Image>().color = new Color(1, 1, 0, 0.5f);
         speed = 2;
     }
-
-    public override void Dead()
-    {
-        base.Dead();
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        Instantiate(coin, this.transform.position, transform.rotation);
-        CancelInvoke();
-        Invoke("Destroy", 1);
-
-    }
     #endregion
+
+    /// <summary>
+    /// Show bubble on platform to go
+    /// </summary>
+    private void ShowBubble()
+    {
+        if (platformToGo == null)
+            return;
+
+        platformToGo.GetComponent<Platform>().ShowBubble();
+    }
 
     private void SetIsFloatingFalse()
     {

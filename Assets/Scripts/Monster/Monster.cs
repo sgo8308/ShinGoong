@@ -19,6 +19,8 @@ public abstract class Monster : MonoBehaviour
     public GameObject coin;
     public UnityEvent OnDead;
 
+    protected GameObject explosion;
+
     virtual protected void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -31,6 +33,8 @@ public abstract class Monster : MonoBehaviour
                                     .Find("HpBarFrame").gameObject;
 
         hpBar = hpBarFrame.transform.Find("HpBar").GetComponent<Image>();
+
+        explosion = transform.Find("Explosion").gameObject;
 
         OnDead = new UnityEvent();
 
@@ -71,12 +75,12 @@ public abstract class Monster : MonoBehaviour
         hpBarFrame.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 180, 0);
     }
 
-    #region RadarDetection
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (col.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             OnDetectPlayer();
+            return;
         }
     }
 
@@ -86,7 +90,6 @@ public abstract class Monster : MonoBehaviour
 
     abstract public void GetPeaceful();
 
-    #endregion
     void AddHitEvent()
     {
         MonsterBody monsterBody = this.transform.Find("Body").GetComponent<MonsterBody>();
@@ -107,7 +110,12 @@ public abstract class Monster : MonoBehaviour
 
     protected void ReduceHp(float damage)
     {
-        hp -= damage - defensivePower;
+        float realDamage = damage - defensivePower;
+
+        if (realDamage <= 0)
+            realDamage = 10;
+
+        hp -= realDamage;
         anim.SetFloat("Hp", hp);
 
         if ((hp / 100) <= 0)
@@ -130,11 +138,25 @@ public abstract class Monster : MonoBehaviour
         StageManager.instance.AddNumOfMonsterKilled();
 
         Destroy(radar);
+
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
+        Instantiate(coin, this.transform.position, transform.rotation);
+
+        CancelInvoke();
+
+        ShowExplosion();
+
+        Destroy(explosion.gameObject, 1f);
+        Destroy(this.gameObject);
+
+        SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.MONSTER_DIE);
     }
 
-    void Destroy()
+    protected void ShowExplosion()
     {
-        Destroy(this.gameObject);
+        explosion.transform.parent = null;
+        explosion.SetActive(true);
     }
 
     void HideHpBarFrame()

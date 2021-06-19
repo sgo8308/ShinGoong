@@ -132,16 +132,5 @@ public class MonsterDog : Monster
         speed = 1;
         anim.speed = 1;
     }
-    public override void Dead()
-    {
-        base.Dead();
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        Instantiate(coin, this.transform.position, transform.rotation);
-        CancelInvoke();
-        Invoke("Destroy", 0.8f);
-
-    }
     #endregion
-
-
 }

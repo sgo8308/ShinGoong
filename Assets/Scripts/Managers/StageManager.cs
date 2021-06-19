@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 using System;
 using UnityEngine.SceneManagement;
+using TentuPlay.Api;
 
 public enum StageState
 {
@@ -42,6 +43,8 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
+        TPStashEvent myStashEvent = new TPStashEvent();
+
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += ResetStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStage;
@@ -147,5 +150,13 @@ public class StageManager : MonoBehaviour
     {
         platformPlayerSteppingOn = platform;
     }
+    #endregion
+
+    #region TentuPlayMethod
+    void PlayStage()
+    {
+    }
+
+
     #endregion
 }

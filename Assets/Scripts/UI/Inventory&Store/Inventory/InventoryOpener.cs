@@ -27,7 +27,7 @@ public class InventoryOpener : UIOpener
         if (mainMenuPanel.activeSelf)
             return;
 
-        if (Input.GetKeyDown(KeyCode.I) && CanOpen())
+        if (Input.GetKeyDown(KeyCode.V) && CanOpen())
         {
             if (inventoryPanel.activeSelf)
                 Close();
@@ -45,6 +45,7 @@ public class InventoryOpener : UIOpener
     {
         base.Open();
         inventoryPanel.SetActive(true);
+        SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.OPEN_INVENTORY);
     }
 
     protected override void Close()
