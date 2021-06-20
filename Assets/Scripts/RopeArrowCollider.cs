@@ -22,13 +22,7 @@ public class RopeArrowCollider : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
-         //   PlayerAttack.isRopeArrowMoving = false;
-         //
-         //   playerMove.SetIsRopeMoving(true);
-         //
-         //   currentRopeArrowPositionList.Add(transform.position);
-         //
-         //   this.gameObject.layer = ARROW_ON_PLATFORM_LAYER_NUM;
+     
         }
     }
 }

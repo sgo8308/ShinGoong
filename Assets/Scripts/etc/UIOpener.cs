@@ -23,10 +23,16 @@ public abstract class UIOpener : MonoBehaviour
         playerAttack.SetCanShoot(false);
     }
 
+
     protected virtual void Close()
     {
-        isOpened = false;
+        Invoke("SetIsOpenedFalse", 0.5f);
         playerMove.SetCanMove(true);
         playerAttack.SetCanShoot(true);
+    }
+
+    private void SetIsOpenedFalse()
+    {
+        isOpened = false;
     }
 }

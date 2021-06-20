@@ -88,6 +88,8 @@ public class GameOverUI : UIOpener
         gameOverPanel = transform.Find("GameOverPanel").gameObject;
 
         level.text = "1";
+
+        exitButton.onClick.AddListener(GoToShelterScene);
     }
 
     public int timesExpBarToBeFilled;
@@ -171,5 +173,9 @@ public class GameOverUI : UIOpener
         gameOverPanel.SetActive(false);
         canFillExpBar = true;
         Time.timeScale = 1;
+    }
+    private void GoToShelterScene()
+    {
+        SceneManager.instance.GoTo("ShelterScene");
     }
 }
