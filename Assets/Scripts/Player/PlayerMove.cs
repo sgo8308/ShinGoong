@@ -36,24 +36,27 @@ public class PlayerMove : MonoBehaviour
         zeroVector = new Vector2(0, 0);
     }
 
-    private void FixedUpdate()
+
+
+    private void Update()
     {
+
         if (!canMove)
             return;
 
         //GetAxisRaw 함수를 이용해 Horizontal 값을 가져옴(-1,0,1) [Edit] -> [Project Settings] -> Input
-        if (Input.GetAxisRaw("Horizontal") == 1)
+        if (Input.GetAxisRaw("Horizontal") == 1 && !animator.GetBool("isJumpingFinal") && !animator.GetBool("isRopeMoving") && !animator.GetBool("isReady") && !Hook.isHookMoving)
             MoveRight();
-        if (Input.GetAxisRaw("Horizontal") == -1)
+        if (Input.GetAxisRaw("Horizontal") == -1 && !animator.GetBool("isJumpingFinal") && !animator.GetBool("isRopeMoving") && !animator.GetBool("isReady") && !Hook.isHookMoving)
             MoveLeft();
 
         limitSpeed();
 
         CheckIfJumping();
-    }
 
-    private void Update()
-    {
+
+
+
         if (isRopeMoving)
             RopeMove();
 
@@ -63,17 +66,17 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Jump") && !animator.GetBool("isJumping"))
+        if (Input.GetButtonDown("Jump") && !animator.GetBool("isReady") && !animator.GetBool("isJumpingUp") && !animator.GetBool("isJumpingDown") && !animator.GetBool("isJumpingFinal")
+             && !animator.GetBool("isRopeMoving") && !Hook.isHookMoving)
         {
             Jump();
         }
-
         if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
             StopPlayer();
 
-        if (Mathf.Abs(rigid.velocity.x) < 0.4 || isJumping)
+        if (Mathf.Abs(rigid.velocity.x) < 0.4 )
             animator.SetBool("isRunning", false);
-        else
+        else if(!animator.GetBool("isJumpingUp"))
             animator.SetBool("isRunning", true);
 
         if (animator.GetBool("isRunning"))
@@ -128,7 +131,9 @@ public class PlayerMove : MonoBehaviour
     {
         rigid.AddForce(Vector2.up * playerInfo.jumpPower, ForceMode2D.Impulse);
         animator.SetBool("isRunning", false);
-        animator.SetBool("isJumping", true);
+
+        animator.SetBool("isJumpingUp", true);
+
         isJumping = true;
 
         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_JUMP);
@@ -138,7 +143,11 @@ public class PlayerMove : MonoBehaviour
     {
         if (rigid.velocity.y < 0)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
         {
-            Debug.DrawRay(rigid.position, 3 * Vector3.down, new Color(0, 1, 0));
+            animator.SetBool("isRunning", false);
+            animator.SetBool("isJumpingUp", false);
+            animator.SetBool("isJumpingDown", true);
+
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
 
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
 
@@ -146,24 +155,33 @@ public class PlayerMove : MonoBehaviour
             {
                 if (rayHit.distance < 2.2f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
                 {
-                    animator.SetBool("isJumping", false);
-
                     if (isJumping)
                         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
 
                     isJumping = false;
 
+                    print("착지");
+
+                    animator.SetBool("isJumpingDown", false);
+                    animator.SetBool("isJumpingFinal", true);
                 }
             }
         }
 
-        if (rigid.velocity.y == 0)
-        {
-            animator.SetBool("isJumping", false);
+      if (rigid.velocity.y == 0)
+      {
             isJumping = false;
-        }
+            Invoke("JumpFinalTime", 0.5f);
+       }
     }
 
+    void JumpFinalTime()
+    {
+           animator.SetBool("isJumpingDown", false);
+
+        animator.SetBool("isJumpingFinal", false);
+
+    }
 
     public float ropeMoveSpeed;
 
@@ -206,5 +224,6 @@ public class PlayerMove : MonoBehaviour
     {
         rigid.velocity = zeroVector;
         animator.SetBool("isRunning", false);
+
     }
 }

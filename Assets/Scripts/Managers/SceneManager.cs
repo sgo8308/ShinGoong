@@ -61,8 +61,8 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    public void ExitGame()
-    {
-        UnityEditor.EditorApplication.isPlaying = false;
-    }
+  //  public void ExitGame()
+  //  {
+  //      UnityEditor.EditorApplication.isPlaying = false;
+  //  }
 }
