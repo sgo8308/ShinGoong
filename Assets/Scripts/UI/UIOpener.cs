@@ -37,9 +37,4 @@ public abstract class UIOpener : MonoBehaviour
     {
         isOpened = false;
     }
-
-    private void SetIsOpenedFalse()
-    {
-        isOpened = false;
-    }
 }
