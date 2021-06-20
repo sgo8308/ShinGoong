@@ -149,7 +149,10 @@ public class Arrow : MonoBehaviour
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; //오브젝트를 움직이지 않게 한다.
         GetComponent<Rigidbody2D>().velocity = zeroVelocity;
         arrowState = false; //화살촉 방향 변화를 멈추게 한다.
+
         isUsed = true;
+
+        PlayerAttack.power = 0.0f;
     }
 
     private void PlaySkillEffect()
@@ -177,9 +180,12 @@ public class Arrow : MonoBehaviour
 
     private void Reflect(Collision2D collision)
     {
+       
         Vector2 inNormal = collision.contacts[0].normal;               //충돌 시 법선 벡터
         Vector2 newVelocity = Vector2.Reflect(transform.right, inNormal);  //반사각 벡터
-        GetComponent<Rigidbody2D>().velocity = newVelocity * PlayerAttack.power * 1 / 3;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
+        GetComponent<Rigidbody2D>().velocity = newVelocity * PlayerAttack.power * 1/3;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
+        
+       
     }
 
     private bool isZeroGravityArrow()

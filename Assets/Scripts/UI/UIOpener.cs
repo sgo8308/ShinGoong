@@ -24,12 +24,18 @@ public abstract class UIOpener : MonoBehaviour
         SoundManager.instance.MutePlayerSound();
     }
 
+
     protected virtual void Close()
     {
         Invoke("SetIsOpenedFalse", 0.5f);
         playerMove.SetCanMove(true);
         playerAttack.SetCanShoot(true);
         SoundManager.instance.UnMutePlayerSound();
+    }
+
+    private void SetIsOpenedFalse()
+    {
+        isOpened = false;
     }
 
     private void SetIsOpenedFalse()
