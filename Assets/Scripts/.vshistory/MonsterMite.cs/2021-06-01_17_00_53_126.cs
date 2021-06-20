@@ -1,0 +1,77 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MonsterMite : MonoBehaviour
+{
+    Animator _anim;
+    Rigidbody2D _rigid;
+    SpriteRenderer _spriteRenderer;
+    RectTransform _radarRectTranform;
+    public int nextMove; // -1 , 0 , 1 로 왼쪽 정지 오른쪽을 가리킴
+
+    void Awake()
+    {
+        _rigid = GetComponent<Rigidbody2D>();
+        _anim = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();  
+        _radarRectTranform = this.transform
+                                .Find("MonsterCanvas").transform
+                                .Find("RadarImage").GetComponent<RectTransform>();
+
+        Invoke("Think", 5); // 5초마다 다음 행동 판단
+    }
+
+    void FixedUpdate()
+    {
+        //이동
+        _rigid.velocity = new Vector2(nextMove, _rigid.velocity.y);
+
+        if (nextMove == 0)
+        {
+            _anim.SetBool("isWalking", false);
+        }
+        else
+        {
+            _anim.SetBool("isWalking", true);
+
+            // 방향에 맞게 몬스터 스프라이트와 레이더 이미지를 돌려줌
+            if (nextMove == 1) 
+            {
+                _spriteRenderer.flipX = true;
+                _radarRectTranform.rotation = 
+                    Quaternion.Euler(_radarRectTranform.rotation.x, 
+                                     0, _radarRectTranform.rotation.z);
+            }
+            else
+            {
+                _spriteRenderer.flipX = false;
+                _radarRectTranform.rotation = 
+                    Quaternion.Euler(_radarRectTranform.rotation.x, 
+                                     180, _radarRectTranform.rotation.z);
+            }
+        }
+
+        //플랫폼 체크
+        Vector2 frontVec = new Vector2(_rigid.position.x + nextMove, _rigid.position.y);
+        Debug.DrawRay(_rigid.position, Vector3.down, new Color(0, 1, 0));
+
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("UI"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
+
+        if (rayHit.collider != null)  //레이와 충돌한 오브젝트가 있다면
+        {
+            if (rayHit.distance < 1.2f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
+            {
+                anim.SetBool("isJumping", false);
+            }
+        }
+        
+    }
+
+    void Think()
+    {
+        nextMove = Random.Range(-1, 2);
+
+        Invoke("Think", 5);
+    }
+}

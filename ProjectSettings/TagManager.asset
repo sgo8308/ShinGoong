@@ -4,8 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - power
-  - arrowcount
+  - ArrowCount
+  - Radar
+  - Arrow
+  - Monster
+  - MonsterBody
+  - Platform
+  - Skill
   layers:
   - Default
   - TransparentFX
@@ -15,19 +20,19 @@ TagManager:
   - UI
   - 
   - 
-  - SunBee
+  - Player
   - Arrow
   - MiniMap
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Platform
+  - Monster
+  - MonsterBody
+  - ArrowOnPlatform
+  - RopeArrow
+  - Rope
+  - ArrowOnMonster
+  - ArrowTrigger
+  - Coin
+  - Skill
   - 
   - 
   - 
