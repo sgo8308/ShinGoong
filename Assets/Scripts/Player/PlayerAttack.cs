@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     public static bool isRopeArrowMoving = false;
+    public static bool isAttacking;
 
     public static float power = 0.0f;
 
@@ -81,7 +82,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void AttackReady()
     {
-        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving)  //down -> ready애니메이션 시작
+        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && !isAttacking)  //down -> ready애니메이션 시작
         {
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
@@ -93,9 +94,11 @@ public class PlayerAttack : MonoBehaviour
             Invoke("ReadyToAim", 0.4f);  //0.7초 후에 준비자세에서 조준자세로 바꿔준다.
 
             SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_READY_ARROW);
+
+            power = 0.0f;
         }
 
-        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving)
+        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && !isAttacking)
         {
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
@@ -107,16 +110,38 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonUp(0) && !Input.GetKey(KeyCode.R) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving)  //up -> 0.2초 뒤에 angle애니메이션 취소
+        if (Input.GetMouseButtonUp(0) && !Input.GetKey(KeyCode.R) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && !isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
         {
             print("마우스 up");
 
-            playerMove.SetCanMove(true);
-            Invoke("ShootArrow", 0.1f);
             
-            FireFinish();
 
-            SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
+            print("파워1 : " + power);
+
+            //파워가 특정값 이상일때만 화살 생성 및 공격
+
+            if (power >= 20.0f)
+            {
+                print("파워2 : " + power);
+
+                playerMove.SetCanMove(true);
+                Invoke("ShootArrow", 0.1f);
+
+                FireFinish();
+
+                SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
+            }
+
+
+            AimCancel();
+            animator.enabled = true;
+
+            animator.SetBool("isReady", false);
+            
+            aiming = false;
+            angleChange = false;
+            playerMove.SetCanMove(true);
+
         }
     }
 
@@ -311,7 +336,6 @@ public class PlayerAttack : MonoBehaviour
             spriteReAim.sprite = sprites3[11];
         }
 
-        //    Invoke("AttackToIdle", 0.2f);
 
         aiming = false;
         angleChange = false;
@@ -486,6 +510,7 @@ public class PlayerAttack : MonoBehaviour
     {
         GameObject t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
         t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * 1 / 2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+        isAttacking = true;
 
         if (power >= arrowMaxPower)
         {

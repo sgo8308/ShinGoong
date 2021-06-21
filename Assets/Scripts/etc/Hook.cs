@@ -91,7 +91,7 @@ public class Hook : MonoBehaviour
                 animator.SetBool("isReady", true);
                 Invoke("ReadyToAngle", 1.1f);
 
-                //SetRopeArrowDirection();           //RopeArrow의 벡터를 마우스 방향으로 잡아준다.      
+                SetRopeArrowDirection();           //RopeArrow의 벡터를 마우스 방향으로 잡아준다.      
 
                 CalculateBowAngle();
 
@@ -140,11 +140,13 @@ public class Hook : MonoBehaviour
 
 
             animator.SetBool("isRopeMoving", true);
-            
-     
+
+
             if (Vector2.Distance(transform.position, hook.transform.position) < 1.0f)  //로프 이동이 끝남
             {
+                
                 animator.SetBool("isRopeMoving", false);
+                
                 animator.SetBool("isReady", false);
 
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
@@ -184,6 +186,17 @@ public class Hook : MonoBehaviour
         isRopeStart = true;
 
         animator.SetBool("isRopeAiming20", false);
+        animator.SetBool("isRopeAiming30", false);
+        animator.SetBool("isRopeAiming40", false);
+        animator.SetBool("isRopeAiming50", false);
+        animator.SetBool("isRopeAiming60", false);
+        animator.SetBool("isRopeAiming70", false);
+        animator.SetBool("isRopeAiming80", false);
+        animator.SetBool("isRopeAiming90", false);
+        animator.SetBool("isRopeAiming100", false);
+        animator.SetBool("isRopeAiming110", false);
+        animator.SetBool("isRopeAiming120", false);
+        animator.SetBool("isRopeAiming130", false);
 
 
     }
@@ -199,59 +212,59 @@ public class Hook : MonoBehaviour
         }
         if (ropeArrowAngle >= 20 && ropeArrowAngle < 30)
         {
-            animator.SetBool("isAiming30", true);
+            animator.SetBool("isRopeAiming30", true);
             currnetAngleType = 30;
 
         }
         if (ropeArrowAngle >= 30 && ropeArrowAngle < 40)
         {
-            animator.SetBool("isAiming40", true);
+            animator.SetBool("isRopeAiming40", true);
             currnetAngleType = 40;
 
         }
         if (ropeArrowAngle >= 40 && ropeArrowAngle < 50)
         {
-            animator.SetBool("isAiming50", true);
+            animator.SetBool("isRopeAiming50", true);
             currnetAngleType = 50;
         }
         if (ropeArrowAngle >= 50 && ropeArrowAngle < 60)
         {
-            animator.SetBool("isAiming60", true);
+            animator.SetBool("isRopeAiming60", true);
             currnetAngleType = 60;
         }
         if (ropeArrowAngle >= 60 && ropeArrowAngle < 70)
         {
-            animator.SetBool("isAiming70", true);
+            animator.SetBool("isRopeAiming70", true);
             currnetAngleType = 70;
         }
         if (ropeArrowAngle >= 70 && ropeArrowAngle < 80)
         {
-            animator.SetBool("isAiming80", true);
+            animator.SetBool("isRopeAiming80", true);
             currnetAngleType = 80;
         }
         if (ropeArrowAngle >= 80 && ropeArrowAngle < 90)
         {
-            animator.SetBool("isAiming90", true);
+            animator.SetBool("isRopeAiming90", true);
             currnetAngleType = 90;
         }
         if (ropeArrowAngle >= 90 && ropeArrowAngle < 100)
         {
-            animator.SetBool("isAiming100", true);
+            animator.SetBool("isRopeAiming100", true);
             currnetAngleType = 100;
         }
         if (ropeArrowAngle >= 100 && ropeArrowAngle < 110)
         {
-            animator.SetBool("isAiming110", true);
+            animator.SetBool("isRopeAiming110", true);
             currnetAngleType = 110;
         }
         if (ropeArrowAngle >= 110 && ropeArrowAngle < 120)
         {
-            animator.SetBool("isAiming120", true);
+            animator.SetBool("isRopeAiming120", true);
             currnetAngleType = 120;
         }
         if (ropeArrowAngle >= 120)
         {
-            animator.SetBool("isAiming130", true);
+            animator.SetBool("isRopeAiming130", true);
             currnetAngleType = 130;
         }
 
