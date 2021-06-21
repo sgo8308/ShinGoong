@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     public static bool isRopeArrowMoving = false;
-    public static bool isAttacking;
 
     public static float power = 0.0f;
 
@@ -82,7 +81,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void AttackReady()
     {
-        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && !isAttacking)  //down -> ready애니메이션 시작
+        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving )  //down -> ready애니메이션 시작
         {
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
@@ -98,7 +97,7 @@ public class PlayerAttack : MonoBehaviour
             power = 0.0f;
         }
 
-        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && !isAttacking)
+        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving)
         {
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
@@ -110,7 +109,7 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonUp(0) && !Input.GetKey(KeyCode.R) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && !isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
+        if (Input.GetMouseButtonUp(0) && !Input.GetKey(KeyCode.R) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving )  //up -> 0.2초 뒤에 angle애니메이션 취소
         {
             print("마우스 up");
 
@@ -510,7 +509,7 @@ public class PlayerAttack : MonoBehaviour
     {
         GameObject t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
         t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * 1 / 2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
-        isAttacking = true;
+        t_arrow.GetComponent<Rigidbody2D>().gravityScale = 1;
 
         if (power >= arrowMaxPower)
         {

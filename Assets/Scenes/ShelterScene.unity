@@ -5926,7 +5926,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.87258, y: -53.287464, z: -10}
+  m_LocalPosition: {x: -8.181278, y: -53.27837, z: -10}
   m_LocalScale: {x: 1.1948497, y: 1.1948497, z: 1.1948497}
   m_Children:
   - {fileID: 1029734724}
@@ -7081,6 +7081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stopSoundCount: 0
+  animator: {fileID: 0}
   ropeMoveSpeed: 1
 --- !u!114 &594572427
 MonoBehaviour:
@@ -7099,7 +7100,7 @@ MonoBehaviour:
   ropeArrowPrefab: {fileID: 5602112689742771599, guid: 807f24dcdc912a84b9cbb51a55c46c2a,
     type: 3}
   arrowSpeed: 50
-  arrowMaxPower: 75
+  arrowMaxPower: 70
   ropeArrowSpeed: 70
 --- !u!114 &594572428
 MonoBehaviour:
@@ -12159,7 +12160,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029734721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.9825683, y: -1.8065325, z: 0}
+  m_LocalPosition: {x: -5.561136, y: -1.8141437, z: 0}
   m_LocalScale: {x: 0.83692527, y: 0.83692527, z: 0.83692527}
   m_Children:
   - {fileID: 1758396107}
@@ -16705,7 +16706,7 @@ AudioSource:
   m_Volume: 0.303
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -17867,7 +17868,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128

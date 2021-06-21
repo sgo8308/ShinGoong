@@ -23,6 +23,7 @@ public class GameOverUI : UIOpener
     Button continueButton;
     Button exitButton;
     Player player;
+
     private void Awake()
     {
         var obj = FindObjectsOfType<GameOverUI>();
@@ -186,7 +187,13 @@ public class GameOverUI : UIOpener
 
     protected override void Open()
     {
-        base.Open();
+        if (isOpened)
+            return;
+
+        isOpened = true;
+        playerMove.SetCanMove(false);
+        playerAttack.SetCanShoot(false);
+        SoundManager.instance.MutePlayerSound();
 
         if (StageManager.instance.stageState == StageState.CLEAR)
         {
@@ -194,6 +201,7 @@ public class GameOverUI : UIOpener
                 return;
 
             Title.text = "STAGE CLEAR";
+            playerMove.animator.SetBool("isIdle", true);
             continueButton.gameObject.SetActive(true);
             gameOverPanel.SetActive(true);
             canFillExpBar = true;
