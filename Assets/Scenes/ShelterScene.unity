@@ -5926,7 +5926,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.202242, y: -53.278645, z: -10}
+  m_LocalPosition: {x: -8.87258, y: -53.287464, z: -10}
   m_LocalScale: {x: 1.1948497, y: 1.1948497, z: 1.1948497}
   m_Children:
   - {fileID: 1029734724}
@@ -7131,6 +7131,7 @@ MonoBehaviour:
   hook: {fileID: 470929199}
   ropeArrow: {fileID: 2097896315}
   isHookActive: 0
+  isRopeStart: 0
   isLineMax: 0
   isAttach: 0
 --- !u!251 &594572430
@@ -12158,7 +12159,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029734721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.5511374, y: -1.8140128, z: 0}
+  m_LocalPosition: {x: -4.9825683, y: -1.8065325, z: 0}
   m_LocalScale: {x: 0.83692527, y: 0.83692527, z: 0.83692527}
   m_Children:
   - {fileID: 1758396107}

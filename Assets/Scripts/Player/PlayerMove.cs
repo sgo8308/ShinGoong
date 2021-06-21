@@ -141,37 +141,44 @@ public class PlayerMove : MonoBehaviour
 
     private void CheckIfJumping()
     {
-        if (rigid.velocity.y < 0)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
+        if (rigid.velocity.y < -0.1f)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
         {
+            isJumping = true;
+
+
             animator.SetBool("isRunning", false);
             animator.SetBool("isJumpingUp", false);
             animator.SetBool("isJumpingDown", true);
 
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+         //   Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
 
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
-
-            if (rayHit.collider != null)  //레이와 충돌한 오브젝트가 있다면
-            {
-                if (rayHit.distance < 2.2f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
-                {
-                    if (isJumping)
-                        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
-
-                    isJumping = false;
-
-                    print("착지");
-
-                    animator.SetBool("isJumpingDown", false);
-                    animator.SetBool("isJumpingFinal", true);
-                }
-            }
+         //   RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
+         //
+         //   if (rayHit.collider != null)  //레이와 충돌한 오브젝트가 있다면
+         //   {
+         //       if (rayHit.distance < 2.2f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
+         //       {
+         //           if (isJumping)
+         //               SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
+         //
+         //         //  isJumping = false;
+         //
+         //           print("착지");
+         //
+         //           animator.SetBool("isJumpingDown", false);
+         //           animator.SetBool("isJumpingFinal", true);
+         //       }
+         //   }
         }
 
-      if (rigid.velocity.y == 0)
+      if (rigid.velocity.y == 0 && isJumping)
       {
             isJumping = false;
-            Invoke("JumpFinalTime", 0.5f);
+            animator.SetBool("isJumpingDown", false);
+
+            animator.SetBool("isJumpingFinal", true);
+
+            Invoke("JumpFinalTime", 0.3f);
        }
     }
 

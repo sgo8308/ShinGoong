@@ -55,6 +55,8 @@ public class Arrow : MonoBehaviour
 
         if (!isZeroGravityArrow()) //곡사가 충돌할때 화살이 박힌다.
         {
+            PlayerAttack.isAttacking = false;
+
             if (playerSkill.IsSkillOn()) {
                 Invoke("PlaySkillEffect", 0.2f);
                 Destroy(this.gameObject, 0.2f);
