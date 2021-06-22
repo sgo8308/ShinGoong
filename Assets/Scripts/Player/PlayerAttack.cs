@@ -41,6 +41,8 @@ public class PlayerAttack : MonoBehaviour
 
     public static int ropeArrowAngleType;  //로프화살 조준각도 타입
 
+    bool isAttacking;
+
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -83,6 +85,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving )  //down -> ready애니메이션 시작
         {
+            isAttacking = true;
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
             playerMove.SetCanMove(false);
@@ -97,7 +100,7 @@ public class PlayerAttack : MonoBehaviour
             power = 0.0f;
         }
 
-        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving)
+        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)
         {
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
@@ -109,11 +112,12 @@ public class PlayerAttack : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonUp(0) && !Input.GetKey(KeyCode.R) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving )  //up -> 0.2초 뒤에 angle애니메이션 취소
+        if (Input.GetMouseButtonUp(0) && !Input.GetKey(KeyCode.R) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
         {
             print("마우스 up");
+            isAttacking = false;
 
-            
+
 
             print("파워1 : " + power);
 
