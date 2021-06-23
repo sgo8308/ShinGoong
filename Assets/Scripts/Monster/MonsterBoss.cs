@@ -128,7 +128,7 @@ public class MonsterBoss : Monster
             }
         }
 
-        return Random.Range(2, 3);
+        return Random.Range(-1, 3);
     }
 
     private void MoveLeft()
