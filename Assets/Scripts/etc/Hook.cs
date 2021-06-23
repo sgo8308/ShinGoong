@@ -112,7 +112,7 @@ public class Hook : MonoBehaviour
 
                 hook.gameObject.SetActive(true);
 
-                Invoke("RopeStart", 1.4f);
+                Invoke("RopeStart", 1.2f);
             }
 
             

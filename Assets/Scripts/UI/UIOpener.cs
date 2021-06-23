@@ -19,20 +19,21 @@ public abstract class UIOpener : MonoBehaviour
             return;
 
         isOpened = true;
-        playerMove.animator.SetBool("isIdle", true);
+        playerMove.animator.SetBool("isRunning", false);
         playerMove.SetCanMove(false);
         playerAttack.SetCanShoot(false);
         SoundManager.instance.MutePlayerSound();
+        SoundManager.instance.MutePlayerRunningSound();
     }
 
 
     protected virtual void Close()
     {
         Invoke("SetIsOpenedFalse", 0.5f);
-        playerMove.animator.SetBool("isIdle", false);
         playerMove.SetCanMove(true);
         playerAttack.SetCanShoot(true);
         SoundManager.instance.UnMutePlayerSound();
+        SoundManager.instance.UnMutePlayerRunningSound();
     }
 
     private void SetIsOpenedFalse()

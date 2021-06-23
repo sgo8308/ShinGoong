@@ -193,7 +193,11 @@ public class GameOverUI : UIOpener
         isOpened = true;
         playerMove.SetCanMove(false);
         playerAttack.SetCanShoot(false);
+        SoundManager.instance.MutePlayerRunningSound();
         SoundManager.instance.MutePlayerSound();
+
+        if (playerMove.animator.GetBool("isJumpingDown"))
+            playerMove.animator.SetBool("isJumpingFinal", true);
 
         if (StageManager.instance.stageState == StageState.CLEAR)
         {
@@ -201,7 +205,7 @@ public class GameOverUI : UIOpener
                 return;
 
             Title.text = "STAGE CLEAR";
-            playerMove.animator.SetBool("isIdle", true);
+            playerMove.animator.SetBool("isRunning", false);
             continueButton.gameObject.SetActive(true);
             gameOverPanel.SetActive(true);
             canFillExpBar = true;
@@ -209,6 +213,7 @@ public class GameOverUI : UIOpener
         else
         {
             Title.text = "GAME OVER";
+            playerMove.animator.SetBool("isRunning", false);
             continueButton.gameObject.SetActive(false);
             gameOverPanel.SetActive(true);
             canFillExpBar = true;
@@ -221,6 +226,7 @@ public class GameOverUI : UIOpener
         gameOverPanel.SetActive(false);
         canFillExpBar = true;
         Time.timeScale = 1;
+        playerMove.InitJumpValues();
     }
 
     private void GoToShelterScene()

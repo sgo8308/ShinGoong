@@ -29,7 +29,13 @@ public class Player : MonoBehaviour
     #region Revive And Die
     public void Revive(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name != "ShelterScene")
+            return;
+
+        animator.enabled = true;
         animator.SetBool("isHit", false);
+        animator.SetBool("isJumpingFinal", false);
+
         isDead = false;
 
         playerMove.SetCanMove(true);

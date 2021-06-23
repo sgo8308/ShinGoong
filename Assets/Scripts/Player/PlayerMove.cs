@@ -10,6 +10,8 @@ public class PlayerMove : MonoBehaviour
     public bool isRopeMoving { get; private set; }
     public bool isJumping { get; private set; }
 
+    private bool isLanded;
+
     public int stopSoundCount;
     public float ropeMoveSpeed;
 
@@ -33,7 +35,8 @@ public class PlayerMove : MonoBehaviour
 
         UnityEngine.SceneManagement.SceneManager.sceneLoaded +=
             (Scene scene, LoadSceneMode mode) => canMove = true;
-
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitJumpValues;
+            
         zeroVector = new Vector2(0, 0);
     }
 
@@ -41,7 +44,6 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-
         if (!canMove)
             return;
 
@@ -52,14 +54,9 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") == -1 && !animator.GetBool("isRopeMoving") && !animator.GetBool("isReady") && !Hook.isHookMoving)
             MoveLeft();
 
-
-
-
         limitSpeed();
 
         CheckIfJumping();
-
-
 
         if (isRopeMoving)
             RopeMove();
@@ -75,19 +72,20 @@ public class PlayerMove : MonoBehaviour
         {
             Jump();
         }
+
         if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
             StopPlayer();
 
         if (Mathf.Abs(rigid.velocity.x) < 0.4)
             animator.SetBool("isRunning", false);
-        else if (!animator.GetBool("isJumpingUp"))
+        else if (!isJumping && !animator.GetBool("isJumpingDown"))
             animator.SetBool("isRunning", true);
 
         if (animator.GetBool("isRunning"))
         {
-            if (!SoundManager.instance.playerSound.isPlaying)
+            if (!SoundManager.instance.playerRunningSound.isPlaying)
             {
-                SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_RUN);
+                SoundManager.instance.PlayPlayerRunningSound();
                 stopSoundCount = 0;
             }
         }
@@ -95,7 +93,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (stopSoundCount == 0 && !isJumping)
             {
-                SoundManager.instance.StopPlayerSound();
+                SoundManager.instance.StopPlayerRunningSound();
                 stopSoundCount = 1;
             }
         }
@@ -144,6 +142,8 @@ public class PlayerMove : MonoBehaviour
 
         isJumping = true;
 
+        isLanded = false;
+
         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_JUMP);
     }
 
@@ -158,10 +158,8 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("isJumpingUp", false);
             animator.SetBool("isJumpingDown", true);
 
-            Vector2 rightVec = new Vector2(rigid.position.x + 1, rigid.position.y);
-            Vector2 leftVec = new Vector2(rigid.position.x - 1, rigid.position.y);
-
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+            Vector2 rightVec = new Vector2(rigid.position.x + 0.3f, rigid.position.y);
+            Vector2 leftVec = new Vector2(rigid.position.x - 0.3f, rigid.position.y);
 
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
             RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
@@ -171,14 +169,12 @@ public class PlayerMove : MonoBehaviour
             {
                 if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
                 {
-                    if (isJumping)
-
+                    if (!isLanded)
                         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
 
                     isJumping = false;
-
-                    print("착지");
-
+                    isLanded = true;
+                    
                     animator.SetBool("isJumpingDown", false);
                     animator.SetBool("isJumpingFinal", true);
                     Invoke("JumpFinalTime", 0.3f);
@@ -188,6 +184,22 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
+    }
+
+    public void InitJumpValues(Scene scene, LoadSceneMode mode)
+    {
+        isJumping = false;
+        isLanded = true;
+        animator.SetBool("isJumpingDown", false);
+    }
+
+    public void InitJumpValues()
+    {
+        isJumping = false;
+        isLanded = true;
+        animator.SetBool("isJumpingUp", false);
+        animator.SetBool("isJumpingDown", false);
+        animator.SetBool("isJumpingFinal", false);
     }
 
     void JumpFinalTime()

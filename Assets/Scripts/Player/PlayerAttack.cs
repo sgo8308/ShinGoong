@@ -64,15 +64,6 @@ public class PlayerAttack : MonoBehaviour
 
         SetArrowDirection();
 
-
-        if (Input.GetKey(KeyCode.R))
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                ShootRopeArrow();
-            }
-        }
-
         AttackReady();
     }
 
@@ -83,8 +74,10 @@ public class PlayerAttack : MonoBehaviour
 
     private void AttackReady()
     {
-        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving )  //down -> ready애니메이션 시작
+        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving )  //down -> ready애니메이션 시작
         {
+            animator.SetBool("isRunning", false);
+
             isAttacking = true;
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
@@ -102,49 +95,45 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)
         {
+
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
             playerMove.SetCanMove(false);
             ControlPower();
 
-
             ReAiming();
-
         }
 
-        if (Input.GetMouseButtonUp(0) && !Input.GetKey(KeyCode.R) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
+        if (Input.GetMouseButtonUp(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
         {
-            print("마우스 up");
+
             isAttacking = false;
-
-
-
-            print("파워1 : " + power);
 
             //파워가 특정값 이상일때만 화살 생성 및 공격
 
             if (power >= 20.0f)
             {
-                print("파워2 : " + power);
-
                 playerMove.SetCanMove(true);
                 Invoke("ShootArrow", 0.1f);
 
                 FireFinish();
 
                 SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
+
+                Invoke("AimCancel", 0.5f);
+                
+                playerMove.SetCanMove(true);
             }
+            else
+            {
+                AimCancel();
 
+                aiming = false;
+                angleChange = false;
+                playerMove.SetCanMove(true);
 
-            AimCancel();
-            animator.enabled = true;
-
-            animator.SetBool("isReady", false);
-            
-            aiming = false;
-            angleChange = false;
-            playerMove.SetCanMove(true);
-
+                SoundManager.instance.StopPlayerSound();
+            }
         }
     }
 
@@ -342,22 +331,14 @@ public class PlayerAttack : MonoBehaviour
 
         aiming = false;
         angleChange = false;
-
-        Invoke("FinishtoIdle", 0.5f);
-
     }
-
-    void FinishtoIdle()
-    {
-        animator.enabled = true;
-        animator.SetBool("isReady", false);
-        AimCancel();
-    }
-
 
 
     void AimCancel()
     {
+        animator.enabled = true;
+        animator.SetBool("isReady", false);
+
         animator.SetBool("isAiming20", false);
         animator.SetBool("isAiming30", false);
         animator.SetBool("isAiming40", false);
@@ -370,6 +351,8 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("isAiming110", false);
         animator.SetBool("isAiming120", false);
         animator.SetBool("isAiming130", false);
+
+        CancelInvoke("ReadyToAim");
     }
 
 
@@ -503,10 +486,10 @@ public class PlayerAttack : MonoBehaviour
     {
         power += Time.deltaTime * arrowSpeed;
 
-        MainUI.instance.UpdateGaugeBarUI(power, arrowMaxPower);
-
         if (power > arrowMaxPower)
             power = arrowMaxPower;
+
+        MainUI.instance.UpdateGaugeBarUI(power, arrowMaxPower);
     }
 
     private void ShootArrow()
@@ -520,8 +503,6 @@ public class PlayerAttack : MonoBehaviour
             t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
             t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
         }
-
-
 
         Inventory.instance.UseArrow();
         MainUI.instance.UpdateArrowCountUI();

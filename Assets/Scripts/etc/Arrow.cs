@@ -154,7 +154,7 @@ public class Arrow : MonoBehaviour
 
         isUsed = true;
 
-        PlayerAttack.power = 0.0f;
+        //PlayerAttack.power = 0.0f;
     }
 
     private void PlaySkillEffect()

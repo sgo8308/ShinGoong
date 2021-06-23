@@ -38,6 +38,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource playerSound;
     private AudioSource nonPlayerSound;
     private AudioSource windSound;
+    public AudioSource playerRunningSound;
 
     public AudioClip shelterSceneMusic;
     public AudioClip stage1SceneMusic;
@@ -92,23 +93,18 @@ public class SoundManager : MonoBehaviour
         playerSound = transform.Find("PlayerSound").GetComponent<AudioSource>();
         nonPlayerSound = transform.Find("NonPlayerSound").GetComponent<AudioSource>();
         windSound = transform.Find("WindSound").GetComponent<AudioSource>();
+        playerRunningSound = transform.Find("PlayerRunningSound").GetComponent<AudioSource>();
     }
 
     public void PlayPlayerSound(PlayerSounds sounds)
     {
+        StopPlayerRunningSound();
         playerSound.Stop();
         playerSound.loop = false;
         playerSound.mute = false;
 
         switch (sounds)
         {
-            case PlayerSounds.PLAYER_RUN:
-                playerSound.volume = 3f;
-                playerSound.clip = playerRun;
-                playerSound.loop = true;
-                playerSound.Play();
-                break;
-
             case PlayerSounds.PLAYER_JUMP:
                 playerSound.PlayOneShot(playerJump, 1.5f);
                 break;
@@ -214,6 +210,30 @@ public class SoundManager : MonoBehaviour
         }
 
         bgm.Play();
+    }
+
+    public void PlayPlayerRunningSound()
+    {
+        playerRunningSound.mute = false;
+
+        playerRunningSound.volume = 3f;
+        playerRunningSound.loop = true;
+        playerRunningSound.Play();
+    }
+
+    public void StopPlayerRunningSound()
+    {
+        playerRunningSound.Stop();
+    }
+
+    public void MutePlayerRunningSound()
+    {
+        playerRunningSound.mute = true;
+    }
+
+    public void UnMutePlayerRunningSound()
+    {
+        playerRunningSound.mute = false;
     }
 
     public void StopPlayerSound()

@@ -39,6 +39,7 @@ public class SceneManager : MonoBehaviour
             return;
 
         SoundManager.instance.MutePlayerSound();
+        SoundManager.instance.MutePlayerRunningSound();
     }
 
     void InitializeArrowCount(Scene scene, LoadSceneMode sceneMode)
