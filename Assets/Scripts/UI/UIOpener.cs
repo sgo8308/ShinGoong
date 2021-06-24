@@ -30,11 +30,15 @@ public abstract class UIOpener : MonoBehaviour
     protected virtual void Close()
     {
         Invoke("SetIsOpenedFalse", 0.5f);
-        playerMove.SetCanMove(true);
+        if (!Player.isDead)
+        {
+            playerMove.SetCanMove(true);
+            playerAttack.SetCanShoot(true);
+            SoundManager.instance.UnMutePlayerSound();
+            SoundManager.instance.UnMutePlayerRunningSound();
+        }
         playerMove.InitJumpValues();
-        playerAttack.SetCanShoot(true);
-        SoundManager.instance.UnMutePlayerSound();
-        SoundManager.instance.UnMutePlayerRunningSound();
+
     }
 
     private void SetIsOpenedFalse()

@@ -220,9 +220,14 @@ public class GameOverUI : UIOpener
     protected override void Close()
     {
         base.Close();
+
         gameOverPanel.SetActive(false);
         canFillExpBar = true;
         Time.timeScale = 1;
+        playerMove.SetCanMove(true);
+        playerAttack.SetCanShoot(true);
+        SoundManager.instance.UnMutePlayerSound();
+        SoundManager.instance.UnMutePlayerRunningSound();
         playerMove.InitJumpValues();
     }
 
