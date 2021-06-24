@@ -158,8 +158,8 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("isJumpingUp", false);
             animator.SetBool("isJumpingDown", true);
 
-            Vector2 rightVec = new Vector2(rigid.position.x + 0.6f, rigid.position.y);
-            Vector2 leftVec = new Vector2(rigid.position.x - 0.6f, rigid.position.y);
+            Vector2 rightVec = new Vector2(rigid.position.x + 0.3f, rigid.position.y);
+            Vector2 leftVec = new Vector2(rigid.position.x - 0.3f, rigid.position.y);
 
             Debug.DrawRay(rigid.position, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
             Debug.DrawRay(rightVec, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
