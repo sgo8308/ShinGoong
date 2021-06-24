@@ -58,7 +58,7 @@ public class PlayerMove : MonoBehaviour
 
         CheckIfJumping();
 
-        CheckIfOnGround();
+        //CheckIfOnGround();
 
         if (isRopeMoving)
             RopeMove();
@@ -205,7 +205,6 @@ public class PlayerMove : MonoBehaviour
         {
             if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
             {
-                isJumping = false;
                 isLanded = true;
                 animator.SetBool("isJumpingUp", false);
                 animator.SetBool("isJumpingDown", false);
