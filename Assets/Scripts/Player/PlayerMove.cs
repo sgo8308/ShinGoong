@@ -58,6 +58,8 @@ public class PlayerMove : MonoBehaviour
 
         CheckIfJumping();
 
+        CheckIfOnGround();
+
         if (isRopeMoving)
             RopeMove();
 
@@ -168,7 +170,6 @@ public class PlayerMove : MonoBehaviour
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
             RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
             RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
-
             if (rayHit.collider != null || rayHit2.collider != null || rayHit3.collider != null)  //레이와 충돌한 오브젝트가 있다면
             {
                 if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
@@ -176,9 +177,12 @@ public class PlayerMove : MonoBehaviour
                     if (!isLanded)
                         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
 
+                    Debug.Log("발바닥아래 감지됐음");
+
                     isJumping = false;
                     isLanded = true;
-                    
+
+                    animator.SetBool("isJumpingUp", false);
                     animator.SetBool("isJumpingDown", false);
                     animator.SetBool("isJumpingFinal", true);
                     Invoke("JumpFinalTime", 0.3f);
@@ -187,7 +191,26 @@ public class PlayerMove : MonoBehaviour
                 }
             }
         }
+    }
 
+    public void CheckIfOnGround()
+    {
+        Vector2 rightVec = new Vector2(rigid.position.x + 0.3f, rigid.position.y);
+        Vector2 leftVec = new Vector2(rigid.position.x - 0.3f, rigid.position.y);
+
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
+        RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
+        RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
+        if (rayHit.collider != null || rayHit2.collider != null || rayHit3.collider != null)  //레이와 충돌한 오브젝트가 있다면
+        {
+            if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
+            {
+                isJumping = false;
+                isLanded = true;
+                animator.SetBool("isJumpingUp", false);
+                animator.SetBool("isJumpingDown", false);
+            }
+        }
     }
 
     public void InitJumpValues(Scene scene, LoadSceneMode mode)
