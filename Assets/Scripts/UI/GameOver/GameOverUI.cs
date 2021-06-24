@@ -187,9 +187,6 @@ public class GameOverUI : UIOpener
 
     protected override void Open()
     {
-        if (isOpened)
-            return;
-
         isOpened = true;
         playerMove.SetCanMove(false);
         playerAttack.SetCanShoot(false);
