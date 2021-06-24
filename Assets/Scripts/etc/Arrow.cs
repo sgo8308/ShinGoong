@@ -5,7 +5,7 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     public float damage;
-    private int arrowColMaxCount = 2;
+    private int arrowColMaxCount = 4;
 
     private const float ORIGINAL_DAMAGE = 70;
     private const int LAYER_NUM_ARROW_ON_PLATFORM = 14;
@@ -185,7 +185,7 @@ public class Arrow : MonoBehaviour
        
         Vector2 inNormal = collision.contacts[0].normal;               //충돌 시 법선 벡터
         Vector2 newVelocity = Vector2.Reflect(transform.right, inNormal);  //반사각 벡터
-        GetComponent<Rigidbody2D>().velocity = newVelocity * PlayerAttack.power * 1/3;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
+        GetComponent<Rigidbody2D>().velocity = newVelocity * PlayerAttack.power;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
         
        
     }

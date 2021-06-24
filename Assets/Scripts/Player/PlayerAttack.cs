@@ -495,13 +495,12 @@ public class PlayerAttack : MonoBehaviour
     private void ShootArrow()
     {
         GameObject t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-        t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * 1 / 2;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
-        t_arrow.GetComponent<Rigidbody2D>().gravityScale = 1;
+        t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
 
         if (power >= arrowMaxPower)
         {
             t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
         }
 
         Inventory.instance.UseArrow();
