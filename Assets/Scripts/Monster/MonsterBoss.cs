@@ -12,9 +12,9 @@ public class MonsterBoss : Monster
     /// </summary>
     public float flySpeed;
     public float floatSpeed;
-    private bool isFlying = false;
-    private bool isFloating = false;
-    private bool isHit = false;
+    public bool isFlying = false;
+    public bool isFloating = false;
+    public bool isHit = false;
     private int direction;
 
     protected override void Awake()
@@ -28,7 +28,7 @@ public class MonsterBoss : Monster
         speed = 2;
         flySpeed = 0.15f;
         floatSpeed = 0.05f;
-        hp = 100;
+        hp = 10000;
         defensivePower = 50;
         expPoint = 70.0f;
     }
@@ -36,6 +36,25 @@ public class MonsterBoss : Monster
     private void Start()
     {
         Invoke("ThinkAndMove", 5);
+    }
+
+    private void Update()
+    {
+    }
+
+    private bool CheckIfFalling()
+    {
+        if (isFloating || isFlying)
+            return false;
+
+        Debug.DrawRay(rigid.position, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
+
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));
+
+        if (rayHit.collider == null)
+            return true;
+
+        return false;
     }
 
     void FixedUpdate()
@@ -93,7 +112,10 @@ public class MonsterBoss : Monster
                 MoveRight();
                 break;
             case 2:
-                RunFlyRoutine(true);
+                if (!CheckIfFalling()) // Don't Try Flying When Falling
+                    RunFlyRoutine(true);
+                else
+                    Invoke("ThinkAndMove", 0.5f);
                 return;
             case 3:
                 RunFlyRoutine(false);
@@ -127,7 +149,7 @@ public class MonsterBoss : Monster
                     break;
             }
         }
-
+        
         return Random.Range(-1, 3);
     }
 
@@ -203,8 +225,7 @@ public class MonsterBoss : Monster
 
         direction = 0;
 
-        GetComponent<BoxCollider2D>().isTrigger = true;
-        transform.Find("Body").GetComponent<PolygonCollider2D>().isTrigger = true;
+
         GetComponent<Rigidbody2D>().gravityScale = 0;
 
         Vector3 upSide = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
@@ -230,6 +251,9 @@ public class MonsterBoss : Monster
             FlipSpriteToRight();
         else if (targetPosToFly.x < transform.position.x)
             FlipSpriteToLeft();
+
+        GetComponent<BoxCollider2D>().isTrigger = true;
+        transform.Find("Body").GetComponent<PolygonCollider2D>().isTrigger = true;
 
         anim.enabled = true;
         anim.SetBool("isFlying", true);
