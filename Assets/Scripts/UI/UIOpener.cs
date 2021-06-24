@@ -31,6 +31,7 @@ public abstract class UIOpener : MonoBehaviour
     {
         Invoke("SetIsOpenedFalse", 0.5f);
         playerMove.SetCanMove(true);
+        playerMove.InitJumpValues();
         playerAttack.SetCanShoot(true);
         SoundManager.instance.UnMutePlayerSound();
         SoundManager.instance.UnMutePlayerRunningSound();
