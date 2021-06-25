@@ -5,10 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
-
-/// <summary>
-/// Component of GameOver Canvas
-/// </summary>
 public class GameOverUI : UIOpener
 {
     public Button exitStageButtonInMainMenu;

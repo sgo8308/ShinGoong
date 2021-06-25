@@ -145,6 +145,14 @@ public class StageManager : MonoBehaviour
     }
     #endregion
 
+    #region Stage1Boss
+    public Transform platformPlayerSteppingOn { get; private set; }
+    public void SetPlatformPlayerSteppingOn(Transform platform)
+    {
+        platformPlayerSteppingOn = platform;
+    }
+    #endregion
+
     public void AddNumOfMonsterKilled()
     {
         numOfMonstersKilled++;
@@ -162,13 +170,6 @@ public class StageManager : MonoBehaviour
             onStageClear.Invoke();
         }
     }
-    #region Stage1Boss
-    public Transform platformPlayerSteppingOn { get; private set; }
-    public void SetPlatformPlayerSteppingOn(Transform platform)
-    {
-        platformPlayerSteppingOn = platform;
-    }
-    #endregion
 
     #region TentuPlayMethod
     void PlayStage()

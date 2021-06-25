@@ -7,7 +7,6 @@ public class CameraShake : MonoBehaviour
     public float shakeDuration = 0.3f;
     public float shakeAmplitude = 1f;
     public float shakeFrequency = 1f;
-
     public float shakeElapsedTime = 0f;
 
     public CinemachineVirtualCamera virtualCamera;
@@ -21,8 +20,6 @@ public class CameraShake : MonoBehaviour
 
     private void Update()
     {
-        //TODO
-
         if (virtualCamera != null || virtualCameraNoise != null)
         {
             if (shakeElapsedTime > 0)
@@ -38,12 +35,10 @@ public class CameraShake : MonoBehaviour
                 shakeElapsedTime = 0f;
             }
         }
-        
     }
 
     public void StartShake() 
     {
         shakeElapsedTime = shakeDuration;
-
     }
 }

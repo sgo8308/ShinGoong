@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// StraightArrow when shoot arrow at max power
+/// </summary>
 public class StraightArrow : MonoBehaviour
 {
     public float damage;
@@ -84,7 +86,6 @@ public class StraightArrow : MonoBehaviour
 
         arrowColList.Add(collision.contacts[0].point);  //매 충돌시 리스트에 충돌 좌표를 담는다. 
 
-        //화살의 충돌 횟수가 ArrowCol_MaxCount와 같아지면 더이상 반사되지 않고 멈춘다.
         if (arrowColList.Count == arrowColMaxCount)
         {
             Stop();
@@ -124,10 +125,9 @@ public class StraightArrow : MonoBehaviour
 
     private void Stop()
     {
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; //오브젝트를 움직이지 않게 한다.
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; 
         GetComponent<Rigidbody2D>().velocity = zeroVelocity;
-        arrowState = false; //화살촉 방향 변화를 멈추게 한다.
-
+        arrowState = false; 
         isUsed = true;
     }
 

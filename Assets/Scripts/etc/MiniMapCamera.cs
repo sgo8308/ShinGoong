@@ -48,8 +48,6 @@ public class MiniMapCamera : MonoBehaviour
 
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeMiniMap;
         
-
-
         shelterRenderTexture = new RenderTexture(684, 312, 0); ;
         stage1RenderTexture = new RenderTexture(910, 440, 0);
         bossRenderTexture = new RenderTexture(732, 336, 0);

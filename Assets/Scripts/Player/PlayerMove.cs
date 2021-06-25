@@ -43,7 +43,6 @@ public class PlayerMove : MonoBehaviour
         if (!canMove)
             return;
 
-        //GetAxisRaw 함수를 이용해 Horizontal 값을 가져옴(-1,0,1) [Edit] -> [Project Settings] -> Input
         if (Input.GetAxisRaw("Horizontal") == 1 && !animator.GetBool("isReady") )
             MoveRight();
 
@@ -52,7 +51,7 @@ public class PlayerMove : MonoBehaviour
 
         limitSpeed();
 
-        if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
+        if (Input.GetButtonUp("Horizontal")) 
             StopPlayer();
     }
 
@@ -72,9 +71,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         if (Input.GetButtonDown("Jump") && !animator.GetBool("isReady") && !isJumping)
-        {
             Jump();
-        }
 
 
         if (Mathf.Abs(rigid.velocity.x) < 0.4)
@@ -109,14 +106,12 @@ public class PlayerMove : MonoBehaviour
     {
         spriteRenderer.flipX = false;
         rigid.AddForce(Vector2.right, ForceMode2D.Impulse);
-
     }
 
     private void MoveLeft()
     {
         spriteRenderer.flipX = true;
         rigid.AddForce(Vector2.left, ForceMode2D.Impulse);
-
     }
 
     private void limitSpeed()
@@ -152,10 +147,6 @@ public class PlayerMove : MonoBehaviour
             Vector2 rightVec = new Vector2(rigid.position.x + 0.4f, rigid.position.y);
             Vector2 leftVec = new Vector2(rigid.position.x - 0.45f, rigid.position.y);
 
-            Debug.DrawRay(rigid.position, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
-            Debug.DrawRay(rightVec, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
-            Debug.DrawRay(leftVec, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
-
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  
             RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  
             RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  
@@ -174,7 +165,6 @@ public class PlayerMove : MonoBehaviour
                     animator.SetBool("isJumpingFinal", true);
                     Invoke("JumpFinalTime", 0.3f);
                     rigid.gravityScale = 3.0f;
-
                 }
             }
         }
@@ -221,7 +211,6 @@ public class PlayerMove : MonoBehaviour
         animator.SetBool("isJumpingDown", false);
 
         animator.SetBool("isJumpingFinal", false);
-
     }
 
     public void FlipPlayer()
@@ -242,6 +231,5 @@ public class PlayerMove : MonoBehaviour
     {
         rigid.velocity = zeroVector;
         animator.SetBool("isRunning", false);
-
     }
 }

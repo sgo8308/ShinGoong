@@ -2,7 +2,6 @@
 
 public class MouseCursor : MonoBehaviour
 {
-    //마우스 포인터로 사용할 텍스처를 입력받습니다.
     public Texture2D cursorTexture;
 
     Vector2 _hotSpot;
@@ -16,7 +15,7 @@ public class MouseCursor : MonoBehaviour
     private void Update()
     {
         if (IsAimCursorNeeded())
-            Cursor.SetCursor(cursorTexture, _hotSpot, CursorMode.Auto);  //마우스 커서를 화면에 표시
+            Cursor.SetCursor(cursorTexture, _hotSpot, CursorMode.Auto);
         else
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }

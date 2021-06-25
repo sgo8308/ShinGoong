@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Radar")
-            Invoke("Dead", 0.1f); // dead after 0.1 seconds
+            Invoke("Dead", 0.1f);
     }
 
     private void OnTriggerExit2D(Collider2D col)
@@ -123,7 +123,6 @@ public class Player : MonoBehaviour
         Inventory.instance.AddItem(storeSlot.item);
 
         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_BUY);
-
     }
 
     public void Equip(InventorySlot inventorySlot, InventoryEquipSlot equipSlot)

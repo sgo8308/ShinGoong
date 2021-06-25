@@ -36,7 +36,6 @@ public class MonsterBody : MonoBehaviour
 
                 onHit.Invoke(skill.damage);
             }
-
         }
     }
 

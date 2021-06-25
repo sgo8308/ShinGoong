@@ -124,7 +124,7 @@ public class PlayerAttack : MonoBehaviour
             AimCancel2();
             CancelInvoke("AimCancel");
             CancelInvoke("ReadyToAim");  
-            Invoke("ReadyToAim", 0.7f);  //0.4초 후에 준비자세에서 조준자세로 바꿔준다.
+            Invoke("ReadyToAim", 0.7f);  
 
             SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_READY_ARROW);
 
@@ -314,7 +314,6 @@ public class PlayerAttack : MonoBehaviour
 
     private void FireFinish()
     {
-
         animator.enabled = false;
 
         //각도별 조건 달기
@@ -366,7 +365,6 @@ public class PlayerAttack : MonoBehaviour
         {
             spriteReAim.sprite = sprites3[11];
         }
-
 
         aiming = false;
         angleChange = false;
@@ -434,7 +432,6 @@ public class PlayerAttack : MonoBehaviour
                     spriteReAim.sprite = sprites2[0];
                 }
 
-
                 if (ReAimAngleType == 30)
                 {
                     currnetAngleType = 30;
@@ -442,7 +439,6 @@ public class PlayerAttack : MonoBehaviour
                     animator.enabled = false;
 
                     spriteReAim.sprite = sprites2[1];
-
                 }
 
                 if (ReAimAngleType == 40)
@@ -462,6 +458,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[3];
                 }
+
                 if (ReAimAngleType == 60)
                 {
                     currnetAngleType = 60;
@@ -470,6 +467,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[4];
                 }
+
                 if (ReAimAngleType == 70)
                 {
                     currnetAngleType = 70;
@@ -478,6 +476,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[5];
                 }
+
                 if (ReAimAngleType == 80)
                 {
                     currnetAngleType = 80;
@@ -486,6 +485,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[6];
                 }
+
                 if (ReAimAngleType == 90)
                 {
                     currnetAngleType = 90;
@@ -494,6 +494,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[7];
                 }
+
                 if (ReAimAngleType == 100)
                 {
                     currnetAngleType = 100;
@@ -502,6 +503,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[8];
                 }
+
                 if (ReAimAngleType == 110)
                 {
                     currnetAngleType = 110;
@@ -510,6 +512,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[9];
                 }
+
                 if (ReAimAngleType == 120)
                 {
                     currnetAngleType = 120;
@@ -518,6 +521,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[10];
                 }
+
                 if (ReAimAngleType == 130)
                 {
                     currnetAngleType = 130;
@@ -527,18 +531,16 @@ public class PlayerAttack : MonoBehaviour
                     spriteReAim.sprite = sprites2[11];
                 }
             }
-
-
         }
     }
 
     private void SetArrowDirection()
     {
-        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); 
         Vector2 direction = new Vector2(mousePosition.x - arrowDirection.transform.position.x,
-                                          mousePosition.y - arrowDirection.transform.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
+                                          mousePosition.y - arrowDirection.transform.position.y);   
 
-        arrowDirection.transform.right = direction;  //화살의 x축 방향을 '바라볼 방향'으로 정한다
+        arrowDirection.transform.right = direction;  
     }
 
     private void ControlPower()
@@ -618,7 +620,6 @@ public class PlayerAttack : MonoBehaviour
         Destroy(teleportPosition.gameObject);
     }
 
-    
     private void ImageSet()
     {
         sprites2 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle2");
@@ -635,5 +636,4 @@ public class PlayerAttack : MonoBehaviour
     {
         teleportEffect.SetActive(false);
     }
-
 }
