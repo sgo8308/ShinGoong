@@ -152,9 +152,9 @@ GameObject:
   - component: {fileID: 2851466783527177882}
   - component: {fileID: 5536311343511602895}
   - component: {fileID: 983753514612983088}
-  m_Layer: 9
-  m_Name: Arrow
-  m_TagString: Arrow
+  m_Layer: 23
+  m_Name: StraightArrow
+  m_TagString: StraightArrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
