@@ -42,6 +42,7 @@ public class PlayerAttack : MonoBehaviour
     public static int ropeArrowAngleType;  //로프화살 조준각도 타입
 
     bool isAttacking;
+    bool canGuageBarFill;
 
     private void Start()
     {
@@ -72,6 +73,7 @@ public class PlayerAttack : MonoBehaviour
         this.canShoot = value;
     }
 
+    public float timeG;
     private void AttackReady()
     {
         if (Input.GetMouseButtonDown(0) && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving )  //down -> ready애니메이션 시작
@@ -95,11 +97,15 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)
         {
+            if (!canGuageBarFill)
+                Invoke("SetTrueCanGuageBarFill", timeG);
 
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
             playerMove.SetCanMove(false);
-            ControlPower();
+
+            if (canGuageBarFill)
+                ControlPower();
 
             ReAiming();
         }
@@ -108,10 +114,9 @@ public class PlayerAttack : MonoBehaviour
         {
 
             isAttacking = false;
-
             //파워가 특정값 이상일때만 화살 생성 및 공격
 
-            if (power >= 20.0f)
+            if (canGuageBarFill)
             {
                 playerMove.SetCanMove(true);
                 Invoke("ShootArrow", 0.1f);
@@ -134,6 +139,8 @@ public class PlayerAttack : MonoBehaviour
 
                 SoundManager.instance.StopPlayerSound();
             }
+
+            canGuageBarFill = false;
         }
     }
 
@@ -521,6 +528,11 @@ public class PlayerAttack : MonoBehaviour
         sprites2 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle2");
 
         sprites3 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle3");
+    }
+
+    private void SetTrueCanGuageBarFill()
+    {
+        canGuageBarFill = true;
     }
 
 }
