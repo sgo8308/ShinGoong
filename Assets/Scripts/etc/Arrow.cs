@@ -27,6 +27,7 @@ public class Arrow : MonoBehaviour
     {
         playerSkill = GameObject.Find("Player").GetComponent<PlayerSkill>();
         cameraShake = Camera.main.transform.Find("CameraShake").GetComponent<CameraShake>();
+        bombShotEffect = transform.Find("BombShotEffect").gameObject;
     }
 
 
@@ -151,8 +152,6 @@ public class Arrow : MonoBehaviour
         arrowState = false; //화살촉 방향 변화를 멈추게 한다.
 
         isUsed = true;
-
-        //PlayerAttack.power = 0.0f;
     }
 
     private void PlaySkillEffect()
@@ -184,8 +183,6 @@ public class Arrow : MonoBehaviour
         Vector2 inNormal = collision.contacts[0].normal;               //충돌 시 법선 벡터
         Vector2 newVelocity = Vector2.Reflect(transform.right, inNormal);  //반사각 벡터
         GetComponent<Rigidbody2D>().velocity = newVelocity * power;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
-        
-       
     }
 
     private bool isZeroGravityArrow()

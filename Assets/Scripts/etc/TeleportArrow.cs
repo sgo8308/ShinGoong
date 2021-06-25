@@ -24,6 +24,8 @@ public class TeleportArrow : MonoBehaviour
         zeroVelocity = new Vector2(0, 0);
 
         teleportPosition = transform.Find("TeleportPosition").gameObject;
+
+        Invoke("DestroyThis", 5);
     }
 
     void Update()
@@ -92,5 +94,10 @@ public class TeleportArrow : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    private void DestroyThis()
+    {
+        Destroy(gameObject);
     }
 }
