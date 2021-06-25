@@ -58,6 +58,14 @@ public class PlayerAttack : MonoBehaviour
         SetArrowDirection();
 
         AttackReady();
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("마우스 오른쪽 버튼 눌림");
+
+            isAttacking = false;
+            AimCancel();
+        }
     }
 
     public void SetCanShoot(bool value)
@@ -94,7 +102,7 @@ public class PlayerAttack : MonoBehaviour
             gaugePower = 0.0f;
         }
 
-        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && isAttacking)
+        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && isAttacking)
         {
             if (!canGuageBarFill)
                 Invoke("SetTrueCanGuageBarFill", timeG);
@@ -130,11 +138,6 @@ public class PlayerAttack : MonoBehaviour
             else
             {
                 AimCancel();
-
-                aiming = false;
-                angleChange = false;
-
-                SoundManager.instance.StopPlayerSound();
             }
 
             //CancelInvoke("SetTrueCanGuageBarFill");
@@ -358,6 +361,11 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("isReady", false);
 
         playerMove.SetCanMove(true);
+
+        aiming = false;
+        angleChange = false;
+
+        SoundManager.instance.StopPlayerSound();
     }
 
     void AimCancel2()

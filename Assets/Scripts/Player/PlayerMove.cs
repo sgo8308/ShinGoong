@@ -100,8 +100,6 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-
-
     public void SetCanMove(bool value)
     {
         canMove = value;
@@ -147,9 +145,6 @@ public class PlayerMove : MonoBehaviour
     {
         if (rigid.velocity.y < -0.1f)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
         {
-            //isJumping = true;
-
-
             animator.SetBool("isRunning", false);
             animator.SetBool("isJumpingUp", false);
             animator.SetBool("isJumpingDown", true);
@@ -161,12 +156,12 @@ public class PlayerMove : MonoBehaviour
             Debug.DrawRay(rightVec, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
             Debug.DrawRay(leftVec, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
 
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
-            RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
-            RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
-            if (rayHit.collider != null || rayHit2.collider != null || rayHit3.collider != null)  //레이와 충돌한 오브젝트가 있다면
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  
+            RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  
+            RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  
+            if (rayHit.collider != null || rayHit2.collider != null || rayHit3.collider != null)  
             {
-                if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
+                if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)
                 {
                     if (!isLanded)
                         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
@@ -199,7 +194,6 @@ public class PlayerMove : MonoBehaviour
         {
             if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
             {
-                Debug.Log("발바닥 감지");
                 isLanded = true;
                 isJumping = false;
                 animator.SetBool("isJumpingUp", false);
