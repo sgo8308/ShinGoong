@@ -29,14 +29,11 @@ public class PlayerInfo : MonoBehaviour
     {
         int temp = levelUpCount;
         levelUpCount = 0;
-        Debug.Log("겟레벨업카운트");
         return temp;
     }
 
     public float CalculateNowExpPercent()
     {
-        Debug.Log(nowExpPoint + " " + maxExpPoint);
-        Debug.Log((float)(nowExpPoint / maxExpPoint));
         return (float)(nowExpPoint / maxExpPoint);
     }
 

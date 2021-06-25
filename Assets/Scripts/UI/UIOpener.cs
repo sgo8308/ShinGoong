@@ -22,6 +22,7 @@ public abstract class UIOpener : MonoBehaviour
         playerMove.animator.SetBool("isRunning", false);
         playerMove.SetCanMove(false);
         playerAttack.SetCanShoot(false);
+
         SoundManager.instance.MutePlayerSound();
         SoundManager.instance.MutePlayerRunningSound();
     }
@@ -38,7 +39,9 @@ public abstract class UIOpener : MonoBehaviour
             SoundManager.instance.UnMutePlayerRunningSound();
         }
         playerMove.InitJumpValues();
-
+        playerMove.animator.enabled = true;
+        playerMove.animator.SetBool("isIdle", true);
+        playerMove.animator.SetBool("isReady", false);
     }
 
     private void SetIsOpenedFalse()

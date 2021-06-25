@@ -26,8 +26,11 @@ public class StageManager : MonoBehaviour
 
     public GameObject player;
 
+    public GameObject nextStageTeleport;
+
     public delegate void OnStageClear();
     public OnStageClear onStageClear;
+
 
     private void Awake()
     {
@@ -48,6 +51,7 @@ public class StageManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += ResetStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStage;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += SetNextStageTeleport;
 
         stopWatch = new Stopwatch();
 
@@ -86,6 +90,19 @@ public class StageManager : MonoBehaviour
     {
         Transform playerStartPosition = GameObject.Find("PlayerStartPosition").transform;
         player.transform.position = playerStartPosition.position;
+    }
+
+    void NextStageTeleportOn()
+    {
+        nextStageTeleport.SetActive(true);
+    }
+    void SetNextStageTeleport(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "ShelterScene")
+            return;
+
+        nextStageTeleport = GameObject.Find("Teleport");
+        nextStageTeleport.SetActive(false);
     }
 
     #region StopWatch
@@ -128,6 +145,14 @@ public class StageManager : MonoBehaviour
     }
     #endregion
 
+    #region Stage1Boss
+    public Transform platformPlayerSteppingOn { get; private set; }
+    public void SetPlatformPlayerSteppingOn(Transform platform)
+    {
+        platformPlayerSteppingOn = platform;
+    }
+    #endregion
+
     public void AddNumOfMonsterKilled()
     {
         numOfMonstersKilled++;
@@ -141,16 +166,10 @@ public class StageManager : MonoBehaviour
         {
             numOfMonstersKilled = 0;
             stageState = StageState.CLEAR;
+            NextStageTeleportOn();
             onStageClear.Invoke();
         }
     }
-    #region Stage1Boss
-    public Transform platformPlayerSteppingOn { get; private set; }
-    public void SetPlatformPlayerSteppingOn(Transform platform)
-    {
-        platformPlayerSteppingOn = platform;
-    }
-    #endregion
 
     #region TentuPlayMethod
     void PlayStage()

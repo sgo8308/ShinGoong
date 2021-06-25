@@ -14,7 +14,6 @@ public class MonsterDog : Monster
         if (rigid.bodyType == RigidbodyType2D.Static)
             return;
 
-        //Move
         rigid.velocity = new Vector2(nextMove * speed, rigid.velocity.y);
 
         CheckIfFloor();
@@ -25,7 +24,6 @@ public class MonsterDog : Monster
     private void CheckIfFloor()
     {
         Vector2 frontVec = new Vector2(rigid.position.x + nextMove, rigid.position.y);
-        Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0), 10.0f, false);
 
         RaycastHit2D rayHit = Physics2D.Raycast(frontVec,
                                 Vector3.down, 1, LayerMask.GetMask("Platform"));
@@ -89,7 +87,7 @@ public class MonsterDog : Monster
     #endregion
 
     #region When Monster get hit by arrow
-    protected override void OnHit(float damage)
+    public override void OnHit(float damage)
     {
         ReduceHp(damage);
 

@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public static bool isRopeArrowMoving = false;
-
-    public static float power = 0.0f;
+    public static float gaugePower = 0.0f;
+    public static float nowPowerOfArrow = 0.0f;
 
     public GameObject arrowPrefab = null;
-    public GameObject ropeArrowPrefab = null;
+    public GameObject straightArrowPrefab = null;
 
+    public GameObject teleportArrowPrefab = null;
+    public GameObject teleportArrowImage = null;
+    public GameObject teleportEffect = null;
     private GameObject player = null;
     private PlayerMove playerMove;
+    private PlayerSkill playerSkill;
 
     public float arrowSpeed = 50f;    //화살 속도
     public float arrowMaxPower = 1f;    //화살 Max Power
-    public float ropeArrowSpeed = 15f;    //화살 속도
 
 
     private Animator animator;
@@ -39,14 +41,15 @@ public class PlayerAttack : MonoBehaviour
     Sprite[] sprites3;
     SpriteRenderer spriteReAim;
 
-    public static int ropeArrowAngleType;  //로프화살 조준각도 타입
-
     bool isAttacking;
+    public bool canGuageBarFill;
+    public bool isTeleportArrowOn = false;
 
     private void Start()
     {
         player = GameObject.Find("Player");
         playerMove = player.GetComponent<PlayerMove>();
+        playerSkill = player.GetComponent<PlayerSkill>();
         animator = GetComponent<Animator>();
         mainCamera = Camera.main;
         arrowDirection = transform.Find("ArrowDirection");
@@ -57,14 +60,42 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if (!canShoot || playerMove.isJumping ||
-                playerMove.isRopeMoving || Inventory.instance.GetArrowCount() <= 0 ||
-                isRopeArrowMoving || UIOpener.isOpened)
+        if (!canShoot || playerMove.isJumping || Inventory.instance.GetArrowCount() <= 0 || UIOpener.isOpened)
             return;
 
         SetArrowDirection();
 
         AttackReady();
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            isAttacking = false;
+            AimCancel();
+        }
+
+        if (gaugePower >= arrowMaxPower && playerSkill.IsSkillOn() && isAttacking)
+            playerSkill.TurnOffSkill();
+
+        if (Input.GetKeyDown(KeyCode.R) && !playerSkill.IsSkillOn())
+        {
+            if (!isTeleportArrowOn)
+            {
+                isTeleportArrowOn = true;
+                teleportArrowImage.SetActive(true);
+            }
+            else
+            {
+                isTeleportArrowOn = false;
+                teleportArrowImage.SetActive(false);
+            }
+
+            SoundManager.instance.PlayClickSound();
+        }
+
+        if (teleportPosition != null && isTeleportArrowOn && teleportArrow.isStop && !Player.isDead)
+        {
+            Teleport();
+        }
     }
 
     public void SetCanShoot(bool value)
@@ -74,77 +105,84 @@ public class PlayerAttack : MonoBehaviour
 
     private void AttackReady()
     {
-        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving )  //down -> ready애니메이션 시작
+        if (Input.GetMouseButtonDown(0))  //down -> ready애니메이션 시작
         {
+            animator.enabled = true;
             animator.SetBool("isRunning", false);
+            animator.SetBool("isIdle", false);
 
+            CancelInvoke("SetTrueCanGuageBarFill");
+            canGuageBarFill = false;
             isAttacking = true;
+
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
             playerMove.SetCanMove(false);
-
 
             CalculateBowAngle();
             animator.SetBool("isReady", true);
-            Invoke("ReadyToAim", 0.4f);  //0.7초 후에 준비자세에서 조준자세로 바꿔준다.
+            AimCancel2();
+            CancelInvoke("AimCancel");
+            CancelInvoke("ReadyToAim");  
+            Invoke("ReadyToAim", 0.7f);  
 
             SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_READY_ARROW);
 
-            power = 0.0f;
+            gaugePower = 0.0f;
         }
 
-        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)
+        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && isAttacking)
         {
+            if (!canGuageBarFill)
+                Invoke("SetTrueCanGuageBarFill", 0.6f);
 
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
             playerMove.SetCanMove(false);
-            ControlPower();
+
+            if (canGuageBarFill)
+                ControlPower();
 
             ReAiming();
         }
 
-        if (Input.GetMouseButtonUp(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
+        if (Input.GetMouseButtonUp(0) && !animator.GetBool("isRunning") && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
         {
 
             isAttacking = false;
 
-            //파워가 특정값 이상일때만 화살 생성 및 공격
-
-            if (power >= 20.0f)
+            if (canGuageBarFill)
             {
-                playerMove.SetCanMove(true);
-                Invoke("ShootArrow", 0.1f);
+                nowPowerOfArrow = gaugePower;
+
+                if(isTeleportArrowOn)
+                    Invoke("ShootTeleportArrow", 0.05f);
+                else
+                    Invoke("ShootArrow", 0.05f);
+
+                animator.SetBool("isIdle", true);
+                animator.Play("Base Layer.Sunbee-Idle", 0, 0.0f); // for not to go back previous anim but to go Idle anim directly.
 
                 FireFinish();
 
                 SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
 
                 Invoke("AimCancel", 0.5f);
-                
-                playerMove.SetCanMove(true);
             }
             else
             {
                 AimCancel();
-
-                aiming = false;
-                angleChange = false;
-                playerMove.SetCanMove(true);
-
-                SoundManager.instance.StopPlayerSound();
             }
         }
     }
 
     private void CalculateBowAngle()
     {
-        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); 
         Vector2 t_direction = new Vector2(mousePosition.x - arrowDirection.position.x,
-                                          mousePosition.y - arrowDirection.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
+                                          mousePosition.y - arrowDirection.position.y);   //mousePos - arrowPos = arrowDirection
 
-        aimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
-
+        aimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;
 
         if (aimAngle >= 0)
         {
@@ -194,8 +232,6 @@ public class PlayerAttack : MonoBehaviour
 
         if (currnetAngleType != ReAimAngleType)   //재조준 해서 각도타입이 달라졌을 때
         {
-            print("aim 각도type : " + currnetAngleType);
-            print("재조준 각도type : " + ReAimAngleType);
             angleChange = true;
         }
 
@@ -204,11 +240,14 @@ public class PlayerAttack : MonoBehaviour
             angleChange = false;
         }
     }
-
-    private void ReadyToAim()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
+    /// <summary>
+    /// Aiming animation right after shooting ready animation
+    /// </summary>
+    private void ReadyToAim()
     {
+        animator.SetBool("isReady", false);
 
-        if (aimAngle >= 0 && aimAngle < 25) //마우스 각도가 0~25도 일때 Aiming20 애니메이션 시작
+        if (aimAngle >= 0 && aimAngle < 25) 
         {
             animator.SetBool("isAiming20", true);
             currnetAngleType = 20;
@@ -277,7 +316,6 @@ public class PlayerAttack : MonoBehaviour
     {
         animator.enabled = false;
 
-
         //각도별 조건 달기
         if (currnetAngleType == 20)
         {
@@ -328,7 +366,6 @@ public class PlayerAttack : MonoBehaviour
             spriteReAim.sprite = sprites3[11];
         }
 
-
         aiming = false;
         angleChange = false;
     }
@@ -337,7 +374,7 @@ public class PlayerAttack : MonoBehaviour
     void AimCancel()
     {
         animator.enabled = true;
-        animator.SetBool("isReady", false);
+        animator.SetBool("isIdle", true);
 
         animator.SetBool("isAiming20", false);
         animator.SetBool("isAiming30", false);
@@ -352,16 +389,37 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("isAiming120", false);
         animator.SetBool("isAiming130", false);
 
-        CancelInvoke("ReadyToAim");
+        animator.SetBool("isReady", false);
+
+        playerMove.SetCanMove(true);
+
+        aiming = false;
+        angleChange = false;
+
+        SoundManager.instance.StopPlayerSound();
     }
 
+    void AimCancel2()
+    {
+        animator.SetBool("isAiming20", false);
+        animator.SetBool("isAiming30", false);
+        animator.SetBool("isAiming40", false);
+        animator.SetBool("isAiming50", false);
+        animator.SetBool("isAiming60", false);
+        animator.SetBool("isAiming70", false);
+        animator.SetBool("isAiming80", false);
+        animator.SetBool("isAiming90", false);
+        animator.SetBool("isAiming100", false);
+        animator.SetBool("isAiming110", false);
+        animator.SetBool("isAiming120", false);
+        animator.SetBool("isAiming130", false);
+    }
 
-
-    private void ReAiming()  //마우스를 누르고 있을 때
+    private void ReAiming()
     {
         if (aiming)
         {
-            CalculateBowAngle_ReAim(); //재조준 활 각도계산
+            CalculateBowAngle_ReAim(); 
 
             if (angleChange)
             {
@@ -374,7 +432,6 @@ public class PlayerAttack : MonoBehaviour
                     spriteReAim.sprite = sprites2[0];
                 }
 
-
                 if (ReAimAngleType == 30)
                 {
                     currnetAngleType = 30;
@@ -382,7 +439,6 @@ public class PlayerAttack : MonoBehaviour
                     animator.enabled = false;
 
                     spriteReAim.sprite = sprites2[1];
-
                 }
 
                 if (ReAimAngleType == 40)
@@ -402,6 +458,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[3];
                 }
+
                 if (ReAimAngleType == 60)
                 {
                     currnetAngleType = 60;
@@ -410,6 +467,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[4];
                 }
+
                 if (ReAimAngleType == 70)
                 {
                     currnetAngleType = 70;
@@ -418,6 +476,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[5];
                 }
+
                 if (ReAimAngleType == 80)
                 {
                     currnetAngleType = 80;
@@ -426,6 +485,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[6];
                 }
+
                 if (ReAimAngleType == 90)
                 {
                     currnetAngleType = 90;
@@ -434,6 +494,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[7];
                 }
+
                 if (ReAimAngleType == 100)
                 {
                     currnetAngleType = 100;
@@ -442,6 +503,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[8];
                 }
+
                 if (ReAimAngleType == 110)
                 {
                     currnetAngleType = 110;
@@ -450,6 +512,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[9];
                 }
+
                 if (ReAimAngleType == 120)
                 {
                     currnetAngleType = 120;
@@ -458,6 +521,7 @@ public class PlayerAttack : MonoBehaviour
 
                     spriteReAim.sprite = sprites2[10];
                 }
+
                 if (ReAimAngleType == 130)
                 {
                     currnetAngleType = 130;
@@ -467,53 +531,93 @@ public class PlayerAttack : MonoBehaviour
                     spriteReAim.sprite = sprites2[11];
                 }
             }
-
-
         }
     }
 
-
     private void SetArrowDirection()
     {
-        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); 
         Vector2 direction = new Vector2(mousePosition.x - arrowDirection.transform.position.x,
-                                          mousePosition.y - arrowDirection.transform.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
+                                          mousePosition.y - arrowDirection.transform.position.y);   
 
-        arrowDirection.transform.right = direction;  //화살의 x축 방향을 '바라볼 방향'으로 정한다
+        arrowDirection.transform.right = direction;  
     }
 
     private void ControlPower()
     {
-        power += Time.deltaTime * arrowSpeed;
+        gaugePower += Time.deltaTime * arrowSpeed;
 
-        if (power > arrowMaxPower)
-            power = arrowMaxPower;
+        if (gaugePower > arrowMaxPower)
+            gaugePower = arrowMaxPower;
 
-        MainUI.instance.UpdateGaugeBarUI(power, arrowMaxPower);
+        MainUI.instance.UpdateGaugeBarUI(gaugePower, arrowMaxPower);
     }
 
     private void ShootArrow()
     {
-        GameObject t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-        t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+        GameObject t_arrow;
 
-        if (power >= arrowMaxPower)
+        if (gaugePower >= arrowMaxPower)
         {
-            t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+            t_arrow = Instantiate(straightArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); 
+            t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; 
+            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow; 
+        }
+        else
+        {
+            t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); 
+            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow;  
         }
 
         Inventory.instance.UseArrow();
         MainUI.instance.UpdateArrowCountUI();
     }
 
-    private void ShootRopeArrow()
-    {
-        GameObject RopeArrow = Instantiate(ropeArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-        RopeArrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-        RopeArrow.GetComponent<Rigidbody2D>().velocity = RopeArrow.transform.right * ropeArrowSpeed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+    private GameObject nowFlyingTeleportArrow;
+    private Transform teleportPosition;
+    private TeleportArrow teleportArrow;
 
-        isRopeArrowMoving = true;
+    private void ShootTeleportArrow()
+    {
+        nowFlyingTeleportArrow = Instantiate(teleportArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); 
+        nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 4 / 5;  
+
+        nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().gravityScale = 2; 
+
+        if (gaugePower >= arrowMaxPower)
+        {
+            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().gravityScale = 0; 
+            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 1 / 3;
+        }
+
+        Inventory.instance.UseArrow();
+        MainUI.instance.UpdateArrowCountUI();
+
+        teleportArrow = nowFlyingTeleportArrow.GetComponent<TeleportArrow>();
+        teleportPosition = nowFlyingTeleportArrow.transform.Find("TeleportPosition");
+    }
+
+    private void Teleport()
+    {
+        Vector3 teleportPos;
+        if (teleportPosition.rotation.z >= 0)
+        {
+            teleportPos = new Vector3(teleportPosition.position.x, teleportPosition.position.y, 0);
+        }
+        else
+        {
+            teleportPos = new Vector3(teleportPosition.position.x, teleportPosition.position.y + 2.0f, 0);
+        }
+
+        transform.position = teleportPos;
+        isTeleportArrowOn = false;
+        teleportArrowImage.SetActive(false);
+        teleportEffect.SetActive(true);
+        Invoke("HideTeleportEffect", 0.5f);
+
+        SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ARROW_TELEPORT);
+
+        Destroy(teleportPosition.gameObject);
     }
 
     private void ImageSet()
@@ -523,4 +627,13 @@ public class PlayerAttack : MonoBehaviour
         sprites3 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle3");
     }
 
+    private void SetTrueCanGuageBarFill()
+    {
+        canGuageBarFill = true;
+    }
+
+    private void HideTeleportEffect()
+    {
+        teleportEffect.SetActive(false);
+    }
 }

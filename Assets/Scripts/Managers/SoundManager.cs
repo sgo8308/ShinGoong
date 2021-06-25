@@ -26,6 +26,7 @@ public enum NonPlayerSounds
     MONSTER_DIE,
     ARROW_PIERCE_PLATFORM,
     ARROW_PIERCE_MONSTER,
+    ARROW_TELEPORT,
     SKILL_BOMB_SHOT,
     TELEPORT
 }
@@ -41,8 +42,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource playerRunningSound;
 
     public AudioClip shelterSceneMusic;
-    public AudioClip stage1SceneMusic;
-    public AudioClip bossSceneMusic;
+    public AudioClip stageSceneMusic;
 
     public AudioClip playerRun;
     public AudioClip playerJump;
@@ -63,6 +63,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip monsterDie;
     public AudioClip arrowPiercePlatform;
     public AudioClip arrowPierceMonster;
+    public AudioClip arrowTeleport;
     public AudioClip bombShot;
     public AudioClip shelterWindSound;
     public AudioClip stageWindSound;
@@ -177,10 +178,17 @@ public class SoundManager : MonoBehaviour
                 nonPlayerSound.PlayOneShot(arrowPierceMonster, 0.25f);
                 break;
 
+            case NonPlayerSounds.ARROW_TELEPORT:
+                nonPlayerSound.PlayOneShot(arrowTeleport);
+                break;
+
             case NonPlayerSounds.SKILL_BOMB_SHOT:
                 nonPlayerSound.PlayOneShot(bombShot, 0.7f);
                 break;
             case NonPlayerSounds.TELEPORT:
+                nonPlayerSound.PlayOneShot(teleport, 0.4f);
+                break;
+            case NonPlayerSounds.CLICK:
                 nonPlayerSound.PlayOneShot(teleport, 0.4f);
                 break;
 
@@ -198,12 +206,11 @@ public class SoundManager : MonoBehaviour
                 break;
 
             case "Stage1Scene":
-                bgm.clip = stage1SceneMusic;
+                bgm.clip = stageSceneMusic;
                 break;
 
             case "BossScene":
-                bgm.clip = bossSceneMusic;
-                
+                bgm.clip = stageSceneMusic;
                 break;
             default:
                 break;

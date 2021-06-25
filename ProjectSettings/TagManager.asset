@@ -11,6 +11,8 @@ TagManager:
   - MonsterBody
   - Platform
   - Skill
+  - TeleportArrow
+  - StraightArrow
   layers:
   - Default
   - TransparentFX
@@ -34,8 +36,8 @@ TagManager:
   - Coin
   - Skill
   - Radar
-  - 
-  - 
+  - TeleportArrow
+  - StraightArrow
   - 
   - 
   - 

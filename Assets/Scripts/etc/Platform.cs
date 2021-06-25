@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+/// <summary>
+/// Platform in BossScene
+/// </summary>
 public class Platform : MonoBehaviour
 {
     public GameObject bubble;

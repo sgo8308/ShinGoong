@@ -7,13 +7,11 @@ using UnityEngine.SceneManagement;
 public class PlayerMove : MonoBehaviour
 {
     public bool canMove { get; private set; }
-    public bool isRopeMoving { get; private set; }
     public bool isJumping { get; private set; }
 
     private bool isLanded;
 
     public int stopSoundCount;
-    public float ropeMoveSpeed;
 
     private PlayerInfo playerInfo;
     public Animator animator;
@@ -45,16 +43,15 @@ public class PlayerMove : MonoBehaviour
         if (!canMove)
             return;
 
-        //GetAxisRaw 함수를 이용해 Horizontal 값을 가져옴(-1,0,1) [Edit] -> [Project Settings] -> Input
-        if (Input.GetAxisRaw("Horizontal") == 1 && !animator.GetBool("isRopeMoving") && !animator.GetBool("isReady") && !Hook.isHookMoving)
+        if (Input.GetAxisRaw("Horizontal") == 1 && !animator.GetBool("isReady") )
             MoveRight();
 
-        if (Input.GetAxisRaw("Horizontal") == -1 && !animator.GetBool("isRopeMoving") && !animator.GetBool("isReady") && !Hook.isHookMoving)
+        if (Input.GetAxisRaw("Horizontal") == -1 && !animator.GetBool("isReady"))
             MoveLeft();
 
         limitSpeed();
 
-        if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
+        if (Input.GetButtonUp("Horizontal")) 
             StopPlayer();
     }
 
@@ -67,20 +64,14 @@ public class PlayerMove : MonoBehaviour
 
         CheckIfOnGround();
 
-        if (isRopeMoving)
-            RopeMove();
-
         if (!canMove)
         {
             StopPlayer();
             return;
         }
 
-        if (Input.GetButtonDown("Jump") && !animator.GetBool("isReady") && !isJumping
-             && !animator.GetBool("isRopeMoving") && !Hook.isHookMoving)
-        {
+        if (Input.GetButtonDown("Jump") && !animator.GetBool("isReady") && !isJumping)
             Jump();
-        }
 
 
         if (Mathf.Abs(rigid.velocity.x) < 0.4)
@@ -106,30 +97,21 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-
-
     public void SetCanMove(bool value)
     {
         canMove = value;
-    }
-
-    public void SetIsRopeMoving(bool value)
-    {
-        isRopeMoving = value;
     }
 
     private void MoveRight()
     {
         spriteRenderer.flipX = false;
         rigid.AddForce(Vector2.right, ForceMode2D.Impulse);
-
     }
 
     private void MoveLeft()
     {
         spriteRenderer.flipX = true;
         rigid.AddForce(Vector2.left, ForceMode2D.Impulse);
-
     }
 
     private void limitSpeed()
@@ -158,31 +140,22 @@ public class PlayerMove : MonoBehaviour
     {
         if (rigid.velocity.y < -0.1f)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
         {
-            //isJumping = true;
-
-
             animator.SetBool("isRunning", false);
             animator.SetBool("isJumpingUp", false);
             animator.SetBool("isJumpingDown", true);
 
-            Vector2 rightVec = new Vector2(rigid.position.x + 0.3f, rigid.position.y);
-            Vector2 leftVec = new Vector2(rigid.position.x - 0.3f, rigid.position.y);
+            Vector2 rightVec = new Vector2(rigid.position.x + 0.4f, rigid.position.y);
+            Vector2 leftVec = new Vector2(rigid.position.x - 0.45f, rigid.position.y);
 
-            Debug.DrawRay(rigid.position, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
-            Debug.DrawRay(rightVec, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
-            Debug.DrawRay(leftVec, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
-
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
-            RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
-            RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  //Ray가 맞은 오브젝트 (UI레이어만 해당됨)
-            if (rayHit.collider != null || rayHit2.collider != null || rayHit3.collider != null)  //레이와 충돌한 오브젝트가 있다면
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));  
+            RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  
+            RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  
+            if (rayHit.collider != null || rayHit2.collider != null || rayHit3.collider != null)  
             {
-                if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
+                if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)
                 {
                     if (!isLanded)
                         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
-
-                    Debug.Log("발바닥아래 감지됐음");
 
                     isJumping = false;
                     isLanded = true;
@@ -192,7 +165,6 @@ public class PlayerMove : MonoBehaviour
                     animator.SetBool("isJumpingFinal", true);
                     Invoke("JumpFinalTime", 0.3f);
                     rigid.gravityScale = 3.0f;
-
                 }
             }
         }
@@ -211,6 +183,7 @@ public class PlayerMove : MonoBehaviour
             if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
             {
                 isLanded = true;
+                isJumping = false;
                 animator.SetBool("isJumpingUp", false);
                 animator.SetBool("isJumpingDown", false);
             }
@@ -238,30 +211,6 @@ public class PlayerMove : MonoBehaviour
         animator.SetBool("isJumpingDown", false);
 
         animator.SetBool("isJumpingFinal", false);
-
-    }
-
-    
-
-    private void RopeMove()
-    {
-        if (isRopeMoving)
-        {
-            Vector2 ropeArrow_Position = RopeArrow.currentRopeArrowPositionList[0]; //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
-
-            this.GetComponent<Rigidbody2D>().gravityScale = 0; //플레이어의 중력을 0으로 한다.
-
-            transform.position = Vector2.MoveTowards(transform.position,
-                                        ropeArrow_Position, ropeMoveSpeed);  //로프화살 좌표까지 이동한다.
-
-            Vector2 p_Position = transform.position;
-
-            if (p_Position == ropeArrow_Position)
-            {
-                isRopeMoving = false;
-                this.GetComponent<Rigidbody2D>().gravityScale = 3;
-            }
-        }
     }
 
     public void FlipPlayer()
@@ -282,6 +231,5 @@ public class PlayerMove : MonoBehaviour
     {
         rigid.velocity = zeroVector;
         animator.SetBool("isRunning", false);
-
     }
 }
