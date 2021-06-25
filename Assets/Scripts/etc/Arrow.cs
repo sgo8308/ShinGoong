@@ -58,7 +58,7 @@ public class Arrow : MonoBehaviour
 
         Stop();
 
-        if (!playerSkill.IsSkillOn())  //폭발샷이 아니라면 레이어를 14로 하여 이후에 화살 회수가 가능하도록 한다.
+        if (!playerSkill.IsSkillOn())
             gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
 
         if (collision.gameObject.tag == "MonsterBody")
@@ -126,11 +126,10 @@ public class Arrow : MonoBehaviour
 
     private void Stop()
     {
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; //오브젝트를 움직이지 않게 한다.
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; 
         GetComponent<Rigidbody2D>().velocity = zeroVelocity;
-        arrowState = false; //화살촉 방향 변화를 멈추게 한다.
+        arrowState = false; 
 
-        isUsed = true;
     }
 
     private void PlaySkillEffect()
