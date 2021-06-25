@@ -40,9 +40,7 @@ public class PlayerMove : MonoBehaviour
         zeroVector = new Vector2(0, 0);
     }
 
-
-
-    private void Update()
+    private void FixedUpdate()
     {
         if (!canMove)
             return;
@@ -56,9 +54,18 @@ public class PlayerMove : MonoBehaviour
 
         limitSpeed();
 
+        if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
+            StopPlayer();
+    }
+
+    private void Update()
+    {
+        if (!canMove)
+            return;
+
         CheckIfJumping();
 
-        //CheckIfOnGround();
+        CheckIfOnGround();
 
         if (isRopeMoving)
             RopeMove();
@@ -75,8 +82,6 @@ public class PlayerMove : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetButtonUp("Horizontal")) //버튼을 계속 누르고 있다가 땔때 
-            StopPlayer();
 
         if (Mathf.Abs(rigid.velocity.x) < 0.4)
             animator.SetBool("isRunning", false);
