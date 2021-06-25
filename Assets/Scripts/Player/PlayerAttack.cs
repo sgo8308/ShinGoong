@@ -76,7 +76,7 @@ public class PlayerAttack : MonoBehaviour
     public float timeG;
     private void AttackReady()
     {
-        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving )  //down -> ready애니메이션 시작
+        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isJumping"))  //down -> ready애니메이션 시작
         {
             animator.SetBool("isRunning", false);
 
@@ -95,7 +95,7 @@ public class PlayerAttack : MonoBehaviour
             power = 0.0f;
         }
 
-        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)
+        if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && isAttacking)
         {
             if (!canGuageBarFill)
                 Invoke("SetTrueCanGuageBarFill", timeG);
@@ -110,7 +110,7 @@ public class PlayerAttack : MonoBehaviour
             ReAiming();
         }
 
-        if (Input.GetMouseButtonUp(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && !Input.GetKey(KeyCode.E) && !Hook.isHookMoving && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
+        if (Input.GetMouseButtonUp(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
         {
 
             isAttacking = false;
@@ -201,8 +201,6 @@ public class PlayerAttack : MonoBehaviour
 
         if (currnetAngleType != ReAimAngleType)   //재조준 해서 각도타입이 달라졌을 때
         {
-            print("aim 각도type : " + currnetAngleType);
-            print("재조준 각도type : " + ReAimAngleType);
             angleChange = true;
         }
 
@@ -362,8 +360,6 @@ public class PlayerAttack : MonoBehaviour
         CancelInvoke("ReadyToAim");
     }
 
-
-
     private void ReAiming()  //마우스를 누르고 있을 때
     {
         if (aiming)
@@ -512,15 +508,6 @@ public class PlayerAttack : MonoBehaviour
 
         Inventory.instance.UseArrow();
         MainUI.instance.UpdateArrowCountUI();
-    }
-
-    private void ShootRopeArrow()
-    {
-        GameObject RopeArrow = Instantiate(ropeArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-        RopeArrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-        RopeArrow.GetComponent<Rigidbody2D>().velocity = RopeArrow.transform.right * ropeArrowSpeed * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
-
-        isRopeArrowMoving = true;
     }
 
     private void ImageSet()

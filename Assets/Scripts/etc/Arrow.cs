@@ -53,8 +53,6 @@ public class Arrow : MonoBehaviour
         if (collision.gameObject.tag != "MonsterBody" && collision.gameObject.tag != "Platform")
             return;
 
-        Debug.Log("콜리전 네임 : " + collision.gameObject.name);
-
         if (!isZeroGravityArrow()) //곡사가 충돌할때 화살이 박힌다.
         {
             if (playerSkill.IsSkillOn()) {
