@@ -28,7 +28,7 @@ public class MonsterBoss : Monster
         speed = 2;
         flySpeed = 0.15f;
         floatSpeed = 0.05f;
-        hp = 10000;
+        hp = 100;
         defensivePower = 50;
         expPoint = 70.0f;
     }
@@ -36,10 +36,6 @@ public class MonsterBoss : Monster
     private void Start()
     {
         Invoke("ThinkAndMove", 5);
-    }
-
-    private void Update()
-    {
     }
 
     private bool CheckIfFalling()
@@ -288,7 +284,7 @@ public class MonsterBoss : Monster
     }
 
     #region When Monster gets hit
-    protected override void OnHit(float damage)
+    public override void OnHit(float damage)
     {
         isHit = true;
 

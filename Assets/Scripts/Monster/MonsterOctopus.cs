@@ -98,7 +98,7 @@ public class MonsterOctopus : Monster
         Invoke("GetPeaceful", 5);
     }
 
-    protected override void OnHit(float damage)
+    public override void OnHit(float damage)
     {
         ReduceHp(damage);
 

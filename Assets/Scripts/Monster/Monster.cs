@@ -97,7 +97,7 @@ public abstract class Monster : MonoBehaviour
     }
 
     #region When Monster get hit by arrow
-    protected abstract void OnHit(float damage);
+    public abstract void OnHit(float damage);
 
     protected void CheckIfDead()
     {

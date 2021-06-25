@@ -89,7 +89,7 @@ public class MonsterDog : Monster
     #endregion
 
     #region When Monster get hit by arrow
-    protected override void OnHit(float damage)
+    public override void OnHit(float damage)
     {
         ReduceHp(damage);
 

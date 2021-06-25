@@ -8,6 +8,8 @@ public class PlayerAttack : MonoBehaviour
     public static float nowPowerOfArrow = 0.0f;
 
     public GameObject arrowPrefab = null;
+    public GameObject straightArrowPrefab = null;
+
     public GameObject teleportArrowPrefab = null;
     public GameObject teleportArrowImage = null;
     public GameObject teleportEffect = null;
@@ -527,7 +529,6 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-
     private void SetArrowDirection()
     {
         mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
@@ -549,12 +550,17 @@ public class PlayerAttack : MonoBehaviour
 
     private void ShootArrow()
     {
-        GameObject t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-        t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+        GameObject t_arrow;
 
         if (gaugePower >= arrowMaxPower)
         {
+            t_arrow = Instantiate(straightArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
             t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
+            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+        }
+        else
+        {
+            t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
             t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
         }
 

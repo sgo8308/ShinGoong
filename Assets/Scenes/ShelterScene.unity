@@ -6395,7 +6395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.19162, y: -53.278503, z: -10}
+  m_LocalPosition: {x: -8.192888, y: -53.278522, z: -10}
   m_LocalScale: {x: 1.1948497, y: 1.1948497, z: 1.1948497}
   m_Children:
   - {fileID: 1029734724}
@@ -7496,6 +7496,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 7775416424767616081, guid: 099e93f504dd976438175c2bc84280b3,
+    type: 3}
+  straightArrowPrefab: {fileID: 7775416424767616081, guid: e97fd5fce096ef0439027d63125ded66,
     type: 3}
   teleportArrowPrefab: {fileID: 5948160989283791283, guid: 22eaba98a8a9c6448b579986e603a508,
     type: 3}
@@ -12777,7 +12779,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029734721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.3496933, y: -1.8324437, z: 0}
+  m_LocalPosition: {x: -3.3486316, y: -1.8324277, z: 0}
   m_LocalScale: {x: 0.83692527, y: 0.83692527, z: 0.83692527}
   m_Children:
   - {fileID: 1758396107}
