@@ -152,10 +152,12 @@ public class PlayerAttack : MonoBehaviour
                 nowPowerOfArrow = gaugePower;
 
                 if(isTeleportArrowOn)
-                    Invoke("ShootTeleportArrow", 0.1f);
+                    Invoke("ShootTeleportArrow", 0.05f);
                 else
-                    Invoke("ShootArrow", 0.1f);
+                    Invoke("ShootArrow", 0.05f);
 
+                animator.SetBool("isIdle", true);
+                animator.Play("Base Layer.Sunbee-Idle", 0, 0.0f);
                 FireFinish();
 
                 SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
@@ -306,6 +308,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void FireFinish()
     {
+
         animator.enabled = false;
 
         //각도별 조건 달기
