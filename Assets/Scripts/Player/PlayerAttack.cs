@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public static bool isRopeArrowMoving = false;
-
     public static float gaugePower = 0.0f;
     public static float nowPowerOfArrow = 0.0f;
 
     public GameObject arrowPrefab = null;
-    public GameObject ropeArrowPrefab = null;
-
     private GameObject player = null;
     private PlayerMove playerMove;
 
     public float arrowSpeed = 50f;    //화살 속도
     public float arrowMaxPower = 1f;    //화살 Max Power
-    public float ropeArrowSpeed = 15f;    //화살 속도
 
 
     private Animator animator;
@@ -40,8 +35,6 @@ public class PlayerAttack : MonoBehaviour
     Sprite[] sprites3;
     SpriteRenderer spriteReAim;
 
-    public static int ropeArrowAngleType;  //로프화살 조준각도 타입
-
     bool isAttacking;
     public bool canGuageBarFill;
 
@@ -59,9 +52,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if (!canShoot || playerMove.isJumping ||
-                playerMove.isRopeMoving || Inventory.instance.GetArrowCount() <= 0 ||
-                isRopeArrowMoving || UIOpener.isOpened)
+        if (!canShoot || playerMove.isJumping || Inventory.instance.GetArrowCount() <= 0 || UIOpener.isOpened)
             return;
 
         SetArrowDirection();
@@ -81,7 +72,8 @@ public class PlayerAttack : MonoBehaviour
         {
             animator.enabled = true;
             animator.SetBool("isRunning", false);
-            Debug.Log("마우스 버튼 다운");
+            animator.SetBool("isIdle", false);
+
             CancelInvoke("SetTrueCanGuageBarFill");
             canGuageBarFill = false;
             isAttacking = true;
@@ -95,7 +87,7 @@ public class PlayerAttack : MonoBehaviour
             AimCancel2();
             CancelInvoke("AimCancel");
             CancelInvoke("ReadyToAim");  
-            Invoke("ReadyToAim", 0.4f);  //0.4초 후에 준비자세에서 조준자세로 바꿔준다.
+            Invoke("ReadyToAim", 0.7f);  //0.4초 후에 준비자세에서 조준자세로 바꿔준다.
 
             SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_READY_ARROW);
 
@@ -104,7 +96,6 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && isAttacking)
         {
-            Debug.Log("겟마우스 버튼");
             if (!canGuageBarFill)
                 Invoke("SetTrueCanGuageBarFill", timeG);
 
@@ -222,6 +213,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void ReadyToAim()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
     {
+        animator.SetBool("isReady", false);
 
         if (aimAngle >= 0 && aimAngle < 25) //마우스 각도가 0~25도 일때 Aiming20 애니메이션 시작
         {
@@ -292,7 +284,6 @@ public class PlayerAttack : MonoBehaviour
     {
         animator.enabled = false;
 
-
         //각도별 조건 달기
         if (currnetAngleType == 20)
         {
@@ -352,7 +343,7 @@ public class PlayerAttack : MonoBehaviour
     void AimCancel()
     {
         animator.enabled = true;
-        animator.SetBool("isReady", false);
+        animator.SetBool("isIdle", true);
 
         animator.SetBool("isAiming20", false);
         animator.SetBool("isAiming30", false);
@@ -367,7 +358,8 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("isAiming120", false);
         animator.SetBool("isAiming130", false);
 
-        CancelInvoke("ReadyToAim");
+        animator.SetBool("isReady", false);
+
     }
 
     void AimCancel2()
@@ -384,8 +376,6 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("isAiming110", false);
         animator.SetBool("isAiming120", false);
         animator.SetBool("isAiming130", false);
-
-        CancelInvoke("ReadyToAim");
     }
 
     private void ReAiming()  //마우스를 누르고 있을 때

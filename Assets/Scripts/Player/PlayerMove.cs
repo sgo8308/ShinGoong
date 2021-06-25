@@ -7,13 +7,11 @@ using UnityEngine.SceneManagement;
 public class PlayerMove : MonoBehaviour
 {
     public bool canMove { get; private set; }
-    public bool isRopeMoving { get; private set; }
     public bool isJumping { get; private set; }
 
     private bool isLanded;
 
     public int stopSoundCount;
-    public float ropeMoveSpeed;
 
     private PlayerInfo playerInfo;
     public Animator animator;
@@ -46,10 +44,10 @@ public class PlayerMove : MonoBehaviour
             return;
 
         //GetAxisRaw 함수를 이용해 Horizontal 값을 가져옴(-1,0,1) [Edit] -> [Project Settings] -> Input
-        if (Input.GetAxisRaw("Horizontal") == 1 && !animator.GetBool("isRopeMoving") && !animator.GetBool("isReady") && !Hook.isHookMoving)
+        if (Input.GetAxisRaw("Horizontal") == 1 && !animator.GetBool("isReady") )
             MoveRight();
 
-        if (Input.GetAxisRaw("Horizontal") == -1 && !animator.GetBool("isRopeMoving") && !animator.GetBool("isReady") && !Hook.isHookMoving)
+        if (Input.GetAxisRaw("Horizontal") == -1 && !animator.GetBool("isReady"))
             MoveLeft();
 
         limitSpeed();
@@ -67,17 +65,13 @@ public class PlayerMove : MonoBehaviour
 
         CheckIfOnGround();
 
-        if (isRopeMoving)
-            RopeMove();
-
         if (!canMove)
         {
             StopPlayer();
             return;
         }
 
-        if (Input.GetButtonDown("Jump") && !animator.GetBool("isReady") && !isJumping
-             && !animator.GetBool("isRopeMoving") && !Hook.isHookMoving)
+        if (Input.GetButtonDown("Jump") && !animator.GetBool("isReady") && !isJumping)
         {
             Jump();
         }
@@ -111,11 +105,6 @@ public class PlayerMove : MonoBehaviour
     public void SetCanMove(bool value)
     {
         canMove = value;
-    }
-
-    public void SetIsRopeMoving(bool value)
-    {
-        isRopeMoving = value;
     }
 
     private void MoveRight()
@@ -239,29 +228,6 @@ public class PlayerMove : MonoBehaviour
 
         animator.SetBool("isJumpingFinal", false);
 
-    }
-
-    
-
-    private void RopeMove()
-    {
-        if (isRopeMoving)
-        {
-            Vector2 ropeArrow_Position = RopeArrow.currentRopeArrowPositionList[0]; //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
-
-            this.GetComponent<Rigidbody2D>().gravityScale = 0; //플레이어의 중력을 0으로 한다.
-
-            transform.position = Vector2.MoveTowards(transform.position,
-                                        ropeArrow_Position, ropeMoveSpeed);  //로프화살 좌표까지 이동한다.
-
-            Vector2 p_Position = transform.position;
-
-            if (p_Position == ropeArrow_Position)
-            {
-                isRopeMoving = false;
-                this.GetComponent<Rigidbody2D>().gravityScale = 3;
-            }
-        }
     }
 
     public void FlipPlayer()
