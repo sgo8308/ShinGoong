@@ -154,8 +154,8 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("isJumpingUp", false);
             animator.SetBool("isJumpingDown", true);
 
-            Vector2 rightVec = new Vector2(rigid.position.x + 0.3f, rigid.position.y);
-            Vector2 leftVec = new Vector2(rigid.position.x - 0.3f, rigid.position.y);
+            Vector2 rightVec = new Vector2(rigid.position.x + 0.4f, rigid.position.y);
+            Vector2 leftVec = new Vector2(rigid.position.x - 0.45f, rigid.position.y);
 
             Debug.DrawRay(rigid.position, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
             Debug.DrawRay(rightVec, 3 * Vector3.down, new Color(0, 1, 0), 10.0f, false);
@@ -199,7 +199,9 @@ public class PlayerMove : MonoBehaviour
         {
             if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)  //플레이어의 발바닥 바로 아래에서 무언가가 감지된다면 
             {
+                Debug.Log("발바닥 감지");
                 isLanded = true;
+                isJumping = false;
                 animator.SetBool("isJumpingUp", false);
                 animator.SetBool("isJumpingDown", false);
             }
