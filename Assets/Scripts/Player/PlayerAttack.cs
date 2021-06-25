@@ -117,7 +117,6 @@ public class PlayerAttack : MonoBehaviour
 
             if (canGuageBarFill)
             {
-                playerMove.SetCanMove(true);
                 nowPowerOfArrow = gaugePower;
                 Invoke("ShootArrow", 0.1f);
 
@@ -127,7 +126,6 @@ public class PlayerAttack : MonoBehaviour
 
                 Invoke("AimCancel", 0.5f);
                 
-                playerMove.SetCanMove(true);
             }
             else
             {
@@ -135,7 +133,6 @@ public class PlayerAttack : MonoBehaviour
 
                 aiming = false;
                 angleChange = false;
-                playerMove.SetCanMove(true);
 
                 SoundManager.instance.StopPlayerSound();
             }
@@ -360,6 +357,7 @@ public class PlayerAttack : MonoBehaviour
 
         animator.SetBool("isReady", false);
 
+        playerMove.SetCanMove(true);
     }
 
     void AimCancel2()
