@@ -7421,7 +7421,7 @@ MonoBehaviour:
   teleportArrowImage: {fileID: 1125739834}
   teleportEffect: {fileID: 1014316557}
   arrowSpeed: 23
-  arrowMaxPower: 37
+  arrowMaxPower: 30
   canGuageBarFill: 0
   isTeleportArrowOn: 0
 --- !u!114 &594572428
@@ -9982,7 +9982,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 583.5, y: -1033.9}
+  m_AnchoredPosition: {x: 580.4, y: -1037}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &850223999
@@ -14072,7 +14072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 579.6, y: -1001.1}
+  m_AnchoredPosition: {x: 579.6, y: -1003.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1125739836

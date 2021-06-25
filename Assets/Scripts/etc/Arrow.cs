@@ -70,6 +70,8 @@ public class Arrow : MonoBehaviour
 
             PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }
+
+        isUsed = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -129,7 +131,6 @@ public class Arrow : MonoBehaviour
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; 
         GetComponent<Rigidbody2D>().velocity = zeroVelocity;
         arrowState = false; 
-
     }
 
     private void PlaySkillEffect()

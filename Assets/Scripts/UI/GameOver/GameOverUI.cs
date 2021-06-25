@@ -150,7 +150,7 @@ public class GameOverUI : UIOpener
             }
         }
 
-        expBar.fillAmount += 0.02f;
+        expBar.fillAmount += 0.03f;
 
         Invoke("FillExpBar", 0.04f);
     }
@@ -187,6 +187,8 @@ public class GameOverUI : UIOpener
 
     protected override void Open()
     {
+        Time.timeScale = 1;
+
         isOpened = true;
         playerMove.SetCanMove(false);
         playerAttack.SetCanShoot(false);
@@ -196,11 +198,8 @@ public class GameOverUI : UIOpener
         if (playerMove.animator.GetBool("isJumpingDown"))
             playerMove.animator.SetBool("isJumpingFinal", true);
 
-        if (StageManager.instance.stageState == StageState.CLEAR)
+        if (!Player.isDead && StageManager.instance.stageState == StageState.CLEAR)
         {
-            if (Player.isDead)
-                return;
-
             Title.text = "STAGE CLEAR";
             playerMove.animator.SetBool("isRunning", false);
             continueButton.gameObject.SetActive(true);
@@ -223,7 +222,6 @@ public class GameOverUI : UIOpener
 
         gameOverPanel.SetActive(false);
         canFillExpBar = true;
-        Time.timeScale = 1;
         playerMove.SetCanMove(true);
         playerAttack.SetCanShoot(true);
         SoundManager.instance.UnMutePlayerSound();

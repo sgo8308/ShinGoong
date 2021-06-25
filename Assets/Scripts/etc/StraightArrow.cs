@@ -43,7 +43,10 @@ public class StraightArrow : MonoBehaviour
             transform.right = GetComponent<Rigidbody2D>().velocity;  //매 프레임마다 화살의 x축 벡터값을 2d의 속도로 정해준다. 화살촉 방향 조절
         }
 
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, transform.right, 3, LayerMask.GetMask("MonsterBody"));
+        if (isUsed)
+            return;
+
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, transform.right, 1 / 4, LayerMask.GetMask("MonsterBody"));
 
         if (rayHit.collider != null)
         {
@@ -64,6 +67,7 @@ public class StraightArrow : MonoBehaviour
             {
                 Stop();
                 gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
+                isUsed = true;
             }
         }
     }
