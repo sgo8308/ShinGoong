@@ -29,17 +29,27 @@ public class PlayerSkill : MonoBehaviour
         {
             if (!isSkillOn)
             {
-                skillImage.gameObject.SetActive(true);
-                isSkillOn = true;
+                TurnOnSkill();
             }
             else
             {
-                skillImage.gameObject.SetActive(false);
-                isSkillOn = false;
+                TurnOffSkill();
             }
-
-            SoundManager.instance.PlayClickSound();
         }
+    }
+
+    private void TurnOnSkill()
+    {
+        skillImage.gameObject.SetActive(true);
+        isSkillOn = true;
+        SoundManager.instance.PlayClickSound();
+    }
+
+    public void TurnOffSkill()
+    {
+        skillImage.gameObject.SetActive(false);
+        isSkillOn = false;
+        SoundManager.instance.PlayClickSound();
     }
 
     public void SetSkill(Item item)

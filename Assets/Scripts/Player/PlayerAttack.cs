@@ -73,6 +73,9 @@ public class PlayerAttack : MonoBehaviour
             AimCancel();
         }
 
+        if (gaugePower >= arrowMaxPower && playerSkill.IsSkillOn() && isAttacking)
+            playerSkill.TurnOffSkill();
+
         if (Input.GetKeyDown(KeyCode.R) && !playerSkill.IsSkillOn())
         {
             if (!isTeleportArrowOn)
@@ -100,7 +103,6 @@ public class PlayerAttack : MonoBehaviour
         this.canShoot = value;
     }
 
-    public float timeG;
     private void AttackReady()
     {
         if (Input.GetMouseButtonDown(0))  //down -> ready애니메이션 시작
@@ -132,7 +134,7 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && isAttacking)
         {
             if (!canGuageBarFill)
-                Invoke("SetTrueCanGuageBarFill", timeG);
+                Invoke("SetTrueCanGuageBarFill", 0.6f);
 
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
@@ -176,12 +178,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void CalculateBowAngle()
     {
-        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); 
         Vector2 t_direction = new Vector2(mousePosition.x - arrowDirection.position.x,
-                                          mousePosition.y - arrowDirection.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
+                                          mousePosition.y - arrowDirection.position.y);   //mousePos - arrowPos = arrowDirection
 
-        aimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
-
+        aimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;
 
         if (aimAngle >= 0)
         {
@@ -239,12 +240,14 @@ public class PlayerAttack : MonoBehaviour
             angleChange = false;
         }
     }
-
-    private void ReadyToAim()  //Ready애니메이션 끝나자 마자 Aiming애니메이션 시작
+    /// <summary>
+    /// Aiming animation right after shooting ready animation
+    /// </summary>
+    private void ReadyToAim()
     {
         animator.SetBool("isReady", false);
 
-        if (aimAngle >= 0 && aimAngle < 25) //마우스 각도가 0~25도 일때 Aiming20 애니메이션 시작
+        if (aimAngle >= 0 && aimAngle < 25) 
         {
             animator.SetBool("isAiming20", true);
             currnetAngleType = 20;
@@ -414,11 +417,11 @@ public class PlayerAttack : MonoBehaviour
         animator.SetBool("isAiming130", false);
     }
 
-    private void ReAiming()  //마우스를 누르고 있을 때
+    private void ReAiming()
     {
         if (aiming)
         {
-            CalculateBowAngle_ReAim(); //재조준 활 각도계산
+            CalculateBowAngle_ReAim(); 
 
             if (angleChange)
             {
@@ -554,34 +557,35 @@ public class PlayerAttack : MonoBehaviour
 
         if (gaugePower >= arrowMaxPower)
         {
-            t_arrow = Instantiate(straightArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-            t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+            t_arrow = Instantiate(straightArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); 
+            t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; 
+            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow; 
         }
         else
         {
-            t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+            t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); 
+            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow;  
         }
 
         Inventory.instance.UseArrow();
         MainUI.instance.UpdateArrowCountUI();
     }
 
-    public GameObject nowFlyingTeleportArrow;
-    public Transform teleportPosition;
-    public TeleportArrow teleportArrow;
+    private GameObject nowFlyingTeleportArrow;
+    private Transform teleportPosition;
+    private TeleportArrow teleportArrow;
+
     private void ShootTeleportArrow()
     {
-        nowFlyingTeleportArrow = Instantiate(teleportArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-        nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 4 / 5;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+        nowFlyingTeleportArrow = Instantiate(teleportArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); 
+        nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 4 / 5;  
 
-        nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().gravityScale = 2; //Max Power일때 직사로 발사된다. 중력 0
+        nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().gravityScale = 2; 
 
         if (gaugePower >= arrowMaxPower)
         {
-            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().gravityScale = 0; 
+            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 1 / 3;
         }
 
         Inventory.instance.UseArrow();
