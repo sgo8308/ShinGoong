@@ -166,8 +166,6 @@ public class PlayerMove : MonoBehaviour
                     if (!isLanded)
                         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
 
-                    Debug.Log("발바닥아래 감지됐음");
-
                     isJumping = false;
                     isLanded = true;
 

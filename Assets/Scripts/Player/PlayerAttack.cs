@@ -8,8 +8,12 @@ public class PlayerAttack : MonoBehaviour
     public static float nowPowerOfArrow = 0.0f;
 
     public GameObject arrowPrefab = null;
+    public GameObject teleportArrowPrefab = null;
+    public GameObject teleportArrowImage = null;
+    public GameObject teleportEffect = null;
     private GameObject player = null;
     private PlayerMove playerMove;
+    private PlayerSkill playerSkill;
 
     public float arrowSpeed = 50f;    //화살 속도
     public float arrowMaxPower = 1f;    //화살 Max Power
@@ -37,11 +41,13 @@ public class PlayerAttack : MonoBehaviour
 
     bool isAttacking;
     public bool canGuageBarFill;
+    public bool isTeleportArrowOn = false;
 
     private void Start()
     {
         player = GameObject.Find("Player");
         playerMove = player.GetComponent<PlayerMove>();
+        playerSkill = player.GetComponent<PlayerSkill>();
         animator = GetComponent<Animator>();
         mainCamera = Camera.main;
         arrowDirection = transform.Find("ArrowDirection");
@@ -61,10 +67,29 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("마우스 오른쪽 버튼 눌림");
-
             isAttacking = false;
             AimCancel();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && !playerSkill.IsSkillOn())
+        {
+            if (!isTeleportArrowOn)
+            {
+                isTeleportArrowOn = true;
+                teleportArrowImage.SetActive(true);
+            }
+            else
+            {
+                isTeleportArrowOn = false;
+                teleportArrowImage.SetActive(false);
+            }
+
+            SoundManager.instance.PlayClickSound();
+        }
+
+        if (teleportPosition != null && isTeleportArrowOn && teleportArrow.isStop && !Player.isDead)
+        {
+            Teleport();
         }
     }
 
@@ -76,7 +101,7 @@ public class PlayerAttack : MonoBehaviour
     public float timeG;
     private void AttackReady()
     {
-        if (Input.GetMouseButtonDown(0) && !animator.GetBool("isJumping"))  //down -> ready애니메이션 시작
+        if (Input.GetMouseButtonDown(0))  //down -> ready애니메이션 시작
         {
             animator.enabled = true;
             animator.SetBool("isRunning", false);
@@ -117,31 +142,30 @@ public class PlayerAttack : MonoBehaviour
             ReAiming();
         }
 
-        if (Input.GetMouseButtonUp(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
+        if (Input.GetMouseButtonUp(0) && !animator.GetBool("isRunning") && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
         {
 
             isAttacking = false;
-            //파워가 특정값 이상일때만 화살 생성 및 공격
 
             if (canGuageBarFill)
             {
                 nowPowerOfArrow = gaugePower;
-                Invoke("ShootArrow", 0.1f);
+
+                if(isTeleportArrowOn)
+                    Invoke("ShootTeleportArrow", 0.1f);
+                else
+                    Invoke("ShootArrow", 0.1f);
 
                 FireFinish();
 
                 SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
 
                 Invoke("AimCancel", 0.5f);
-                
             }
             else
             {
                 AimCancel();
             }
-
-            //CancelInvoke("SetTrueCanGuageBarFill");
-            //canGuageBarFill = false;
         }
     }
 
@@ -534,6 +558,53 @@ public class PlayerAttack : MonoBehaviour
         MainUI.instance.UpdateArrowCountUI();
     }
 
+    public GameObject nowFlyingTeleportArrow;
+    public Transform teleportPosition;
+    public TeleportArrow teleportArrow;
+    private void ShootTeleportArrow()
+    {
+        nowFlyingTeleportArrow = Instantiate(teleportArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
+        nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 4 / 5;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+
+        nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().gravityScale = 2; //Max Power일때 직사로 발사된다. 중력 0
+
+        if (gaugePower >= arrowMaxPower)
+        {
+            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
+            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 1 / 3;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+        }
+
+        Inventory.instance.UseArrow();
+        MainUI.instance.UpdateArrowCountUI();
+
+        teleportArrow = nowFlyingTeleportArrow.GetComponent<TeleportArrow>();
+        teleportPosition = nowFlyingTeleportArrow.transform.Find("TeleportPosition");
+    }
+
+    private void Teleport()
+    {
+        Vector3 teleportPos;
+        if (teleportPosition.rotation.z >= 0)
+        {
+            teleportPos = new Vector3(teleportPosition.position.x, teleportPosition.position.y, 0);
+        }
+        else
+        {
+            teleportPos = new Vector3(teleportPosition.position.x, teleportPosition.position.y + 2.0f, 0);
+        }
+
+        transform.position = teleportPos;
+        isTeleportArrowOn = false;
+        teleportArrowImage.SetActive(false);
+        teleportEffect.SetActive(true);
+        Invoke("HideTeleportEffect", 0.5f);
+
+        SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ARROW_TELEPORT);
+
+        Destroy(teleportPosition.gameObject);
+    }
+
+    
     private void ImageSet()
     {
         sprites2 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle2");
@@ -544,6 +615,11 @@ public class PlayerAttack : MonoBehaviour
     private void SetTrueCanGuageBarFill()
     {
         canGuageBarFill = true;
+    }
+
+    private void HideTeleportEffect()
+    {
+        teleportEffect.SetActive(false);
     }
 
 }

@@ -12,10 +12,12 @@ public class PlayerSkill : MonoBehaviour
     private bool isSkillOn = false;
     private string skillName;
     private PlayerMove playerMove;
+    private PlayerAttack playerAttack;
 
     private void Start()
     {
         playerMove = GetComponent<PlayerMove>();
+        playerAttack = GetComponent<PlayerAttack>();
     }
 
     private void Update()
@@ -23,7 +25,7 @@ public class PlayerSkill : MonoBehaviour
         if (!hasSkill || !playerMove.canMove)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) )
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !playerAttack.isTeleportArrowOn )
         {
             if (!isSkillOn)
             {
@@ -35,6 +37,8 @@ public class PlayerSkill : MonoBehaviour
                 skillImage.gameObject.SetActive(false);
                 isSkillOn = false;
             }
+
+            SoundManager.instance.PlayClickSound();
         }
     }
 

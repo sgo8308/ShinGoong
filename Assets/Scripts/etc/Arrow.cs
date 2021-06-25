@@ -20,15 +20,15 @@ public class Arrow : MonoBehaviour
     private List<Vector2> arrowColList = new List<Vector2>();
     private PlayerSkill playerSkill;
     private CameraShake cameraShake;
-    private GameObject bombShotEffect;
-    
+    protected GameObject bombShotEffect;
 
-    private void Awake()
+
+    protected void Awake()
     {
         playerSkill = GameObject.Find("Player").GetComponent<PlayerSkill>();
         cameraShake = Camera.main.transform.Find("CameraShake").GetComponent<CameraShake>();
-        bombShotEffect = transform.Find("BombShotEffect").gameObject;
     }
+
 
     void Start()
     {
