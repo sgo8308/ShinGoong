@@ -157,7 +157,8 @@ public class PlayerAttack : MonoBehaviour
                     Invoke("ShootArrow", 0.05f);
 
                 animator.SetBool("isIdle", true);
-                animator.Play("Base Layer.Sunbee-Idle", 0, 0.0f);
+                animator.Play("Base Layer.Sunbee-Idle", 0, 0.0f); // for not to go back previous anim but to go Idle anim directly.
+
                 FireFinish();
 
                 SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
