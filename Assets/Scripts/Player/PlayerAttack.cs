@@ -6,7 +6,8 @@ public class PlayerAttack : MonoBehaviour
 {
     public static bool isRopeArrowMoving = false;
 
-    public static float power = 0.0f;
+    public static float gaugePower = 0.0f;
+    public static float nowPowerOfArrow = 0.0f;
 
     public GameObject arrowPrefab = null;
     public GameObject ropeArrowPrefab = null;
@@ -42,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
     public static int ropeArrowAngleType;  //로프화살 조준각도 타입
 
     bool isAttacking;
-    bool canGuageBarFill;
+    public bool canGuageBarFill;
 
     private void Start()
     {
@@ -78,25 +79,32 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !animator.GetBool("isJumping"))  //down -> ready애니메이션 시작
         {
+            animator.enabled = true;
             animator.SetBool("isRunning", false);
-
+            Debug.Log("마우스 버튼 다운");
+            CancelInvoke("SetTrueCanGuageBarFill");
+            canGuageBarFill = false;
             isAttacking = true;
+
             playerMove.StopPlayer();
             playerMove.FlipPlayer();
             playerMove.SetCanMove(false);
 
-
             CalculateBowAngle();
             animator.SetBool("isReady", true);
-            Invoke("ReadyToAim", 0.4f);  //0.7초 후에 준비자세에서 조준자세로 바꿔준다.
+            AimCancel2();
+            CancelInvoke("AimCancel");
+            CancelInvoke("ReadyToAim");  
+            Invoke("ReadyToAim", 0.4f);  //0.4초 후에 준비자세에서 조준자세로 바꿔준다.
 
             SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_READY_ARROW);
 
-            power = 0.0f;
+            gaugePower = 0.0f;
         }
 
         if (Input.GetMouseButton(0) && !animator.GetBool("isRunning") && !animator.GetBool("isJumping") && isAttacking)
         {
+            Debug.Log("겟마우스 버튼");
             if (!canGuageBarFill)
                 Invoke("SetTrueCanGuageBarFill", timeG);
 
@@ -119,6 +127,7 @@ public class PlayerAttack : MonoBehaviour
             if (canGuageBarFill)
             {
                 playerMove.SetCanMove(true);
+                nowPowerOfArrow = gaugePower;
                 Invoke("ShootArrow", 0.1f);
 
                 FireFinish();
@@ -140,7 +149,8 @@ public class PlayerAttack : MonoBehaviour
                 SoundManager.instance.StopPlayerSound();
             }
 
-            canGuageBarFill = false;
+            //CancelInvoke("SetTrueCanGuageBarFill");
+            //canGuageBarFill = false;
         }
     }
 
@@ -360,6 +370,24 @@ public class PlayerAttack : MonoBehaviour
         CancelInvoke("ReadyToAim");
     }
 
+    void AimCancel2()
+    {
+        animator.SetBool("isAiming20", false);
+        animator.SetBool("isAiming30", false);
+        animator.SetBool("isAiming40", false);
+        animator.SetBool("isAiming50", false);
+        animator.SetBool("isAiming60", false);
+        animator.SetBool("isAiming70", false);
+        animator.SetBool("isAiming80", false);
+        animator.SetBool("isAiming90", false);
+        animator.SetBool("isAiming100", false);
+        animator.SetBool("isAiming110", false);
+        animator.SetBool("isAiming120", false);
+        animator.SetBool("isAiming130", false);
+
+        CancelInvoke("ReadyToAim");
+    }
+
     private void ReAiming()  //마우스를 누르고 있을 때
     {
         if (aiming)
@@ -487,23 +515,23 @@ public class PlayerAttack : MonoBehaviour
 
     private void ControlPower()
     {
-        power += Time.deltaTime * arrowSpeed;
+        gaugePower += Time.deltaTime * arrowSpeed;
 
-        if (power > arrowMaxPower)
-            power = arrowMaxPower;
+        if (gaugePower > arrowMaxPower)
+            gaugePower = arrowMaxPower;
 
-        MainUI.instance.UpdateGaugeBarUI(power, arrowMaxPower);
+        MainUI.instance.UpdateGaugeBarUI(gaugePower, arrowMaxPower);
     }
 
     private void ShootArrow()
     {
         GameObject t_arrow = Instantiate(arrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); //화살 생성
-        t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+        t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
 
-        if (power >= arrowMaxPower)
+        if (gaugePower >= arrowMaxPower)
         {
             t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; //Max Power일때 직사로 발사된다. 중력 0
-            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * power;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
+            t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow;  //화살 발사 속도 = x축 방향 * 파워 * 속도값
         }
 
         Inventory.instance.UseArrow();

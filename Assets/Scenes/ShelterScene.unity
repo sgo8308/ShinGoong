@@ -7419,7 +7419,7 @@ MonoBehaviour:
   arrowSpeed: 23
   arrowMaxPower: 37
   ropeArrowSpeed: 70
-  timeG: 0
+  timeG: 0.6
 --- !u!114 &594572428
 MonoBehaviour:
   m_ObjectHideFlags: 0

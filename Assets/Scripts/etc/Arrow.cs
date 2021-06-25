@@ -180,10 +180,10 @@ public class Arrow : MonoBehaviour
 
     private void Reflect(Collision2D collision)
     {
-       
+        float power = PlayerAttack.nowPowerOfArrow;
         Vector2 inNormal = collision.contacts[0].normal;               //충돌 시 법선 벡터
         Vector2 newVelocity = Vector2.Reflect(transform.right, inNormal);  //반사각 벡터
-        GetComponent<Rigidbody2D>().velocity = newVelocity * PlayerAttack.power;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
+        GetComponent<Rigidbody2D>().velocity = newVelocity * power;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
         
        
     }
