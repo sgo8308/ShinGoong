@@ -22,11 +22,15 @@ public class StraightArrow : MonoBehaviour
     private List<Vector2> arrowColList = new List<Vector2>();
     private CameraShake cameraShake;
     private Rigidbody2D rigid;
-    private Monster monsterAlreadyHit;
+    private GameObject gameObjectAlreadyHit;
+    private GameObject colliderBefore4Hit;
+    private GameObject collider4Hit;
 
     protected void Awake()
     {
         cameraShake = Camera.main.transform.Find("CameraShake").GetComponent<CameraShake>();
+        colliderBefore4Hit = transform.Find("ColliderBefore4Hit").gameObject;
+        collider4Hit = transform.Find("Collider4Hit").gameObject;
     }
 
 
@@ -41,6 +45,12 @@ public class StraightArrow : MonoBehaviour
 
     void Update()
     {
+        if (arrowColList.Count > 2)
+        {
+            colliderBefore4Hit.SetActive(false);
+            collider4Hit.SetActive(true);
+        }
+
         if (arrowState)
         {
             transform.right = GetComponent<Rigidbody2D>().velocity;  //매 프레임마다 화살의 x축 벡터값을 2d의 속도로 정해준다. 화살촉 방향 조절
@@ -53,25 +63,17 @@ public class StraightArrow : MonoBehaviour
 
         if (rayHit.collider != null)
         {
-            if (monsterAlreadyHit)
+            
+            if (gameObjectAlreadyHit)
             {
-                if (monsterAlreadyHit.gameObject.name == rayHit.collider.transform.parent.gameObject.name)
+                if (gameObjectAlreadyHit.gameObject.name == rayHit.collider.transform.parent.gameObject.name)
                     return;
             }
-            
-            monsterAlreadyHit = rayHit.collider.transform.parent.GetComponent<Monster>();
-            monsterAlreadyHit.OnHit(ORIGINAL_DAMAGE);
-            
+
+            gameObjectAlreadyHit = rayHit.collider.transform.parent.gameObject;
+            gameObjectAlreadyHit.GetComponent<Monster>().OnHit(ORIGINAL_DAMAGE);
             cameraShake.StartShake();
-
             PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
-
-            if (arrowColList.Count == arrowColMaxCount)
-            {
-                Stop();
-                gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
-                isUsed = true;
-            }
         }
     }
 
@@ -89,7 +91,7 @@ public class StraightArrow : MonoBehaviour
         if (collision.gameObject.tag != "Platform")
             return;
 
-        Debug.Log("충돌");
+        gameObjectAlreadyHit = collision.gameObject;
 
         Reflect(collision);
 
