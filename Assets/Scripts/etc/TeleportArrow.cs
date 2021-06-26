@@ -7,6 +7,7 @@ public class TeleportArrow : MonoBehaviour
     private int arrowColMaxCount = 4;
 
     private const int LAYER_NUM_ARROW_ON_PLATFORM = 14;
+    private const int LAYER_NUM_ELECTRICITY_FOR_ARROW = 25;
 
     private bool arrowState = true;
     private bool isUsed = false;
@@ -40,6 +41,12 @@ public class TeleportArrow : MonoBehaviour
     {
         if (isUsed)
             return;
+
+        if (collision.gameObject.layer == LAYER_NUM_ELECTRICITY_FOR_ARROW)
+        {
+            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ARROW_BURN);
+            Destroy(gameObject);
+        }
 
         if (collision.gameObject.tag != "Platform")
             return;

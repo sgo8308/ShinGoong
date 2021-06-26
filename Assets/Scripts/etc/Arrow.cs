@@ -9,6 +9,7 @@ public class Arrow : MonoBehaviour
     private const float ORIGINAL_DAMAGE = 70;
     private const int LAYER_NUM_ARROW_ON_PLATFORM = 14;
     private const int LAYER_NUM_ARROW_ON_MONSTER = 17;
+    private const int LAYER_NUM_ELECTRICITY_FOR_ARROW = 25;
 
     private bool arrowState = true;
     private bool isSoundPlayed;
@@ -46,6 +47,12 @@ public class Arrow : MonoBehaviour
     {
         if (isUsed)
             return;
+
+        if(collision.gameObject.layer == LAYER_NUM_ELECTRICITY_FOR_ARROW)
+        {
+            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ARROW_BURN);
+            Destroy(gameObject);
+        }
 
         if (collision.gameObject.tag != "MonsterBody" && collision.gameObject.tag != "Platform")
             return;

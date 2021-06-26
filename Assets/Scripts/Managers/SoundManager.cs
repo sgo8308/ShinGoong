@@ -27,6 +27,7 @@ public enum NonPlayerSounds
     ARROW_PIERCE_PLATFORM,
     ARROW_PIERCE_MONSTER,
     ARROW_TELEPORT,
+    ARROW_BURN,
     SKILL_BOMB_SHOT,
     TELEPORT
 }
@@ -64,6 +65,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip arrowPiercePlatform;
     public AudioClip arrowPierceMonster;
     public AudioClip arrowTeleport;
+    public AudioClip arrowBurn;
     public AudioClip bombShot;
     public AudioClip shelterWindSound;
     public AudioClip stageWindSound;
@@ -180,6 +182,10 @@ public class SoundManager : MonoBehaviour
 
             case NonPlayerSounds.ARROW_TELEPORT:
                 nonPlayerSound.PlayOneShot(arrowTeleport);
+                break;
+
+            case NonPlayerSounds.ARROW_BURN:
+                nonPlayerSound.PlayOneShot(arrowBurn);
                 break;
 
             case NonPlayerSounds.SKILL_BOMB_SHOT:

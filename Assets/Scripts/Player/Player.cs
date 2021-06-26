@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private PlayerSkill playerSkill;
     private Animator animator;
     private GameObject bulletExplosion; 
+    private GameObject electricityExplosion; 
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
         playerSkill = GetComponent<PlayerSkill>();
         animator = GetComponent<Animator>();
         bulletExplosion = transform.Find("BulletExplosion").gameObject;
+        electricityExplosion = transform.Find("ElectricityExplosion").gameObject;
 
         Cursor.visible = true;
 
@@ -32,6 +34,8 @@ public class Player : MonoBehaviour
         if (scene.name != "ShelterScene")
             return;
 
+        gameObject.SetActive(true);
+        
         animator.enabled = true;
         animator.SetBool("isHit", false);
         animator.SetBool("isJumpingFinal", false);
@@ -41,6 +45,17 @@ public class Player : MonoBehaviour
         playerMove.SetCanMove(true);
 
         playerAttack.SetCanShoot(true);
+    }
+    
+    private const int LAYER_NUM_ELECTRICITY_FOR_PLAYER = 24;
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.layer == LAYER_NUM_ELECTRICITY_FOR_PLAYER)
+            DeadByElectricity();
+        Debug.Log("플레이어 온 콜리전 엔터 들어옴");
+        Debug.Log(col.gameObject.name);
+        Debug.Log(col.gameObject.layer);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -57,17 +72,44 @@ public class Player : MonoBehaviour
 
     void Dead()
     {
+        //if (isDead || StageManager.instance.stageState == StageState.CLEAR)
+        //    return;
+
+        //isDead = true;
+
+        //bulletExplosion.SetActive(true);
+        //Invoke("HideBulletExplosion", 0.5f);
+        //Invoke("HidePlayer", 0.7f);
+        //SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
+
+        //animator.enabled = true;
+        //Invoke("StartHitAnimation", 0.1f);
+
+        //if (onPlayerDead != null)
+        //    onPlayerDead.Invoke();
+
+        //playerMove.SetCanMove(false);
+        //playerAttack.SetCanShoot(false);
+
+        //Time.timeScale = 0.4f;
+    }
+
+
+    void DeadByElectricity()
+    {
+        Debug.Log("데드바이 일렉 들어옴");
+
         if (isDead || StageManager.instance.stageState == StageState.CLEAR)
             return;
 
         isDead = true;
 
-        bulletExplosion.SetActive(true);
-        Invoke("HideBulletExplosion", 0.5f);
+        electricityExplosion.SetActive(true);
+        Invoke("HideElectricityExplosion", 0.5f);
+        Invoke("HidePlayer", 0.5f);
         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
 
         animator.enabled = true;
-        Invoke("StartHitAnimation", 0.1f);
 
         if (onPlayerDead != null)
             onPlayerDead.Invoke();
@@ -81,6 +123,16 @@ public class Player : MonoBehaviour
     void HideBulletExplosion()
     {
         bulletExplosion.SetActive(false);
+    }
+
+    void HideElectricityExplosion()
+    {
+        electricityExplosion.SetActive(false);
+    }
+
+    void HidePlayer()
+    {
+        this.gameObject.SetActive(false);
     }
 
     void StartHitAnimation()
