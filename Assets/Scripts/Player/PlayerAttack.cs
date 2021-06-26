@@ -148,7 +148,6 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && !animator.GetBool("isRunning") && isAttacking)  //up -> 0.2초 뒤에 angle애니메이션 취소
         {
-
             isAttacking = false;
 
             if (canGuageBarFill)
@@ -561,8 +560,9 @@ public class PlayerAttack : MonoBehaviour
 
         if (gaugePower >= arrowMaxPower)
         {
+            
             t_arrow = Instantiate(straightArrowPrefab, arrowDirection.transform.position, arrowDirection.transform.rotation); 
-            t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0; 
+            t_arrow.GetComponent<Rigidbody2D>().gravityScale = 0;
             t_arrow.GetComponent<Rigidbody2D>().velocity = t_arrow.transform.right * nowPowerOfArrow; 
         }
         else

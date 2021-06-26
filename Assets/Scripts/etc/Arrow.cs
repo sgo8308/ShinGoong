@@ -65,6 +65,8 @@ public class Arrow : MonoBehaviour
 
         Stop();
 
+        PlaySound(NonPlayerSounds.ARROW_PIERCE_PLATFORM);
+
         if (!playerSkill.IsSkillOn())
             gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
 
@@ -112,9 +114,6 @@ public class Arrow : MonoBehaviour
 
             PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }
-
-        if (collision.tag == "Platform")
-            PlaySound(NonPlayerSounds.ARROW_PIERCE_PLATFORM);
     }
     
     private void PlaySound(NonPlayerSounds sound)

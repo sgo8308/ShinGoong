@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿    using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -42,6 +42,7 @@ public class MainUI : MonoBehaviour
 
         UpdateCoinUI();
         UpdateArrowCountUI();
+        UpdateLevelUI();
 
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += UpdateLevelUI;
     }
@@ -57,6 +58,11 @@ public class MainUI : MonoBehaviour
         {
             _levelUI.text = playerInfo.level.ToString();
         }
+    }
+
+    public void UpdateLevelUI()
+    {
+        _levelUI.text = playerInfo.level.ToString();
     }
 
     public void UpdateArrowCountUI()

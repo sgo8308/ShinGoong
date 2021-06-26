@@ -138,7 +138,7 @@ public class PlayerMove : MonoBehaviour
 
     private void CheckIfJumping()
     {
-        if (rigid.velocity.y < -0.1f)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
+        if (rigid.velocity.y < -0.0001f)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
         {
             animator.SetBool("isRunning", false);
             animator.SetBool("isJumpingUp", false);
@@ -172,14 +172,14 @@ public class PlayerMove : MonoBehaviour
 
     public void CheckIfOnGround()
     {
-        if (animator.GetBool("isJumpingUp") || animator.GetBool("isJumpingDown"))
+        if ((animator.GetBool("isJumpingUp") || animator.GetBool("isJumpingDown")) && rigid.velocity.y == 0)
         {
             Vector2 rightVec = new Vector2(rigid.position.x + 0.4f, rigid.position.y);
             Vector2 leftVec = new Vector2(rigid.position.x - 0.45f, rigid.position.y);
 
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));
-            RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 3, LayerMask.GetMask("Platform"));
-            RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 3, LayerMask.GetMask("Platform"));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 2, LayerMask.GetMask("Platform"));
+            RaycastHit2D rayHit2 = Physics2D.Raycast(rightVec, Vector3.down, 2, LayerMask.GetMask("Platform"));
+            RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 2, LayerMask.GetMask("Platform"));
             if (rayHit.collider != null || rayHit2.collider != null || rayHit3.collider != null)
             {
                 if (rayHit.distance < 1.6f || rayHit2.distance < 1.6f || rayHit3.distance < 1.6f)
@@ -188,7 +188,7 @@ public class PlayerMove : MonoBehaviour
                         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
 
                     isLanded = true;
-                    Invoke("SetIsJumpingFalse", 0.3f);
+                    isJumping = false;
                     animator.SetBool("isJumpingUp", false);
                     animator.SetBool("isJumpingDown", false);
                 }

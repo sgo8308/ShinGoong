@@ -53,6 +53,13 @@ public class MonsterBoss : Monster
 
     void FixedUpdate()
     {
+        if (Player.isDead)
+        {
+            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0 ,0);
+            CancelInvoke();
+        }
+
         if (isFloating || isFlying)
             return;
 
@@ -60,22 +67,6 @@ public class MonsterBoss : Monster
             return;
 
         rigid.velocity = new Vector2(direction * speed, rigid.velocity.y);
-
-        CheckIfWall();
-    }
-
-    private void CheckIfWall()
-    {
-        Vector2 frontVecHorizontal = new Vector2(rigid.position.x + 2 * direction, rigid.position.y);
-
-        RaycastHit2D rayHit2 = Physics2D.Raycast(frontVecHorizontal,
-                                2 * Vector3.left, 1, LayerMask.GetMask("Platform"));
-
-        if (rayHit2.collider != null)
-        {
-            CancelInvoke();
-            ThinkAndMove();
-        }
     }
 
     /// <summary>

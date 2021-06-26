@@ -42,8 +42,7 @@ public class StraightArrow : MonoBehaviour
 
         rigid = GetComponent<Rigidbody2D>();
     }
-
-    void Update()
+    private void FixedUpdate()
     {
         if (arrowColList.Count > 2)
         {
@@ -59,11 +58,10 @@ public class StraightArrow : MonoBehaviour
         if (isUsed)
             return;
 
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, transform.right, 1 / 4, LayerMask.GetMask("MonsterBody"));
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, transform.right, 1, LayerMask.GetMask("MonsterBody"));
 
         if (rayHit.collider != null)
         {
-            
             if (gameObjectAlreadyHit)
             {
                 if (gameObjectAlreadyHit.gameObject.name == rayHit.collider.transform.parent.gameObject.name)

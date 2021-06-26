@@ -6021,7 +6021,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476425752}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.4638543, y: -2.2232296, z: 0}
+  m_LocalPosition: {x: -6.4079375, y: -2.2739825, z: 0}
   m_LocalScale: {x: 0.83692527, y: 0.83692527, z: 0.83692527}
   m_Children:
   - {fileID: 572002508}
@@ -6240,7 +6240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.438592, y: -53.21542, z: -10}
+  m_LocalPosition: {x: -4.5374775, y: -53.165005, z: -10}
   m_LocalScale: {x: 1.1948497, y: 1.1948497, z: 1.1948497}
   m_Children:
   - {fileID: 1029734724}
@@ -7347,8 +7347,8 @@ MonoBehaviour:
     type: 3}
   teleportArrowImage: {fileID: 1125739834}
   teleportEffect: {fileID: 1014316557}
-  arrowSpeed: 23
-  arrowMaxPower: 30
+  arrowSpeed: 50
+  arrowMaxPower: 40
   canGuageBarFill: 0
   isTeleportArrowOn: 0
 --- !u!114 &594572428
@@ -12720,7 +12720,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029734721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.63222027, y: -1.8852401, z: 0}
+  m_LocalPosition: {x: -6.4079375, y: -1.9274337, z: 0}
   m_LocalScale: {x: 0.83692527, y: 0.83692527, z: 0.83692527}
   m_Children:
   - {fileID: 1758396107}
@@ -21939,7 +21939,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107877594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.470665, y: -52.811573, z: -10}
+  m_LocalPosition: {x: -4.5374775, y: -52.75093, z: -10}
   m_LocalScale: {x: 1.1948497, y: 1.1948497, z: 1.1948497}
   m_Children:
   - {fileID: 476425753}
