@@ -176,9 +176,10 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    #region Aroow Shooting Animation
     private void CalculateBowAngle()
     {
-        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); 
+        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         Vector2 t_direction = new Vector2(mousePosition.x - arrowDirection.position.x,
                                           mousePosition.y - arrowDirection.position.y);   //mousePos - arrowPos = arrowDirection
 
@@ -201,12 +202,12 @@ public class PlayerAttack : MonoBehaviour
 
     private void CalculateBowAngle_ReAim()
     {
-        Vector2 t_mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition); //스크린상의 마우스좌표 -> 게임상의 2d 좌표로 치환
+        Vector2 t_mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         Vector2 t_direction = new Vector2(t_mousePos.x - arrowDirection.position.x,
-                                          t_mousePos.y - arrowDirection.position.y);   //마우스 좌표 - 화살 좌표 = 바라볼 방향
+                                          t_mousePos.y - arrowDirection.position.y);
 
-        ReAimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;   //조준하고 있는 각도 세타 구하기
-                                                                                  // print("재조준각도1: " + ReAimAngle);
+        ReAimAngle = Mathf.Atan2(t_direction.y, t_direction.x) * Mathf.Rad2Deg;
+
         if (ReAimAngle >= 0)
         {
             ReAimAngle = Mathf.Abs(90 - ReAimAngle);
@@ -247,7 +248,7 @@ public class PlayerAttack : MonoBehaviour
     {
         animator.SetBool("isReady", false);
 
-        if (aimAngle >= 0 && aimAngle < 25) 
+        if (aimAngle >= 0 && aimAngle < 25)
         {
             animator.SetBool("isAiming20", true);
             currnetAngleType = 20;
@@ -419,7 +420,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (aiming)
         {
-            CalculateBowAngle_ReAim(); 
+            CalculateBowAngle_ReAim();
 
             if (angleChange)
             {
@@ -532,7 +533,8 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
         }
-    }
+    } 
+    #endregion
 
     private void SetArrowDirection()
     {
