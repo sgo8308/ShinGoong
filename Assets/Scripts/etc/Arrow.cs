@@ -5,11 +5,11 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     public float damage;
-    private int arrowColMaxCount = 4;
 
     private const float ORIGINAL_DAMAGE = 70;
     private const int LAYER_NUM_ARROW_ON_PLATFORM = 14;
     private const int LAYER_NUM_ARROW_ON_MONSTER = 17;
+    private const int LAYER_NUM_ELECTRICITY_FOR_ARROW = 25;
 
     private bool arrowState = true;
     private bool isSoundPlayed;
@@ -17,13 +17,11 @@ public class Arrow : MonoBehaviour
     private bool isUsed= false;
 
     private Vector2 zeroVelocity;
-    private List<Vector2> arrowColList = new List<Vector2>();
     private PlayerSkill playerSkill;
     private CameraShake cameraShake;
-    private GameObject bombShotEffect;
-    
+    protected GameObject bombShotEffect;
 
-    private void Awake()
+    protected void Awake()
     {
         playerSkill = GameObject.Find("Player").GetComponent<PlayerSkill>();
         cameraShake = Camera.main.transform.Find("CameraShake").GetComponent<CameraShake>();
@@ -50,36 +48,25 @@ public class Arrow : MonoBehaviour
         if (isUsed)
             return;
 
+        if(collision.gameObject.layer == LAYER_NUM_ELECTRICITY_FOR_ARROW)
+        {
+            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ARROW_BURN);
+            Destroy(gameObject);
+        }
+
         if (collision.gameObject.tag != "MonsterBody" && collision.gameObject.tag != "Platform")
             return;
 
-        if (!isZeroGravityArrow()) //곡사가 충돌할때 화살이 박힌다.
+        if (playerSkill.IsSkillOn())
         {
-            if (playerSkill.IsSkillOn()) {
-                Invoke("PlaySkillEffect", 0.2f);
-                Destroy(this.gameObject, 0.2f);
-            }
-
-            Stop();
-
-            if (!playerSkill.IsSkillOn())  //폭발샷이 아니라면 레이어를 14로 하여 이후에 화살 회수가 가능하도록 한다.
-                gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
+            Invoke("PlaySkillEffect", 0.2f);
+            Destroy(this.gameObject, 0.2f);
         }
 
-        if (isZeroGravityArrow())  //직사가 충돌할때 화살이 반사된다.
-        {
-            Reflect(collision);
+        Stop();
 
-            arrowColList.Add(collision.contacts[0].point);  //매 충돌시 리스트에 충돌 좌표를 담는다. 
-
-            //화살의 충돌 횟수가 ArrowCol_MaxCount와 같아지면 더이상 반사되지 않고 멈춘다.
-            if (arrowColList.Count == arrowColMaxCount)
-            {
-                Stop();
-
-                gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
-            }
-        }
+        if (!playerSkill.IsSkillOn())
+            gameObject.layer = LAYER_NUM_ARROW_ON_PLATFORM;
 
         if (collision.gameObject.tag == "MonsterBody")
         {
@@ -90,8 +77,10 @@ public class Arrow : MonoBehaviour
 
             PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }
+
+        isUsed = true;
     }
-    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player" &&
@@ -127,7 +116,7 @@ public class Arrow : MonoBehaviour
         if (collision.tag == "Platform")
             PlaySound(NonPlayerSounds.ARROW_PIERCE_PLATFORM);
     }
-
+    
     private void PlaySound(NonPlayerSounds sound)
     {
         if (isSoundPlayed) 
@@ -146,13 +135,9 @@ public class Arrow : MonoBehaviour
 
     private void Stop()
     {
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; //오브젝트를 움직이지 않게 한다.
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; 
         GetComponent<Rigidbody2D>().velocity = zeroVelocity;
-        arrowState = false; //화살촉 방향 변화를 멈추게 한다.
-
-        isUsed = true;
-
-        PlayerAttack.power = 0.0f;
+        arrowState = false; 
     }
 
     private void PlaySkillEffect()
@@ -176,24 +161,6 @@ public class Arrow : MonoBehaviour
         }
 
         isSkillPlayed = true;
-    }
-
-    private void Reflect(Collision2D collision)
-    {
-       
-        Vector2 inNormal = collision.contacts[0].normal;               //충돌 시 법선 벡터
-        Vector2 newVelocity = Vector2.Reflect(transform.right, inNormal);  //반사각 벡터
-        GetComponent<Rigidbody2D>().velocity = newVelocity * PlayerAttack.power * 1/3;   //반사된 화살 속도 = 반사각 벡터 * 파워 * 스피드
-        
-       
-    }
-
-    private bool isZeroGravityArrow()
-    {
-        if (GetComponent<Rigidbody2D>().gravityScale == 0)
-            return true;
-
-        return false;
     }
 
     private void RegisterDetachEvent(Monster monster)

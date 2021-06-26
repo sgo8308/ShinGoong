@@ -19,16 +19,13 @@ public class MonsterOctopus : Monster
         if (rigid.bodyType == RigidbodyType2D.Static)
             return;
 
-        //Move
         rigid.velocity = new Vector2(nextMove * speed, rigid.velocity.y);
 
         CheckIfFloor();
     }
-
     private void CheckIfFloor()
     {
         Vector2 frontVecVertical = new Vector2(rigid.position.x + nextMove * 2, rigid.position.y);
-        Debug.DrawRay(frontVecVertical, 2 * Vector3.down, new Color(0, 1, 0), 0.1f, false);
 
         RaycastHit2D rayHit = Physics2D.Raycast(frontVecVertical,
                                 Vector3.down, 2, LayerMask.GetMask("Platform"));
@@ -36,7 +33,6 @@ public class MonsterOctopus : Monster
         if (rayHit.collider == null)
             Turn();
     }
-
 
     protected override void Initialize()
     {
@@ -98,7 +94,7 @@ public class MonsterOctopus : Monster
         Invoke("GetPeaceful", 5);
     }
 
-    protected override void OnHit(float damage)
+    public override void OnHit(float damage)
     {
         ReduceHp(damage);
 

@@ -26,6 +26,8 @@ public enum NonPlayerSounds
     MONSTER_DIE,
     ARROW_PIERCE_PLATFORM,
     ARROW_PIERCE_MONSTER,
+    ARROW_TELEPORT,
+    ARROW_BURN,
     SKILL_BOMB_SHOT,
     TELEPORT
 }
@@ -38,10 +40,10 @@ public class SoundManager : MonoBehaviour
     public AudioSource playerSound;
     private AudioSource nonPlayerSound;
     private AudioSource windSound;
+    public AudioSource playerRunningSound;
 
     public AudioClip shelterSceneMusic;
-    public AudioClip stage1SceneMusic;
-    public AudioClip bossSceneMusic;
+    public AudioClip stageSceneMusic;
 
     public AudioClip playerRun;
     public AudioClip playerJump;
@@ -62,6 +64,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip monsterDie;
     public AudioClip arrowPiercePlatform;
     public AudioClip arrowPierceMonster;
+    public AudioClip arrowTeleport;
+    public AudioClip arrowBurn;
     public AudioClip bombShot;
     public AudioClip shelterWindSound;
     public AudioClip stageWindSound;
@@ -92,23 +96,18 @@ public class SoundManager : MonoBehaviour
         playerSound = transform.Find("PlayerSound").GetComponent<AudioSource>();
         nonPlayerSound = transform.Find("NonPlayerSound").GetComponent<AudioSource>();
         windSound = transform.Find("WindSound").GetComponent<AudioSource>();
+        playerRunningSound = transform.Find("PlayerRunningSound").GetComponent<AudioSource>();
     }
 
     public void PlayPlayerSound(PlayerSounds sounds)
     {
+        StopPlayerRunningSound();
         playerSound.Stop();
         playerSound.loop = false;
         playerSound.mute = false;
 
         switch (sounds)
         {
-            case PlayerSounds.PLAYER_RUN:
-                playerSound.volume = 3f;
-                playerSound.clip = playerRun;
-                playerSound.loop = true;
-                playerSound.Play();
-                break;
-
             case PlayerSounds.PLAYER_JUMP:
                 playerSound.PlayOneShot(playerJump, 1.5f);
                 break;
@@ -181,10 +180,21 @@ public class SoundManager : MonoBehaviour
                 nonPlayerSound.PlayOneShot(arrowPierceMonster, 0.25f);
                 break;
 
+            case NonPlayerSounds.ARROW_TELEPORT:
+                nonPlayerSound.PlayOneShot(arrowTeleport);
+                break;
+
+            case NonPlayerSounds.ARROW_BURN:
+                nonPlayerSound.PlayOneShot(arrowBurn);
+                break;
+
             case NonPlayerSounds.SKILL_BOMB_SHOT:
                 nonPlayerSound.PlayOneShot(bombShot, 0.7f);
                 break;
             case NonPlayerSounds.TELEPORT:
+                nonPlayerSound.PlayOneShot(teleport, 0.4f);
+                break;
+            case NonPlayerSounds.CLICK:
                 nonPlayerSound.PlayOneShot(teleport, 0.4f);
                 break;
 
@@ -202,18 +212,41 @@ public class SoundManager : MonoBehaviour
                 break;
 
             case "Stage1Scene":
-                bgm.clip = stage1SceneMusic;
+                bgm.clip = stageSceneMusic;
                 break;
 
             case "BossScene":
-                bgm.clip = bossSceneMusic;
-                
+                bgm.clip = stageSceneMusic;
                 break;
             default:
                 break;
         }
 
         bgm.Play();
+    }
+
+    public void PlayPlayerRunningSound()
+    {
+        playerRunningSound.mute = false;
+
+        playerRunningSound.volume = 3f;
+        playerRunningSound.loop = true;
+        playerRunningSound.Play();
+    }
+
+    public void StopPlayerRunningSound()
+    {
+        playerRunningSound.Stop();
+    }
+
+    public void MutePlayerRunningSound()
+    {
+        playerRunningSound.mute = true;
+    }
+
+    public void UnMutePlayerRunningSound()
+    {
+        playerRunningSound.mute = false;
     }
 
     public void StopPlayerSound()

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private PlayerSkill playerSkill;
     private Animator animator;
     private GameObject bulletExplosion; 
+    private GameObject electricityExplosion; 
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
         playerSkill = GetComponent<PlayerSkill>();
         animator = GetComponent<Animator>();
         bulletExplosion = transform.Find("BulletExplosion").gameObject;
+        electricityExplosion = transform.Find("ElectricityExplosion").gameObject;
 
         Cursor.visible = true;
 
@@ -29,18 +31,34 @@ public class Player : MonoBehaviour
     #region Revive And Die
     public void Revive(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name != "ShelterScene")
+            return;
+
+        gameObject.SetActive(true);
+        
+        animator.enabled = true;
         animator.SetBool("isHit", false);
+        animator.SetBool("isJumpingFinal", false);
+
         isDead = false;
 
         playerMove.SetCanMove(true);
 
         playerAttack.SetCanShoot(true);
     }
+    
+    private const int LAYER_NUM_ELECTRICITY_FOR_PLAYER = 24;
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.layer == LAYER_NUM_ELECTRICITY_FOR_PLAYER)
+            DeadByElectricity();
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Radar")
-            Invoke("Dead", 0.1f); // dead after 0.1 seconds
+            Invoke("Dead", 0.1f);
     }
 
     private void OnTriggerExit2D(Collider2D col)
@@ -58,6 +76,7 @@ public class Player : MonoBehaviour
 
         bulletExplosion.SetActive(true);
         Invoke("HideBulletExplosion", 0.5f);
+        Invoke("HidePlayer", 0.7f);
         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
 
         animator.enabled = true;
@@ -72,9 +91,43 @@ public class Player : MonoBehaviour
         Time.timeScale = 0.4f;
     }
 
+
+    void DeadByElectricity()
+    {
+        if (isDead || StageManager.instance.stageState == StageState.CLEAR)
+            return;
+
+        isDead = true;
+
+        electricityExplosion.SetActive(true);
+        Invoke("HideElectricityExplosion", 0.5f);
+        Invoke("HidePlayer", 0.5f);
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
+
+        animator.enabled = true;
+
+        if (onPlayerDead != null)
+            onPlayerDead.Invoke();
+
+        playerMove.SetCanMove(false);
+        playerAttack.SetCanShoot(false);
+
+        Time.timeScale = 0.4f;
+    }
+
     void HideBulletExplosion()
     {
         bulletExplosion.SetActive(false);
+    }
+
+    void HideElectricityExplosion()
+    {
+        electricityExplosion.SetActive(false);
+    }
+
+    void HidePlayer()
+    {
+        this.gameObject.SetActive(false);
     }
 
     void StartHitAnimation()
@@ -117,7 +170,6 @@ public class Player : MonoBehaviour
         Inventory.instance.AddItem(storeSlot.item);
 
         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_BUY);
-
     }
 
     public void Equip(InventorySlot inventorySlot, InventoryEquipSlot equipSlot)

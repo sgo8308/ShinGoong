@@ -7,14 +7,14 @@ public class MonsterBoss : Monster
     public List<Transform> platformListToGo;
     public Transform nowPlatform;
     public Transform platformToGo;
-    /// <summary>
-    /// Position over the platform that monster wants to go.
-    /// </summary>
+
     public float flySpeed;
     public float floatSpeed;
-    private bool isFlying = false;
-    private bool isFloating = false;
-    private bool isHit = false;
+
+    public bool isFlying = false;
+    public bool isFloating = false;
+    public bool isHit = false;
+
     private int direction;
 
     protected override void Awake()
@@ -38,6 +38,19 @@ public class MonsterBoss : Monster
         Invoke("ThinkAndMove", 5);
     }
 
+    private bool CheckIfFalling()
+    {
+        if (isFloating || isFlying)
+            return false;
+
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));
+
+        if (rayHit.collider == null)
+            return true;
+
+        return false;
+    }
+
     void FixedUpdate()
     {
         if (isFloating || isFlying)
@@ -46,7 +59,6 @@ public class MonsterBoss : Monster
         if (rigid.bodyType == RigidbodyType2D.Static)
             return;
 
-        //Move
         rigid.velocity = new Vector2(direction * speed, rigid.velocity.y);
 
         CheckIfWall();
@@ -55,7 +67,6 @@ public class MonsterBoss : Monster
     private void CheckIfWall()
     {
         Vector2 frontVecHorizontal = new Vector2(rigid.position.x + 2 * direction, rigid.position.y);
-        Debug.DrawRay(frontVecHorizontal, 2 * Vector3.left, new Color(0, 1, 0), 10.0f, false);
 
         RaycastHit2D rayHit2 = Physics2D.Raycast(frontVecHorizontal,
                                 2 * Vector3.left, 1, LayerMask.GetMask("Platform"));
@@ -93,7 +104,10 @@ public class MonsterBoss : Monster
                 MoveRight();
                 break;
             case 2:
-                RunFlyRoutine(true);
+                if (!CheckIfFalling()) // Don't Try Flying When Falling
+                    RunFlyRoutine(true);
+                else
+                    Invoke("ThinkAndMove", 0.5f);
                 return;
             case 3:
                 RunFlyRoutine(false);
@@ -127,8 +141,8 @@ public class MonsterBoss : Monster
                     break;
             }
         }
-
-        return Random.Range(2, 3);
+        
+        return Random.Range(-1, 3);
     }
 
     private void MoveLeft()
@@ -203,8 +217,6 @@ public class MonsterBoss : Monster
 
         direction = 0;
 
-        GetComponent<BoxCollider2D>().isTrigger = true;
-        transform.Find("Body").GetComponent<PolygonCollider2D>().isTrigger = true;
         GetComponent<Rigidbody2D>().gravityScale = 0;
 
         Vector3 upSide = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
@@ -230,6 +242,9 @@ public class MonsterBoss : Monster
             FlipSpriteToRight();
         else if (targetPosToFly.x < transform.position.x)
             FlipSpriteToLeft();
+
+        GetComponent<BoxCollider2D>().isTrigger = true;
+        transform.Find("Body").GetComponent<PolygonCollider2D>().isTrigger = true;
 
         anim.enabled = true;
         anim.SetBool("isFlying", true);
@@ -264,7 +279,7 @@ public class MonsterBoss : Monster
     }
 
     #region When Monster gets hit
-    protected override void OnHit(float damage)
+    public override void OnHit(float damage)
     {
         isHit = true;
 

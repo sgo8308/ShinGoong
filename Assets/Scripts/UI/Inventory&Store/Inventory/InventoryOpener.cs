@@ -43,9 +43,20 @@ public class InventoryOpener : UIOpener
 
     protected override void Open()
     {
-        base.Open();
-        inventoryPanel.SetActive(true);
-        SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.OPEN_INVENTORY);
+        if (!playerMove.isJumping)
+        {
+            if (isOpened)
+                return;
+
+            isOpened = true;
+            playerMove.animator.SetBool("isRunning", false);
+            playerMove.SetCanMove(false);
+            playerAttack.SetCanShoot(false);
+            SoundManager.instance.MutePlayerSound();
+            SoundManager.instance.MutePlayerRunningSound();
+            inventoryPanel.SetActive(true);
+            SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.OPEN_INVENTORY);
+        }
     }
 
     protected override void Close()

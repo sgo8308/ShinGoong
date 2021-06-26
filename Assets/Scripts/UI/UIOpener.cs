@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class UIOpener : MonoBehaviour
 {
-    PlayerMove playerMove;
-    PlayerAttack playerAttack;
+    protected PlayerMove playerMove;
+    protected PlayerAttack playerAttack;
     public static bool isOpened;
 
     protected virtual void Start()
@@ -19,18 +19,29 @@ public abstract class UIOpener : MonoBehaviour
             return;
 
         isOpened = true;
+        playerMove.animator.SetBool("isRunning", false);
         playerMove.SetCanMove(false);
         playerAttack.SetCanShoot(false);
+
         SoundManager.instance.MutePlayerSound();
+        SoundManager.instance.MutePlayerRunningSound();
     }
 
 
     protected virtual void Close()
     {
         Invoke("SetIsOpenedFalse", 0.5f);
-        playerMove.SetCanMove(true);
-        playerAttack.SetCanShoot(true);
-        SoundManager.instance.UnMutePlayerSound();
+        if (!Player.isDead)
+        {
+            playerMove.SetCanMove(true);
+            playerAttack.SetCanShoot(true);
+            SoundManager.instance.UnMutePlayerSound();
+            SoundManager.instance.UnMutePlayerRunningSound();
+        }
+        playerMove.InitJumpValues();
+        playerMove.animator.enabled = true;
+        playerMove.animator.SetBool("isIdle", true);
+        playerMove.animator.SetBool("isReady", false);
     }
 
     private void SetIsOpenedFalse()

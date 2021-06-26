@@ -39,6 +39,7 @@ public class SceneManager : MonoBehaviour
             return;
 
         SoundManager.instance.MutePlayerSound();
+        SoundManager.instance.MutePlayerRunningSound();
     }
 
     void InitializeArrowCount(Scene scene, LoadSceneMode sceneMode)
@@ -61,8 +62,8 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-  //  public void ExitGame()
-  //  {
-  //      UnityEditor.EditorApplication.isPlaying = false;
-  //  }
+    public void ExitGame()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
 }

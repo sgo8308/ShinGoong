@@ -32,13 +32,10 @@ public class MonsterBody : MonoBehaviour
 
             if (collision.collider.tag == "Skill")
             {
-                Debug.Log("콜리전엔터 스킬 몬스터 들어옴");
-
                 Skill skill = collision.transform.GetComponent<Skill>();
 
                 onHit.Invoke(skill.damage);
             }
-
         }
     }
 
@@ -57,8 +54,6 @@ public class MonsterBody : MonoBehaviour
 
             if (collision.tag == "Skill")
             {
-                Debug.Log("트리거엔터 스킬 몬스터 들어옴");
-
                 Skill skill = collision.transform.GetComponent<Skill>();
 
                 onHit.Invoke(skill.damage);

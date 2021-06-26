@@ -1,0 +1,788 @@
+fileFormatVersion: 2
+guid: 4801e54d3036386499d0196355572334
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4040979859610238653
+    second: shock (1)_0
+  - first:
+      213: 562866764321622934
+    second: shock (1)_1
+  - first:
+      213: -5494666211966967615
+    second: shock (1)_2
+  - first:
+      213: -1774882646710185756
+    second: shock (1)_3
+  - first:
+      213: 5098292798335679104
+    second: shock (1)_4
+  - first:
+      213: -1716485842412812938
+    second: shock (1)_5
+  - first:
+      213: 1278732882112564175
+    second: shock (1)_6
+  - first:
+      213: -3691572225082467538
+    second: shock (1)_7
+  - first:
+      213: -996671231598685330
+    second: shock (1)_8
+  - first:
+      213: 5322284324539961359
+    second: shock (1)_9
+  - first:
+      213: 7210527311038878859
+    second: shock (1)_10
+  - first:
+      213: 8447347236297995638
+    second: shock (1)_11
+  - first:
+      213: 6800466346985236497
+    second: shock (1)_12
+  - first:
+      213: -6285472370594937803
+    second: shock (1)_13
+  - first:
+      213: -6466275998128222647
+    second: shock (1)_14
+  - first:
+      213: -7359691942038539642
+    second: shock (1)_15
+  - first:
+      213: -1958239982783451806
+    second: shock (1)_16
+  - first:
+      213: 5770368750277751708
+    second: shock (1)_17
+  - first:
+      213: -7289847570192234952
+    second: shock (1)_18
+  - first:
+      213: -9085587921482448609
+    second: shock (1)_19
+  - first:
+      213: -1680166882127712290
+    second: shock (1)_20
+  - first:
+      213: 7443917176254141284
+    second: shock (1)_21
+  - first:
+      213: 7509522164638498135
+    second: shock (1)_22
+  - first:
+      213: 1573332059379344656
+    second: shock (1)_23
+  - first:
+      213: -6730714683301258260
+    second: shock (1)_24
+  - first:
+      213: 7286430810885641626
+    second: shock (1)_25
+  - first:
+      213: 8968432847345705440
+    second: shock (1)_26
+  - first:
+      213: -1870765297272874363
+    second: shock (1)_27
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: shock (1)_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 471
+        width: 64
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbe7394b5c1741830800000000000000
+      internalID: 4040979859610238653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_1
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 400
+        width: 50
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69b83470754bfc700800000000000000
+      internalID: 562866764321622934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_2
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 471
+        width: 64
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c02e5431360fb3b0800000000000000
+      internalID: -5494666211966967615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_3
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 471
+        width: 64
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e095d4f2a95e57e0800000000000000
+      internalID: -1774882646710185756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_4
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 401
+        width: 52
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08afab5c946c0c640800000000000000
+      internalID: 5098292798335679104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_5
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 334
+        width: 20
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6754ffc7831dd28e0800000000000000
+      internalID: -1716485842412812938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_6
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 334
+        width: 20
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcb4ee008c8feb110800000000000000
+      internalID: 1278732882112564175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_7
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 331
+        width: 20
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2bd24dbe96e4ccc0800000000000000
+      internalID: -3691572225082467538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_8
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 333
+        width: 20
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6395b2abcc1b22f0800000000000000
+      internalID: -996671231598685330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_9
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 274
+        width: 50
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0095ddf46d8cd940800000000000000
+      internalID: 5322284324539961359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_10
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 274
+        width: 52
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8499b9e260f01460800000000000000
+      internalID: 7210527311038878859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_11
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 271
+        width: 51
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6757be13e810b3570800000000000000
+      internalID: 8447347236297995638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_12
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 272
+        width: 52
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 118ad07bc1c106e50800000000000000
+      internalID: 6800466346985236497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 215
+        width: 63
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53408294e2485c8a0800000000000000
+      internalID: -6285472370594937803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 215
+        width: 192
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94eceef4d3c2346a0800000000000000
+      internalID: -6466275998128222647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_15
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 144
+        width: 49
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 682fc7a0c2f1dd990800000000000000
+      internalID: -7359691942038539642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_16
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 146
+        width: 52
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26da9316c1fe2d4e0800000000000000
+      internalID: -1958239982783451806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_17
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 145
+        width: 52
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c93f15f3ec7741050800000000000000
+      internalID: 5770368750277751708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_18
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 143
+        width: 53
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83682f7124245da90800000000000000
+      internalID: -7289847570192234952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_19
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 76
+        width: 20
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1185744ce189e180800000000000000
+      internalID: -9085587921482448609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_20
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 79
+        width: 20
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edfe6636f19dea8e0800000000000000
+      internalID: -1680166882127712290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_21
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 77
+        width: 19
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4639e047b3b1e4760800000000000000
+      internalID: 7443917176254141284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_22
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 76
+        width: 20
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75d33302f9e273860800000000000000
+      internalID: 7509522164638498135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_23
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 15
+        width: 50
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0152a011c2995d510800000000000000
+      internalID: 1573332059379344656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_24
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 17
+        width: 51
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceb925908a2b792a0800000000000000
+      internalID: -6730714683301258260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_25
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 18
+        width: 51
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a95dc43a73a9e1560800000000000000
+      internalID: 7286430810885641626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_26
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 15
+        width: 53
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e16cf96826467c70800000000000000
+      internalID: 8968432847345705440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shock (1)_27
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 471
+        width: 61
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58a1ce5bfd4b906e0800000000000000
+      internalID: -1870765297272874363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
