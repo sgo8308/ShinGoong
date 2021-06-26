@@ -53,9 +53,6 @@ public class Player : MonoBehaviour
     {
         if (col.gameObject.layer == LAYER_NUM_ELECTRICITY_FOR_PLAYER)
             DeadByElectricity();
-        Debug.Log("플레이어 온 콜리전 엔터 들어옴");
-        Debug.Log(col.gameObject.name);
-        Debug.Log(col.gameObject.layer);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -97,8 +94,6 @@ public class Player : MonoBehaviour
 
     void DeadByElectricity()
     {
-        Debug.Log("데드바이 일렉 들어옴");
-
         if (isDead || StageManager.instance.stageState == StageState.CLEAR)
             return;
 

@@ -101,7 +101,6 @@ public class PlayerMove : MonoBehaviour
         canMove = value;
     }
 
-    public float speed;
     private void MoveRight()
     {
         spriteRenderer.flipX = false;
@@ -124,8 +123,6 @@ public class PlayerMove : MonoBehaviour
 
     private void Jump()
     {
-        //rigid.AddForce(Vector2.up * playerInfo.jumpPower, ForceMode2D.Impulse);
-
         rigid.velocity = Vector2.up * playerInfo.jumpPower;
 
         animator.SetBool("isRunning", false);
