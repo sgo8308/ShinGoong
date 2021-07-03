@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
     private InventoryInfo info;
     private InventoryUI ui;
 
+    public InventoryEquipSlot inventoryEquipSlot;
+
     private void Awake()
     {
         if (instance != null)
@@ -116,5 +118,15 @@ public class Inventory : MonoBehaviour
     public int GetCoinCountPerStage()
     {
         return info.coinCountPerStage;
+    }
+
+    public bool isItemEquipped()
+    {
+        return inventoryEquipSlot.IsItemSet();
+    }
+
+    public Item GetEquippedItem()
+    {
+        return inventoryEquipSlot.GetItem();
     }
 }

@@ -15,6 +15,8 @@ public class InventoryOpener : UIOpener
     {
         base.Start();
 
+        Close();
+
         StoreOpener storeOpener = GameObject.Find("StoreNpc").GetComponent<StoreOpener>();
         storeOpener.onStoreOpened += Open;
         storeOpener.onStoreClosed += Close;

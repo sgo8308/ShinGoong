@@ -25,12 +25,20 @@ public class StageManager : MonoBehaviour
     Stopwatch stopWatch;
 
     public GameObject player;
+    public PlayerSkill playerSkill;
 
     public GameObject nextStageTeleport;
 
     public delegate void OnStageClear();
     public OnStageClear onStageClear;
 
+    private string player_uuid = "player1234"; // player_uuid can be anything that uniquely identifies each of your game user.
+    private string character_uuid = TentuPlayKeyword._DUMMY_CHARACTER_ID_;
+    private string[] character_uuids = new string[] { TentuPlayKeyword._DUMMY_CHARACTER_ID_ };
+
+    TPStashEvent myStashEvent;
+
+    
 
     private void Awake()
     {
@@ -46,12 +54,13 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        TPStashEvent myStashEvent = new TPStashEvent();
+        myStashEvent = new TPStashEvent();
 
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += ResetStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStopWatch;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitializeStage;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += SetNextStageTeleport;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += StartStage;
 
         stopWatch = new Stopwatch();
 
@@ -75,7 +84,7 @@ public class StageManager : MonoBehaviour
                 break;
             case "Stage1Scene":
                 stageState = StageState.UNCLEAR;
-                totalNumOfMosters = 11;
+                totalNumOfMosters = 1;
                 break;
             case "BossScene":
                 stageState = StageState.UNCLEAR;
@@ -168,14 +177,211 @@ public class StageManager : MonoBehaviour
             stageState = StageState.CLEAR;
             NextStageTeleportOn();
             onStageClear.Invoke();
+
+            switch (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
+            {
+                case "Stage1Scene":
+                    Debug.Log("클리어 스테이지 스테이지 원 씬");
+                    myStashEvent.PlayStage(
+                        player_uuid: player_uuid, // unique identifier of player
+                        character_uuids: character_uuids,
+                        stage_type: stageType.PvE,
+                        stage_slug: "stage1_1", // unique identifier of played stage
+                        stage_category_slug: "general", // category slug of stage (optional)
+                        stage_level: "1", // level of stage (optional)
+                        stage_score: null, // score is null when stage starts (optional)
+                        stage_status: stageStatus.Win, // "Start"
+                        stage_playtime: null // playtime is null when stage starts (optional)
+                        );
+                    break;
+
+                case "BossScene":
+                    myStashEvent.PlayStage(
+                        player_uuid: player_uuid, // unique identifier of player
+                        character_uuids: character_uuids,
+                        stage_type: stageType.PvE,
+                        stage_slug: "stage1_2", // unique identifier of played stage
+                        stage_category_slug: "boss", // category slug of stage (optional)
+                        stage_level: "1", // level of stage (optional)
+                        stage_score: null, // score is null when stage starts (optional)
+                        stage_status: stageStatus.Win, // "Start"
+                        stage_playtime: null // playtime is null when stage starts (optional)
+                        );
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
-    #region TentuPlayMethod
-    void PlayStage()
+    public string GetStageName()
     {
+        string nowScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+        switch (nowScene)
+        {
+            case "ShelterScene":
+                return "shelter";
+            case "Stage1Scene":
+                return "stage1_1";
+            case "BossScene":
+                return "stage1_2";
+            default:
+                break;
+        }
+
+        return "NoStage";
     }
 
+    public string GetStageCategory()
+    {
+        string nowScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
+        switch (nowScene)
+        {
+            case "ShelterScene":
+                return "shelter";
+            case "Stage1Scene":
+                return "general";
+            case "BossScene":
+                return "boss";
+            default:
+                break;
+        }
+
+        return "NoStageCategory";
+    }
+    
+
+    #region TentuPlayMethod
+    void StartStage(Scene scene, LoadSceneMode mode)
+    {
+        TPStashEvent myStashEvent = new TPStashEvent();
+
+        switch (scene.name) 
+        {
+            case "Stage1Scene":
+
+                Debug.Log("스테이지1 스타트");
+                new TPStashEvent().PlayStage(
+                    player_uuid: player_uuid, // unique identifier of player
+                    character_uuids: character_uuids,
+                    stage_type: stageType.PvE,
+                    stage_slug: "stage1_1", // unique identifier of played stage
+                    stage_category_slug: "general", // category slug of stage (optional)
+                    stage_level: "1", // level of stage (optional)
+                    stage_score: null, // score is null when stage starts (optional)
+                    stage_status: stageStatus.Start, // "Start"
+                    stage_playtime: null // playtime is null when stage starts (optional)
+                    );
+
+                if (playerSkill.hasSkill)
+                {
+                    new TPStashEvent().PlayStageWithSkill(
+                        player_uuid: player_uuid, // unique identifier of player
+                        character_uuid: character_uuid,
+                        stage_type: stageType.PvE,
+                        stage_slug: "stage1_1", // unique identifier of played stage
+                        stage_category_slug: "general", // category slug of stage (optional)
+                        skill_slug: playerSkill.GetSkillName(),
+                        skill_category_slug: null
+                        ) ;
+                }
+
+                if (Inventory.instance.isItemEquipped())
+                {
+                    new TPStashEvent().PlayStageWithEquipment(
+                        player_uuid: player_uuid, // unique identifier of player
+                        character_uuid: character_uuid,
+                        stage_type: stageType.PvE,
+                        stage_slug: "stage1_1", // unique identifier of played stage
+                        stage_category_slug: "general", // category slug of stage (optional)
+                        item_slug: Inventory.instance.GetEquippedItem().itemName
+                        );
+                }
+
+                break;
+
+            case "BossScene":
+                myStashEvent.PlayStage(
+                    player_uuid: player_uuid, // unique identifier of player
+                    character_uuids: character_uuids,
+                    stage_type: stageType.PvE,
+                    stage_slug: "stage1_2", // unique identifier of played stage
+                    stage_category_slug: "boss", // category slug of stage (optional)
+                    stage_level: "1", // level of stage (optional)
+                    stage_score: null, // score is null when stage starts (optional)
+                    stage_status: stageStatus.Start, // "Start"
+                    stage_playtime: null // playtime is null when stage starts (optional)
+                    );
+
+                if (playerSkill.hasSkill)
+                {
+                    new TPStashEvent().PlayStageWithSkill(
+                        player_uuid: player_uuid, // unique identifier of player
+                        character_uuid: character_uuid,
+                        stage_type: stageType.PvE,
+                        stage_slug: "stage1_2", // unique identifier of played stage
+                        stage_category_slug: "boss", // category slug of stage (optional)
+                        skill_slug: playerSkill.GetSkillName(),
+                        skill_category_slug: null
+                        );
+                }
+
+                if (Inventory.instance.isItemEquipped())
+                {
+                    new TPStashEvent().PlayStageWithEquipment(
+                        player_uuid: player_uuid, // unique identifier of player
+                        character_uuid: character_uuid,
+                        stage_type: stageType.PvE,
+                        stage_slug: "stage1_2", // unique identifier of played stage
+                        stage_category_slug: "boss", // category slug of stage (optional)
+                        item_slug: Inventory.instance.GetEquippedItem().itemName
+                        );
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void LoseStage()
+    {
+        switch (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
+        {
+            case "Stage1Scene":
+                myStashEvent.PlayStage(
+                    player_uuid: player_uuid, // unique identifier of player
+                    character_uuids: character_uuids,
+                    stage_type: stageType.PvE,
+                    stage_slug: "stage1_1", // unique identifier of played stage
+                    stage_category_slug: "general", // category slug of stage (optional)
+                    stage_level: "1", // level of stage (optional)
+                    stage_score: null, // score is null when stage starts (optional)
+                    stage_status: stageStatus.Lose, // "Start"
+                    stage_playtime: null // playtime is null when stage starts (optional)
+                    );
+                break;
+
+            case "BossScene":
+                myStashEvent.PlayStage(
+                    player_uuid: player_uuid, // unique identifier of player
+                    character_uuids: character_uuids,
+                    stage_type: stageType.PvE,
+                    stage_slug: "stage1_2", // unique identifier of played stage
+                    stage_category_slug: "boss", // category slug of stage (optional)
+                    stage_level: "1", // level of stage (optional)
+                    stage_score: null, // score is null when stage starts (optional)
+                    stage_status: stageStatus.Lose, // "Start"
+                    stage_playtime: null // playtime is null when stage starts (optional)
+                    );
+                break;
+
+            default:
+                break;
+        }
+    }
     #endregion
 }

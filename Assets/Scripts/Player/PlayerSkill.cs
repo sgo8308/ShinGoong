@@ -8,7 +8,7 @@ public class PlayerSkill : MonoBehaviour
     public Image skillImage;
     public InventoryEquipSlot inventoryEquipSlot;
 
-    private bool hasSkill = false;
+    public bool hasSkill = false;
     private bool isSkillOn = false;
     private string skillName;
     private PlayerMove playerMove;

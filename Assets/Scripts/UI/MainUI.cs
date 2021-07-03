@@ -1,4 +1,4 @@
-﻿    using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -44,6 +44,7 @@ public class MainUI : MonoBehaviour
         UpdateArrowCountUI();
         UpdateLevelUI();
 
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += UpdateArrowCountUI;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += UpdateLevelUI;
     }
 
@@ -63,6 +64,11 @@ public class MainUI : MonoBehaviour
     public void UpdateLevelUI()
     {
         _levelUI.text = playerInfo.level.ToString();
+    }
+
+    public void UpdateArrowCountUI(Scene scene, LoadSceneMode mode)
+    {
+            _arrowCountUI.text = Inventory.instance.GetArrowCount().ToString();
     }
 
     public void UpdateArrowCountUI()

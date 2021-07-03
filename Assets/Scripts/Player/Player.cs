@@ -1,24 +1,31 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using TentuPlay.Api;
 
 public class Player : MonoBehaviour
 {
     private PlayerMove playerMove;
     private PlayerAttack playerAttack;
     private PlayerSkill playerSkill;
+    private PlayerInfo playerInfo;
     private Animator animator;
     private GameObject bulletExplosion; 
     private GameObject electricityExplosion; 
 
     public delegate void OnPlayerDead();
     public OnPlayerDead onPlayerDead;
-    public static bool isDead; 
+    public static bool isDead;
+
+    private string player_uuid = "TentuPlayer"; // player_uuid can be anything that uniquely identifies each of your game user.
+    private string character_uuid = TentuPlayKeyword._DUMMY_CHARACTER_ID_;
+    private string[] character_uuids = new string[] { TentuPlayKeyword._DUMMY_CHARACTER_ID_ };
 
     void Start()
     {
         playerMove = GetComponent<PlayerMove>();
         playerAttack = GetComponent<PlayerAttack>();
         playerSkill = GetComponent<PlayerSkill>();
+        playerInfo = GetComponent<PlayerInfo>();
         animator = GetComponent<Animator>();
         bulletExplosion = transform.Find("BulletExplosion").gameObject;
         electricityExplosion = transform.Find("ElectricityExplosion").gameObject;
@@ -146,8 +153,18 @@ public class Player : MonoBehaviour
         Inventory.instance.UpdateCoin();
 
         SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.ACQUIRE_COIN);
+
+        new TPStashEvent().GetCurrency(
+            player_uuid: player_uuid,
+            character_uuid: character_uuid,
+            currency_slug: "Coin",
+            currency_quantity: amount,
+            currency_total_quantity: Inventory.instance.GetCoinCount(),
+            from_entity: entity.PlayStage,
+            from_category_slug: StageManager.instance.GetStageCategory(),
+            from_slug: StageManager.instance.GetStageName()
+            );
     }
-    
 
     #region Item
     public void Sell(InventorySlot slot)
@@ -170,13 +187,35 @@ public class Player : MonoBehaviour
         Inventory.instance.AddItem(storeSlot.item);
 
         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_BUY);
+
+        new TPStashEvent().UseCurrency(
+            player_uuid: player_uuid, // unique identifier of player
+            character_uuid: character_uuid,
+            currency_slug: "coin", // unique identifier of gotten item
+            currency_quantity: storeSlot.item.priceInStore, // quantity of gotten item
+            currency_total_quantity: Inventory.instance.GetCoinCount(),
+            where_to_entity: entity.GetEquipment,  // i got this item from what category of game elements?
+            where_to_category_slug: "shop",
+            where_to_slug: "shelter shop"  // i got this item from exactly what game element? unique identifier of source of the item
+            );
+
+        new TPStashEvent().GetEquipment(
+            player_uuid: player_uuid, // unique identifier of player
+            character_uuid: character_uuid,
+            item_slug: storeSlot.item.itemName, // unique identifier of gotten item
+            item_quantity: 1.0F, // quantity of gotten item
+            from_entity: entity.ShopPurchase,  // i got this item from what category of game elements?
+            from_category_slug: StageManager.instance.GetStageCategory(),
+            from_slug: StageManager.instance.GetStageName()  // i got this item from exactly what game element? unique identifier of source of the item
+            );
     }
 
     public void Equip(InventorySlot inventorySlot, InventoryEquipSlot equipSlot)
     {
         Item tempItem = inventorySlot.GetItem();
-
-        if (equipSlot.IsItemSet())
+        
+        // 장착 슬롯이 비어 있지 않다면 이 아이템으로 교체
+        if (equipSlot.IsItemSet()) 
         {
             inventorySlot.SetItem(equipSlot.GetItem());
 
@@ -184,27 +223,85 @@ public class Player : MonoBehaviour
 
             Inventory.instance.
                 ChangeItem(inventorySlot.GetSlotNum(), inventorySlot.GetItem());
+
+            new TPStashEvent().EquipEquipment(
+                player_uuid: player_uuid, // unique identifier of player
+                character_uuid: character_uuid,
+                item_slug: equipSlot.GetItem().itemName,
+                equip_status: equipStatus.Unequip,
+                item_level: null,
+                character_level: playerInfo.level
+                );
+
+            new TPStashEvent().EquipEquipment(
+                player_uuid: player_uuid, // unique identifier of player
+                character_uuid: character_uuid,
+                item_slug: tempItem.itemName,
+                equip_status: equipStatus.Equip,
+                item_level: null,
+                character_level: playerInfo.level
+                );
         }
+        // 장착 슬롯이 비어 있다면 이 아이템을 장착
         else
         {
             equipSlot.SetItem(tempItem);
 
             Inventory.instance.RemoveItem(inventorySlot.GetSlotNum());
+            Debug.Log("장착 슬롯에 장비 장착");
+            new TPStashEvent().EquipEquipment(
+                player_uuid: player_uuid, // unique identifier of player
+                character_uuid: character_uuid,
+                item_slug: tempItem.itemName,
+                equip_status: equipStatus.Equip,
+                item_level: null,
+                character_level: playerInfo.level
+                );
         }
-
+        //아이템에 붙어있는 스킬 장착
         playerSkill.SetSkill(equipSlot.GetItem());
-        
+
+        new TPStashEvent().EquipSkill(
+                player_uuid: player_uuid, // unique identifier of player
+                character_uuid: character_uuid,
+                skill_slug: equipSlot.GetItem().skillName,
+                skill_category_slug : null,
+                equip_status: equipStatus.Equip,
+                skill_level : null,
+                character_level: playerInfo.level
+                );
+
         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_EQUIP);
     }
 
     public void UnEquip(InventoryEquipSlot equipSlot)
     {
+        //아이템 창이 꽉 차지 않았다면 장비중인 아이템 장착 해제
         if (Inventory.instance.GetItemCount() < Inventory.instance.GetSlotCount())
         {
             Inventory.instance.AddItem(equipSlot.GetItem());
             equipSlot.RemoveItem();
 
+            new TPStashEvent().EquipEquipment(
+                player_uuid: player_uuid, // unique identifier of player
+                character_uuid: character_uuid,
+                item_slug: equipSlot.GetItem().itemName,
+                equip_status: equipStatus.Unequip,
+                item_level: null,
+                character_level: playerInfo.level
+                );
+
             playerSkill.UnSetSkill();
+
+            new TPStashEvent().EquipSkill(
+                player_uuid: player_uuid, // unique identifier of player
+                character_uuid: character_uuid,
+                skill_slug: equipSlot.GetItem().skillName,
+                skill_category_slug: null,
+                equip_status: equipStatus.Unequip,
+                skill_level: null,
+                character_level: playerInfo.level
+                );
 
             SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_UNEQUIP);
         }

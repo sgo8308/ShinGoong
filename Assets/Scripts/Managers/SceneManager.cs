@@ -60,8 +60,6 @@ public class SceneManager : MonoBehaviour
                 Inventory.instance.InitializeArrowCount(45);
                 break;
         }
-
-        MainUI.instance.UpdateArrowCountUI();
     }
 
     public void ExitGame()
