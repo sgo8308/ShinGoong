@@ -15,15 +15,15 @@ public class InventoryOpener : UIOpener
     {
         base.Start();
 
-        Close();
-
         StoreOpener storeOpener = GameObject.Find("StoreNpc").GetComponent<StoreOpener>();
         storeOpener.onStoreOpened += Open;
         storeOpener.onStoreClosed += Close;
 
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += RegisterToStoreEvent;
+
+        inventoryPanel.SetActive(false);
     }
-    
+
     private void Update()
     {
         if (mainMenuPanel.activeSelf)

@@ -88,7 +88,7 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            if (stopSoundCount == 0 && !isJumping)
+            if (stopSoundCount == 0)
             {
                 SoundManager.instance.StopPlayerRunningSound();
                 stopSoundCount = 1;
@@ -140,6 +140,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (rigid.velocity.y < -0.0001f)  //플레이어가 아래로 떨어질때 Down Ray를 사용한다.
         {
+            isJumping = true;
             animator.SetBool("isRunning", false);
             animator.SetBool("isJumpingUp", false);
             animator.SetBool("isJumpingDown", true);

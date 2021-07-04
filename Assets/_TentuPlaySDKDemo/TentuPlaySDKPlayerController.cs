@@ -81,7 +81,6 @@ public class TentuPlaySDKPlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             player_currency += 1.0F;
             SetInventoryText();
-            Debug.Log("동전 먹음");
             myStashEvent.GetCurrency(
                 player_uuid: player_uuid,
                 character_uuid: character_uuid,

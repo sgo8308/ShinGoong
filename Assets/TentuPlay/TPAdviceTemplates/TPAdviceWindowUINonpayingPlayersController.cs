@@ -65,7 +65,8 @@ namespace TentuPlay.CRM
             float bar_height = 14.8F;
 
             // Fix the line below to use in your game.
-            string asset_path_prefix = "Images/M002(nonpaying_players)/";
+            //string asset_path_prefix = "Images/M002(nonpaying_players)/";
+            string asset_path_prefix = "Sprites/Item/";
 
 
             // Json parsing
@@ -164,31 +165,55 @@ namespace TentuPlay.CRM
 
 
             /*To fill in the Advice*/
-            Title.text = player_name + ", Here's a Special Tip for You";
-            RankingTitle.text = stage_name;
+            //Title.text = player_name + ", Here's a Special Tip for You";
+            //RankingTitle.text = stage_name;
 
-            TopTag1st.text = top_tag_1st;
-            TopName1st.text = top_name_1st;
-            TopImage1st.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + top_asset_name_1st);
+            //TopTag1st.text = top_tag_1st;
+            //TopName1st.text = top_name_1st;
+            //TopImage1st.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + top_asset_name_1st);
+            //TopBar1st.GetComponent<Image>().rectTransform.sizeDelta = new Vector2(top_fidelity_1st * bar_width, bar_height);
+            //TopFidelity1st.text = top_fidelity_1st.ToString() + "%";
+
+            //TopTag2nd.text = top_tag_2nd;
+            //TopName2nd.text = top_name_2nd;
+            //TopImage2nd.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + top_asset_name_2nd);
+            //TopBar2nd.GetComponent<Image>().rectTransform.sizeDelta = new Vector2(top_fidelity_2nd * bar_width, bar_height);
+            //TopFidelity2nd.text = top_fidelity_2nd.ToString() + "%";
+
+            //TopTag3rd.text = top_tag_3rd;
+            //TopName3rd.text = top_name_3rd;
+            //TopImage3rd.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + top_asset_name_3rd);
+            //TopBar3rd.GetComponent<Image>().rectTransform.sizeDelta = new Vector2(top_fidelity_3rd * bar_width, bar_height);
+            //TopFidelity3rd.text = top_fidelity_3rd.ToString() + "%";
+
+            //ContentImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + content_asset_name);
+            //RecommendDesc.text = "Watch ads and get coins to buy " + content_name + " IMMEDIATELY!";
+            //OfferButtonText.text = "Watch Ads and Get " + offer_name + "!";
+
+            Title.text = player_name + ", Here's a Special Tip for You";
+            RankingTitle.text = "Stage1-1";
+
+            TopTag1st.text = "Bow";
+            TopName1st.text = "Bomb Bow";
+            TopImage1st.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + "BombBow");
             TopBar1st.GetComponent<Image>().rectTransform.sizeDelta = new Vector2(top_fidelity_1st * bar_width, bar_height);
             TopFidelity1st.text = top_fidelity_1st.ToString() + "%";
 
-            TopTag2nd.text = top_tag_2nd;
-            TopName2nd.text = top_name_2nd;
-            TopImage2nd.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + top_asset_name_2nd);
+            TopTag2nd.text = "Consumable";
+            TopName2nd.text = "Arrow + 5";
+            TopImage2nd.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + "Arrow");
             TopBar2nd.GetComponent<Image>().rectTransform.sizeDelta = new Vector2(top_fidelity_2nd * bar_width, bar_height);
             TopFidelity2nd.text = top_fidelity_2nd.ToString() + "%";
 
-            TopTag3rd.text = top_tag_3rd;
-            TopName3rd.text = top_name_3rd;
-            TopImage3rd.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + top_asset_name_3rd);
+            TopTag3rd.text = "Consumable";
+            TopName3rd.text = "Jump Potion";
+            TopImage3rd.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + "JumpPotion");
             TopBar3rd.GetComponent<Image>().rectTransform.sizeDelta = new Vector2(top_fidelity_3rd * bar_width, bar_height);
             TopFidelity3rd.text = top_fidelity_3rd.ToString() + "%";
 
-            ContentImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + content_asset_name);
-            RecommendDesc.text = "Watch ads and get gems to buy " + content_name + " IMMEDIATELY!";
-            OfferButtonText.text = "Watch Ads and Get " + offer_name + "!";
-
+            ContentImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + "BombBow");
+            RecommendDesc.text = "Watch ads and get coins to buy " + "Bomb Bow" + " IMMEDIATELY!";
+            OfferButtonText.text = "Watch Ads and Get " + "1000 Coin " + "!";
 
             // Example of ItemViewer & GoToShopExample
             itemIdViewer[] ItemViewerContainer = gameObject.GetComponentsInChildren<itemIdViewer>();

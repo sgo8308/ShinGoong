@@ -13,7 +13,6 @@ public class TentuPlayCRMPlayerController : MonoBehaviour
     public GameObject tpPersonalizedOfferController;
     public GameObject MailBox_advice;
     public GameObject MailBox_offer;
-     
     private string player_uuid = "TentuPlayer"; // player_uuid can be anything that uniquely identifies each of your game user.
     public List<AdviceInfo> myAdvices = new List<AdviceInfo>(); // advice_id, closed_count, valid_until
     public List<OfferInfo> myOffers= new List<OfferInfo>();
@@ -23,7 +22,6 @@ public class TentuPlayCRMPlayerController : MonoBehaviour
         // Download mail when the game starts.
         LoadAdvice();
         LoadOffer();
-
     }
 
     private void LoadAdvice()
@@ -32,6 +30,8 @@ public class TentuPlayCRMPlayerController : MonoBehaviour
         myMentor.GetAdvicesAsync(this.player_uuid, (response) =>
         {
             myAdvices = myMentor.SelectAdvicesInfo(player_uuid);
+            Debug.Log("I HAVE " + myAdvices.Count.ToString() + " ADVICES.");
+
             // When unread Advices exist.
             bool has_unread_advice = false;
             foreach (AdviceInfo myAdvice in myAdvices)

@@ -32,7 +32,7 @@ public class StageManager : MonoBehaviour
     public delegate void OnStageClear();
     public OnStageClear onStageClear;
 
-    private string player_uuid = "player1234"; // player_uuid can be anything that uniquely identifies each of your game user.
+    private string player_uuid = "TentuPlayer"; // player_uuid can be anything that uniquely identifies each of your game user.
     private string character_uuid = TentuPlayKeyword._DUMMY_CHARACTER_ID_;
     private string[] character_uuids = new string[] { TentuPlayKeyword._DUMMY_CHARACTER_ID_ };
 
