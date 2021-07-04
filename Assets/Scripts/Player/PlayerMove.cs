@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMove : MonoBehaviour
 {
     public bool canMove { get; private set; }
-    public bool isJumping { get; private set; }
+    public bool isJumping;
 
     private bool isLanded;
 
@@ -153,7 +153,7 @@ public class PlayerMove : MonoBehaviour
             RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 3, LayerMask.GetMask("Platform"));  
             if (rayHit.collider != null || rayHit2.collider != null || rayHit3.collider != null)  
             {
-                if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)
+                if (rayHit.distance < 2.3f || rayHit2.distance < 2.3f || rayHit3.distance < 2.3f)
                 {
                     if (!isLanded)
                         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
@@ -183,7 +183,7 @@ public class PlayerMove : MonoBehaviour
             RaycastHit2D rayHit3 = Physics2D.Raycast(leftVec, Vector3.down, 2, LayerMask.GetMask("Platform"));
             if (rayHit.collider != null || rayHit2.collider != null || rayHit3.collider != null)
             {
-                if (rayHit.distance < 1.6f || rayHit2.distance < 1.6f || rayHit3.distance < 1.6f)
+                if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)
                 {
                     if (!isLanded)
                         SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
