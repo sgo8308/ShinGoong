@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 텔레포트 화살을 쏘고 텔레포트 하는 곳의 position
+/// </summary>
 public class TeleportPosition : MonoBehaviour
 {
     bool isInvokeStart;

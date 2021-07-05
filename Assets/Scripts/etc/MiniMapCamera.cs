@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// 미니맵 카메라에 붙어있는 스크립트.
+/// 
+/// </summary>
 public class MiniMapCamera : MonoBehaviour
 {
     Camera miniMapCamera;

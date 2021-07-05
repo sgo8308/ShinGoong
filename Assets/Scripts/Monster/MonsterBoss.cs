@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 보스 몬스터에 붙어 있는 스크립트 
+/// </summary>
 public class MonsterBoss : Monster
 {
     public List<Transform> platformListToGo;
@@ -38,25 +41,11 @@ public class MonsterBoss : Monster
         Invoke("ThinkAndMove", 5);
     }
 
-    private bool CheckIfFalling()
-    {
-        if (isFloating || isFlying)
-            return false;
-
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));
-
-        if (rayHit.collider == null)
-            return true;
-
-        return false;
-    }
-
     void FixedUpdate()
     {
         if (Player.isDead)
         {
             gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0 ,0);
             CancelInvoke();
         }
 
@@ -74,7 +63,8 @@ public class MonsterBoss : Monster
     /// 오른쪽으로 움직이기
     /// 멈춰서 쉬기
     /// 다른 플랫폼으로 날아가기
-    /// 날아가다가 방향 바꿔서 플레이어가 있는 플랫폼으로 날아가기
+    /// 날아가다가 맞으면 방향 바꿔서 플레이어가 있는 플랫폼으로 날아가기
+    /// 중에 하나를 랜덤으로 선택해서 행동한다.
     /// </summary>
 
     protected override void ThinkAndMove()
@@ -157,6 +147,10 @@ public class MonsterBoss : Monster
         anim.SetBool("isWalking", false);
     }
 
+    /// <summary>
+    /// 위로 뜨기, 날기, 착지하기의 비행루틴
+    /// </summary>
+    /// <param name="isOnTheGround"></param>
     private void RunFlyRoutine(bool isOnTheGround)
     {
         ChoosePlatformToGo();
@@ -174,6 +168,9 @@ public class MonsterBoss : Monster
         SetIsFloatingFalse();
     }
 
+    /// <summary>
+    /// 날기 시작할 때 이동할 플랫폼을 선택하는 메소드 
+    /// </summary>
     private void ChoosePlatformToGo()
     {
         if (isHit)
@@ -267,6 +264,19 @@ public class MonsterBoss : Monster
         GetAngry();
         CancelInvoke("GetPeaceful");
         Invoke("GetPeaceful", 7);
+    }
+
+    private bool CheckIfFalling()
+    {
+        if (isFloating || isFlying)
+            return false;
+
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, LayerMask.GetMask("Platform"));
+
+        if (rayHit.collider == null)
+            return true;
+
+        return false;
     }
 
     #region When Monster gets hit

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// 인벤토리 장착슬롯에 붙어 있는 스크립트.
+/// </summary>
 public class InventoryEquipSlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject storePanel;

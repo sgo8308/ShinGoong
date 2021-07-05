@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+/// <summary>
+/// 플레이어가 몬스터를 공격할 때 화면을 흔들어주는 스크립트.
+/// </summary>
 public class CameraShake : MonoBehaviour
 {
     public float shakeDuration = 0.3f;

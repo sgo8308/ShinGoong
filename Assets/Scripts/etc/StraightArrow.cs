@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// StraightArrow when shoot arrow at max power
+/// 직선으로 나가는 화살 플레이어가 Max Power로 화살을 쏠 때 이 스크립트가 붙어 있는 화살이 나간다.
 /// </summary>
 public class StraightArrow : MonoBehaviour
 {
@@ -33,7 +33,6 @@ public class StraightArrow : MonoBehaviour
         collider4Hit = transform.Find("Collider4Hit").gameObject;
     }
 
-
     void Start()
     {
         damage = ORIGINAL_DAMAGE;
@@ -58,7 +57,7 @@ public class StraightArrow : MonoBehaviour
         if (isUsed)
             return;
 
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, transform.right, 1, LayerMask.GetMask("MonsterBody"));
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, transform.right, 1, LayerMask.GetMask("MonsterBody")); // 레이저로 몬스터를 탐지해서 공격 판정한다.
 
         if (rayHit.collider != null)
         {
@@ -103,6 +102,7 @@ public class StraightArrow : MonoBehaviour
         }
     }
 
+    //플레이어가 화살 습득할 때
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player" &&
@@ -140,6 +140,7 @@ public class StraightArrow : MonoBehaviour
         isUsed = true;
     }
 
+    //벽에 맞았을 때 반사시켜주는 메소드
     private void Reflect(Collision2D collision)
     {
         float power = PlayerAttack.nowPowerOfArrow;

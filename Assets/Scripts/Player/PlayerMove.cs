@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
+/// <summary>
+/// Player에 붙어 있는 스크립트.
+/// Player에 모든 움직임을 담당함.
+/// </summary>
 public class PlayerMove : MonoBehaviour
 {
     public bool canMove { get; private set; }

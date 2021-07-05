@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 로봇 문어 몬스터에 붙어 있는 스크립트
+/// </summary>
 public class MonsterOctopus : Monster
 {
     Vector3 _position;
@@ -23,6 +26,7 @@ public class MonsterOctopus : Monster
 
         CheckIfFloor();
     }
+
     private void CheckIfFloor()
     {
         Vector2 frontVecVertical = new Vector2(rigid.position.x + nextMove * 2, rigid.position.y);
@@ -44,7 +48,10 @@ public class MonsterOctopus : Monster
         expPoint = 30.0f;
         defensivePower = 30;
     }
-
+    /// <summary>
+    /// 왼쪽으로 움직이거나 오른쪽으로 움직이거나 가만히 대기하는 행동 중 하나를 랜덤으로 함.
+    /// 보통은 대기하다가 체력이 50% 이하로 떨어지면 움직이기 시작하고 다시 본래 자리로 돌아옴.
+    /// </summary>
     protected override void ThinkAndMove()
     {
         nextMove = Random.Range(-1, 2);

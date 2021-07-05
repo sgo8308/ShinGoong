@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 다음 스테이지로 이동하는 텔레포트
+/// </summary>
 public class Teleport : MonoBehaviour
 {
     public string sceneName;

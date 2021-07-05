@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// 상점에 각각의 아이템이 등록되어 있는 슬롯에 관한 스크립트
+/// </summary>
 public class StoreSlot : MonoBehaviour , IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Item item;

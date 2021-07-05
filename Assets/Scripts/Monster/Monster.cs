@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+/// <summary>
+/// 모든 몬스터들의 부모 스크립트
+/// </summary>
 public abstract class Monster : MonoBehaviour
 {
     Image hpBar;
@@ -46,6 +49,7 @@ public abstract class Monster : MonoBehaviour
     #region Move
     abstract protected void ThinkAndMove();
 
+    //몬스터가 방향을 바꿀 때마다 이미지도 같이 돌려주는 메소드
     protected void FlipSprite()
     {
         // Flip Monster Sprite and HpHarFrame
@@ -153,6 +157,7 @@ public abstract class Monster : MonoBehaviour
         SoundManager.instance.PlayNonPlayerSound(NonPlayerSounds.MONSTER_DIE);
     }
 
+    //몬스터가 죽을 떄 폭발하는 애니메이션
     protected void ShowExplosion()
     {
         explosion.transform.parent = null;

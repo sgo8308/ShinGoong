@@ -8,6 +8,10 @@ public class OnHit : UnityEvent<float>
 {
 }
 
+/// <summary>
+/// 몬스터의 child gameobject인 monster body에 붙어 있는 스크립트.
+/// 몬스터가 화살에 맞는 것을 감지한다.
+/// </summary>
 public class MonsterBody : MonoBehaviour
 {   
     public OnHit onHit;

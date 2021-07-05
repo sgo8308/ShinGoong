@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 기본 화살에 붙는 스크립트
+/// </summary>
 public class Arrow : MonoBehaviour
 {
     public float damage;
@@ -98,6 +101,7 @@ public class Arrow : MonoBehaviour
         if (isUsed)
             return;
 
+        // 날고 있기 때문에 isTrigger가 켜진 보스를 활로 맞추기 위한 부분
         if (collision.tag == "MonsterBody")
         {
             if (playerSkill.IsSkillOn())
@@ -162,6 +166,7 @@ public class Arrow : MonoBehaviour
         isSkillPlayed = true;
     }
 
+    //몬스터가 죽을 때 박혀 있던 화살이 땅으로 떨어지게 하기 위해서 몬스터 죽음 이벤트에 등록하는 메소드.
     private void RegisterDetachEvent(Monster monster)
     {
         if (monster.OnDead.GetPersistentEventCount() == 0)

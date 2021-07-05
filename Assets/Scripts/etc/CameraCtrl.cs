@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// 카메랄를 누를 때 줌 아웃 또는 줌 인 해주는 스크립트.
+/// </summary>
 public class CameraCtrl : MonoBehaviour
 {
     public PlayerMove playerMove;

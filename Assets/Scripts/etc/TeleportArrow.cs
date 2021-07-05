@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 화살이 닿은 곳으로 이동할 수 있게 해주는 텔레포트 화살
+/// </summary>
 public class TeleportArrow : MonoBehaviour
 {
     private int arrowColMaxCount = 4;

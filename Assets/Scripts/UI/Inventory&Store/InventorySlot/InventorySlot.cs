@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// 인벤토리 각각의 슬롯에 붙어 있는 메소드
+/// </summary>
 public class InventorySlot : MonoBehaviour, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject storePanel;

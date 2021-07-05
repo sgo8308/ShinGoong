@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// UI들을 열고 닫을 때 쓰는 모든 Opener 스크립트의 부모 스크립트
+/// </summary>
 public abstract class UIOpener : MonoBehaviour
 {
     protected PlayerMove playerMove;

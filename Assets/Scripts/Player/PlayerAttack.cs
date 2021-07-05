@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Player에 붙어 있는 player의 공격에 관한 스크립트.
+/// </summary>
 public class PlayerAttack : MonoBehaviour
 {
     public static float gaugePower = 0.0f;
@@ -28,8 +31,8 @@ public class PlayerAttack : MonoBehaviour
 
     private bool canShoot = true;
 
-    float aimAngle;
-    float ReAimAngle;
+    float aimAngle; //화살의 각도
+    float ReAimAngle; //조준한 상태에서 마우스를 움직여 재조준 할 때의 화살 각도
 
     bool aiming;
     bool angleChange;
@@ -175,7 +178,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    #region Aroow Shooting Animation
+    #region 화살 쏠 때 Player의 애니메이션의 관한 스크립트 
     private void CalculateBowAngle()
     {
         mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -535,6 +538,9 @@ public class PlayerAttack : MonoBehaviour
     } 
     #endregion
 
+    /// <summary>
+    /// 화살이 날아갈 방향을 정함.
+    /// </summary>
     private void SetArrowDirection()
     {
         mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); 
@@ -622,6 +628,9 @@ public class PlayerAttack : MonoBehaviour
         Destroy(teleportPosition.gameObject);
     }
 
+    /// <summary>
+    /// Player의 화살 각도별 sprite 이미지를 로드함.
+    /// </summary>
     private void ImageSet()
     {
         sprites2 = Resources.LoadAll<Sprite>("Sprites/Player/FireAngle_anim/Angle2");

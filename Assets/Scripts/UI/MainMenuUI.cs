@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Esc키를 눌렀을 때 나오는 메인 메뉴 스크립트
+/// </summary>
 public class MainMenuUI : UIOpener
 {
     public GameObject inventoryPanel;

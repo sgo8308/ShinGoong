@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
+/// <summary>
+/// 스테이지가 종료되었을 때 나타나는 UI에 관한 스크립트
+/// </summary>
 public class GameOverUI : UIOpener
 {
     public Button exitStageButtonInMainMenu;
@@ -122,6 +125,9 @@ public class GameOverUI : UIOpener
         Invoke("FillExpBar", 0.5f);
     }
 
+    /// <summary>
+    /// 스테이지 종료 후 얻은 경험치가 오르는 것을 담당하는 메소드
+    /// </summary>
     private void FillExpBar()
     {
         if (!canFillExpBar)
@@ -209,6 +215,8 @@ public class GameOverUI : UIOpener
             continueButton.gameObject.SetActive(false);
             gameOverPanel.SetActive(true);
             canFillExpBar = true;
+
+            StageManager.instance.LoseStage();
         }
     }
 

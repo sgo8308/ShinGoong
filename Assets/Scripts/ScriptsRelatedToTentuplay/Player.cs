@@ -2,6 +2,9 @@
 using UnityEngine.SceneManagement;
 using TentuPlay.Api;
 
+/// <summary>
+/// Player에 붙어 있는 player가 하는 대부분의 행동을 담당하는 스크립트.
+/// </summary>
 public class Player : MonoBehaviour
 {
     private PlayerMove playerMove;
@@ -35,115 +38,7 @@ public class Player : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += Revive;
     }
 
-    #region Revive And Die
-    public void Revive(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name != "ShelterScene")
-            return;
-
-        gameObject.SetActive(true);
-        
-        animator.enabled = true;
-        animator.SetBool("isHit", false);
-        animator.SetBool("isJumpingFinal", false);
-
-        isDead = false;
-
-        playerMove.SetCanMove(true);
-
-        playerAttack.SetCanShoot(true);
-    }
-    
-    private const int LAYER_NUM_ELECTRICITY_FOR_PLAYER = 24;
-
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.layer == LAYER_NUM_ELECTRICITY_FOR_PLAYER)
-            DeadByElectricity();
-    }
-
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "Radar")
-            Invoke("Dead", 0.1f);
-    }
-
-    private void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "Radar")
-            CancelInvoke("Dead");
-    }
-
-    void Dead()
-    {
-        if (isDead || StageManager.instance.stageState == StageState.CLEAR)
-            return;
-
-        isDead = true;
-
-        bulletExplosion.SetActive(true);
-        Invoke("HideBulletExplosion", 0.5f);
-        Invoke("HidePlayer", 0.7f);
-        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
-
-        animator.enabled = true;
-        Invoke("StartHitAnimation", 0.1f);
-
-        if (onPlayerDead != null)
-            onPlayerDead.Invoke();
-
-        playerMove.SetCanMove(false);
-        playerAttack.SetCanShoot(false);
-
-        Time.timeScale = 0.4f;
-    }
-
-
-    void DeadByElectricity()
-    {
-        if (isDead || StageManager.instance.stageState == StageState.CLEAR)
-            return;
-
-        isDead = true;
-
-        electricityExplosion.SetActive(true);
-        Invoke("HideElectricityExplosion", 0.5f);
-        Invoke("HidePlayer", 0.5f);
-        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
-
-        animator.enabled = true;
-
-        if (onPlayerDead != null)
-            onPlayerDead.Invoke();
-
-        playerMove.SetCanMove(false);
-        playerAttack.SetCanShoot(false);
-
-        Time.timeScale = 0.4f;
-    }
-
-    void HideBulletExplosion()
-    {
-        bulletExplosion.SetActive(false);
-    }
-
-    void HideElectricityExplosion()
-    {
-        electricityExplosion.SetActive(false);
-    }
-
-    void HidePlayer()
-    {
-        this.gameObject.SetActive(false);
-    }
-
-    void StartHitAnimation()
-    {
-        animator.SetBool("isHit", true);
-    }
-
-    #endregion
-
+    #region 텐투플레이 메소드가 있는 부분
     public void AcquireCoin(int amount)
     {
         Inventory.instance.AddCoin(amount);
@@ -213,17 +108,10 @@ public class Player : MonoBehaviour
     public void Equip(InventorySlot inventorySlot, InventoryEquipSlot equipSlot)
     {
         Item tempItem = inventorySlot.GetItem();
-        
+
         // 장착 슬롯이 비어 있지 않다면 이 아이템으로 교체
-        if (equipSlot.IsItemSet()) 
+        if (equipSlot.IsItemSet())
         {
-            inventorySlot.SetItem(equipSlot.GetItem());
-
-            equipSlot.SetItem(tempItem);
-
-            Inventory.instance.
-                ChangeItem(inventorySlot.GetSlotNum(), inventorySlot.GetItem());
-
             new TPStashEvent().EquipEquipment(
                 player_uuid: player_uuid, // unique identifier of player
                 character_uuid: character_uuid,
@@ -241,6 +129,13 @@ public class Player : MonoBehaviour
                 item_level: null,
                 character_level: playerInfo.level
                 );
+
+            inventorySlot.SetItem(equipSlot.GetItem());
+
+            equipSlot.SetItem(tempItem);
+
+            Inventory.instance.
+                ChangeItem(inventorySlot.GetSlotNum(), inventorySlot.GetItem());
         }
         // 장착 슬롯이 비어 있다면 이 아이템을 장착
         else
@@ -248,7 +143,6 @@ public class Player : MonoBehaviour
             equipSlot.SetItem(tempItem);
 
             Inventory.instance.RemoveItem(inventorySlot.GetSlotNum());
-            Debug.Log("장착 슬롯에 장비 장착");
             new TPStashEvent().EquipEquipment(
                 player_uuid: player_uuid, // unique identifier of player
                 character_uuid: character_uuid,
@@ -265,9 +159,9 @@ public class Player : MonoBehaviour
                 player_uuid: player_uuid, // unique identifier of player
                 character_uuid: character_uuid,
                 skill_slug: equipSlot.GetItem().skillName,
-                skill_category_slug : null,
+                skill_category_slug: null,
                 equip_status: equipStatus.Equip,
-                skill_level : null,
+                skill_level: null,
                 character_level: playerInfo.level
                 );
 
@@ -279,9 +173,6 @@ public class Player : MonoBehaviour
         //아이템 창이 꽉 차지 않았다면 장비중인 아이템 장착 해제
         if (Inventory.instance.GetItemCount() < Inventory.instance.GetSlotCount())
         {
-            Inventory.instance.AddItem(equipSlot.GetItem());
-            equipSlot.RemoveItem();
-
             new TPStashEvent().EquipEquipment(
                 player_uuid: player_uuid, // unique identifier of player
                 character_uuid: character_uuid,
@@ -303,6 +194,9 @@ public class Player : MonoBehaviour
                 character_level: playerInfo.level
                 );
 
+            Inventory.instance.AddItem(equipSlot.GetItem());
+            equipSlot.RemoveItem();
+
             SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_UNEQUIP);
         }
     }
@@ -310,7 +204,122 @@ public class Player : MonoBehaviour
     public void Use(InventorySlotInfo slotInfo)
     {
         Inventory.instance.RemoveItem(slotInfo.slotNum);
-    } 
+    }
+    #endregion 
     #endregion
+
+
+    #region Revive And Die
+    public void Revive(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "ShelterScene")
+            return;
+
+        gameObject.SetActive(true);
+        
+        animator.enabled = true;
+        animator.SetBool("isHit", false);
+        animator.SetBool("isJumpingFinal", false);
+
+        isDead = false;
+
+        playerMove.SetCanMove(true);
+
+        playerAttack.SetCanShoot(true);
+    }
+    
+    private const int LAYER_NUM_ELECTRICITY_FOR_PLAYER = 24;
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.layer == LAYER_NUM_ELECTRICITY_FOR_PLAYER)
+            DeadByElectricity();
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Radar")
+            Invoke("Dead", 0.1f);
+    }
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Radar")
+            CancelInvoke("Dead");
+    }
+
+    void Dead()
+    {
+        if (isDead || StageManager.instance.stageState == StageState.CLEAR)
+            return;
+
+        isDead = true;
+
+        bulletExplosion.SetActive(true);
+        Invoke("HideBulletExplosion", 0.5f);
+        Invoke("HidePlayer", 0.7f);
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
+
+        animator.enabled = true;
+        Invoke("StartHitAnimation", 0.1f);
+
+        if (onPlayerDead != null)
+            onPlayerDead.Invoke();
+
+        playerMove.SetCanMove(false);
+        playerAttack.SetCanShoot(false);
+
+        Time.timeScale = 0.4f;
+
+
+    }
+
+
+    void DeadByElectricity()
+    {
+        if (isDead || StageManager.instance.stageState == StageState.CLEAR)
+            return;
+
+        isDead = true;
+
+        electricityExplosion.SetActive(true);
+        Invoke("HideElectricityExplosion", 0.5f);
+        Invoke("HidePlayer", 0.5f);
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
+
+        animator.enabled = true;
+
+        if (onPlayerDead != null)
+            onPlayerDead.Invoke();
+
+        playerMove.SetCanMove(false);
+        playerAttack.SetCanShoot(false);
+
+        Time.timeScale = 0.4f;
+    }
+
+    void HideBulletExplosion()
+    {
+        bulletExplosion.SetActive(false);
+    }
+
+    void HideElectricityExplosion()
+    {
+        electricityExplosion.SetActive(false);
+    }
+
+    void HidePlayer()
+    {
+        this.gameObject.SetActive(false);
+    }
+
+    void StartHitAnimation()
+    {
+        animator.SetBool("isHit", true);
+    }
+
+    #endregion
+
+    
 }
 

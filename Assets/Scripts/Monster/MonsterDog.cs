@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 로봇 강아지 몬스터에 붙어 있는 스크립트
+/// </summary>
 public class MonsterDog : Monster
 {
     protected override void Awake()
@@ -55,6 +58,7 @@ public class MonsterDog : Monster
         expPoint = 10.0f;
         Invoke("ThinkAndMove", 5);
     }
+
     protected override void OnDetectPlayer()
     {
         GetAngry();

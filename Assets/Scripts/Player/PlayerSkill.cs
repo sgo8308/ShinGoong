@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Player에 붙어 있는 player와 skill에 관한 스크립트. 
+/// </summary>
 public class PlayerSkill : MonoBehaviour
 {
     public Image skillImage;
