@@ -85,7 +85,7 @@ public class MonsterBoss : Monster
                 MoveRight();
                 break;
             case 2:
-                if (!CheckIfFalling()) // Don't Try Flying When Falling
+                if (!CheckIfFalling() && !isFloating && !isFlying ) // Don't Try Flying When Falling
                     RunFlyRoutine(true);
                 else
                     Invoke("ThinkAndMove", 0.5f);
@@ -97,7 +97,7 @@ public class MonsterBoss : Monster
                 break;
         }
 
-        FlipSprite();
+        FlipSprite();   
 
         float nextThinkTime = Random.Range(3f, 6f);
         Invoke("ThinkAndMove", nextThinkTime);
@@ -107,7 +107,7 @@ public class MonsterBoss : Monster
     {
         if (isHit)
         {
-            if (isFloating || isFlying)
+            if (isFlying)
                 return 3;
 
             switch (FindPlayer())
@@ -164,8 +164,6 @@ public class MonsterBoss : Monster
             Invoke("SetIsFloatingFalse", 1.5f);
             return;
         }
-
-        SetIsFloatingFalse();
     }
 
     /// <summary>
@@ -220,6 +218,8 @@ public class MonsterBoss : Monster
 
     private void Fly()
     {
+        direction = 0;
+
         Vector3 targetPosToFly = new Vector3(platformToGo.position.x, platformToGo.position.y + 3,
                                 transform.position.z);
 
