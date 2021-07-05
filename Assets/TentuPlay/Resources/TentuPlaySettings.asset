@@ -17,7 +17,7 @@ MonoBehaviour:
   debug: 1
   authMode: api_key_plain
   useStaticTP: 1
-  autoUpload: 0
+  autoUpload: 1
   deferredSendIntervalSec: 1200
   advicesGetInterval: 600
   offersGetInterval: 600
