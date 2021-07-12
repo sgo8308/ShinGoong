@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: TentuPlaySettings
   m_EditorClassIdentifier: 
   restBaseUrl: https://api.tentuplay.io/v2021.2/unity
-  clientKey: A6gFiMnD4MOegMUZIny3
-  debug: 0
+  clientKey: QTFwOLSgGhWAoh8keaxq
+  debug: 1
   authMode: api_key_plain
   useStaticTP: 1
-  autoUpload: 0
+  autoUpload: 1
   deferredSendIntervalSec: 1200
   advicesGetInterval: 600
   offersGetInterval: 600

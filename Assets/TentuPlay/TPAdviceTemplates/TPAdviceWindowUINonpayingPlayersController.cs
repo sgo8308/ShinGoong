@@ -65,7 +65,7 @@ namespace TentuPlay.CRM
             float bar_height = 14.8F;
 
             // Fix the line below to use in your game.
-            string asset_path_prefix = "Images/M002(nonpaying_players)/";
+            string asset_path_prefix = "Sprites/Item/";
 
 
             // Json parsing
@@ -186,9 +186,8 @@ namespace TentuPlay.CRM
             TopFidelity3rd.text = top_fidelity_3rd.ToString() + "%";
 
             ContentImage.GetComponent<Image>().sprite = Resources.Load<Sprite>(asset_path_prefix + content_asset_name);
-            RecommendDesc.text = "Watch ads and get gems to buy " + content_name + " IMMEDIATELY!";
+            RecommendDesc.text = "Watch ads and get coins to buy " + content_name + " IMMEDIATELY!";
             OfferButtonText.text = "Watch Ads and Get " + offer_name + "!";
-
 
             // Example of ItemViewer & GoToShopExample
             itemIdViewer[] ItemViewerContainer = gameObject.GetComponentsInChildren<itemIdViewer>();
