@@ -6495,7 +6495,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.381158, y: -53.085583, z: -10}
+  m_LocalPosition: {x: -11.072239, y: -53.111088, z: -10}
   m_LocalScale: {x: 1.1948497, y: 1.1948497, z: 1.1948497}
   m_Children:
   - {fileID: 1029734724}
@@ -7499,7 +7499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 7
   jumpPower: 25
-  level: 3
+  level: 1
   levelUpCount: 0
   maxExpPoint: 20
   nowExpPoint: 0
@@ -13401,7 +13401,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029734721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.0279894, y: -1.993904, z: 0}
+  m_LocalPosition: {x: -0.9388304, y: -1.9725581, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1758396107}

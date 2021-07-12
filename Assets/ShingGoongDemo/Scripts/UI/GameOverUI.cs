@@ -83,7 +83,7 @@ public class GameOverUI : UIOpener
 
         gameOverPanel = transform.Find("GameOverPanel").gameObject;
 
-        level.text = "1";
+        level.text = PlayerInfo.instance.level.ToString();
 
         exitButton.onClick.AddListener(GoToShelterScene);
     }

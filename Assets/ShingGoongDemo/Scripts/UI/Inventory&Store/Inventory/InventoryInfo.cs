@@ -27,7 +27,7 @@ public class InventoryInfo : MonoBehaviour
 
         AssignSlotsNum();
 
-        InitializeArrowCount(45);
+        InitializeArrowCount(50);
 
         coinCount = 50000;
 

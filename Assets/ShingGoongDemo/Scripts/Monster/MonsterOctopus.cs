@@ -17,6 +17,11 @@ public class MonsterOctopus : Monster
         Initialize();
     }
 
+    private void Update()
+    {
+        FlipSprite();
+    }
+
     void FixedUpdate()
     {
         if (rigid.bodyType == RigidbodyType2D.Static)

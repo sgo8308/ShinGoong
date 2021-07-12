@@ -12,7 +12,7 @@ public class SceneManager : MonoBehaviour
     public static SceneManager instance;
     public SceneType sceneType;
     public const int STAGE1_ARROW_COUNT = 50;
-    public const int SHELTER_ARROW_COUNT = 45;
+    public const int SHELTER_ARROW_COUNT = 50;
 
     private void Awake()
     {
@@ -57,7 +57,7 @@ public class SceneManager : MonoBehaviour
                 break;
 
             default:
-                Inventory.instance.InitializeArrowCount(45);
+                Inventory.instance.InitializeArrowCount(50);
                 break;
         }
     }
