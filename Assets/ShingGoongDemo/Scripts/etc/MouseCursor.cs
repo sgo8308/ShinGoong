@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 마우스 커서는 조준점으로 바꿔주는 스크립트
+/// 마우스 커서를 조준점으로 바꿔주는 스크립트
 /// </summary>
 public class MouseCursor : MonoBehaviour
 {
