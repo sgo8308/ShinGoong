@@ -40,7 +40,7 @@ public class StoreOpener : UIOpener
         if (mainMenuPanel.activeSelf)
             return;
 
-        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.F))
+        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.F) && !storePanel.activeSelf)
         {
             Open();
         }
@@ -53,6 +53,9 @@ public class StoreOpener : UIOpener
 
     protected override void Open()
     {
+        if (playerMove.isJumping)
+            return;
+        
         base.Open();
         storePanel.SetActive(true);
         isOpened = false;

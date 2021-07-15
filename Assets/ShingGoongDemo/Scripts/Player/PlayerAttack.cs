@@ -614,7 +614,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            teleportPos = new Vector3(teleportPosition.position.x, teleportPosition.position.y + 2.0f, 0);
+            teleportPos = new Vector3(teleportPosition.position.x, teleportPosition.position.y + 3.0f, 0);
         }
 
         transform.position = teleportPos;
