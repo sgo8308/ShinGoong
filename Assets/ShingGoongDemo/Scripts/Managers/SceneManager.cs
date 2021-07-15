@@ -65,7 +65,6 @@ public class SceneManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
-        Debug.Log("exit game2");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif

@@ -54,9 +54,6 @@ public class PlayerMove : MonoBehaviour
 
         limitSpeed();
 
-        if (Input.GetButtonDown("Jump") && !animator.GetBool("isReady") && !isJumping)
-            Jump();
-
         if (Input.GetButtonUp("Horizontal")) 
             StopPlayer();
     }
@@ -69,6 +66,9 @@ public class PlayerMove : MonoBehaviour
         CheckIfJumping();
 
         CheckIfOnGround();
+
+        if (Input.GetButtonDown("Jump") && !animator.GetBool("isReady") && !isJumping)
+            Jump();
 
         if (!canMove)
         {
