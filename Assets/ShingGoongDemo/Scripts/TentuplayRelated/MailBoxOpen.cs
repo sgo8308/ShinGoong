@@ -10,10 +10,10 @@ public class MailBoxOpen : MonoBehaviour
     private string player_uuid = "TentuPlayer";
     private GameObject tpAdviceController;
     private List<AdviceInfo> myAdvices = new List<AdviceInfo>(); // advice_id, closed_count, valid_until
-
+    public GameObject player;
     void Start()
     {
-        myAdvices = GameObject.Find("Player").GetComponent<TentuPlayCRMPlayerController>().myAdvices;
+        myAdvices = player.GetComponent<TentuPlayCRMPlayerController>().myAdvices;
         tpAdviceController = GameObject.Find("TPAdviceController");
     }
 

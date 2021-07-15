@@ -12,6 +12,7 @@ public class TentuPlayCRMPlayerController : MonoBehaviour
     public GameObject tpAdviceController;
     public GameObject tpPersonalizedOfferController;
     public GameObject MailBox_advice;
+    public GameObject mailBoxOpen;
     //public GameObject MailBox_offer;
     private string player_uuid = "TentuPlayer"; // player_uuid can be anything that uniquely identifies each of your game user.
     public List<AdviceInfo> myAdvices = new List<AdviceInfo>(); // advice_id, closed_count, valid_until
@@ -71,24 +72,31 @@ public class TentuPlayCRMPlayerController : MonoBehaviour
     //    );
     //}
 
+    //public void OpenMailBox() // When clicking the mailbox button.
+    //{
+    //    foreach (Transform child in tpAdviceController.transform)
+    //    {
+    //        if (child.name.StartsWith("MailBoxOpen"))
+    //        {
+    //            Destroy(child.gameObject);
+    //        }
+    //    }
+
+    //    tpAdviceController = GameObject.Find("TPAdviceController");
+
+    //    GameObject mailbox = Resources.Load<GameObject>("MailBoxOpen");
+
+    //    GameObject adviceWindow = Instantiate(mailbox, Vector2.zero, Quaternion.identity);
+    //    adviceWindow.transform.SetParent(tpAdviceController.transform, false);
+
+    //    adviceWindow.GetComponent<MessageController>().Show();
+
+    //    MailBox_advice.GetComponent<Image>().sprite = Resources.Load<Sprite>("note");
+    //}
+
     public void OpenMailBox() // When clicking the mailbox button.
     {
-        foreach (Transform child in tpAdviceController.transform)
-        {
-            if (child.name.StartsWith("MailBoxOpen"))
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        tpAdviceController = GameObject.Find("TPAdviceController");
-
-        GameObject mailbox = Resources.Load<GameObject>("MailBoxOpen");
-
-        GameObject adviceWindow = Instantiate(mailbox, Vector2.zero, Quaternion.identity);
-        adviceWindow.transform.SetParent(tpAdviceController.transform, false);
-
-        adviceWindow.GetComponent<MessageController>().Show();
+        mailBoxOpen.GetComponent<MessageController>().Show();
 
         MailBox_advice.GetComponent<Image>().sprite = Resources.Load<Sprite>("note");
     }

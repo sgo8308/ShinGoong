@@ -23,6 +23,62 @@ public class GameOverUI : UIOpener
     Button exitButton;
     Player player;
 
+    #region 텐투플레이와 관련 있는 부분
+    public GameObject tentuplayMail;
+    public GameObject mailBox;
+    protected override void Open()
+    {
+        Time.timeScale = 1;
+
+        isOpened = true;
+        playerMove.SetCanMove(false);
+        playerAttack.SetCanShoot(false);
+        SoundManager.instance.MutePlayerRunningSound();
+        SoundManager.instance.MutePlayerSound();
+
+        if (playerMove.animator.GetBool("isJumpingDown"))
+            playerMove.animator.SetBool("isJumpingFinal", true);
+
+        if (!Player.isDead && StageManager.instance.stageState == StageState.CLEAR)
+        {
+            Title.text = "STAGE CLEAR";
+            playerMove.animator.SetBool("isRunning", false);
+            continueButton.gameObject.SetActive(true);
+            gameOverPanel.SetActive(true);
+            canFillExpBar = true;
+        }
+        else
+        {
+            Title.text = "GAME OVER";
+            playerMove.animator.SetBool("isRunning", false);
+            continueButton.gameObject.SetActive(false);
+            gameOverPanel.SetActive(true);
+            canFillExpBar = true;
+
+            StageManager.instance.LoseStage();
+
+            mailBox.SetActive(false);
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Stage1Scene")
+                tentuplayMail.SetActive(true);
+        }
+    }
+
+    protected override void Close()
+    {
+        base.Close();
+
+        gameOverPanel.SetActive(false);
+        canFillExpBar = true;
+        playerMove.SetCanMove(true);
+        playerAttack.SetCanShoot(true);
+        SoundManager.instance.UnMutePlayerSound();
+        SoundManager.instance.UnMutePlayerRunningSound();
+        playerMove.InitJumpValues();
+
+        tentuplayMail.SetActive(false);
+    } 
+    #endregion
+
     private void Awake()
     {
         var obj = FindObjectsOfType<GameOverUI>();
@@ -187,51 +243,7 @@ public class GameOverUI : UIOpener
         Invoke("Open", 1f);
     }
 
-    protected override void Open()
-    {
-        Time.timeScale = 1;
-
-        isOpened = true;
-        playerMove.SetCanMove(false);
-        playerAttack.SetCanShoot(false);
-        SoundManager.instance.MutePlayerRunningSound();
-        SoundManager.instance.MutePlayerSound();
-
-        if (playerMove.animator.GetBool("isJumpingDown"))
-            playerMove.animator.SetBool("isJumpingFinal", true);
-
-        if (!Player.isDead && StageManager.instance.stageState == StageState.CLEAR)
-        {
-            Title.text = "STAGE CLEAR";
-            playerMove.animator.SetBool("isRunning", false);
-            continueButton.gameObject.SetActive(true);
-            gameOverPanel.SetActive(true);
-            canFillExpBar = true;
-        }
-        else
-        {
-            Title.text = "GAME OVER";
-            playerMove.animator.SetBool("isRunning", false);
-            continueButton.gameObject.SetActive(false);
-            gameOverPanel.SetActive(true);
-            canFillExpBar = true;
-
-            StageManager.instance.LoseStage();
-        }
-    }
-
-    protected override void Close()
-    {
-        base.Close();
-
-        gameOverPanel.SetActive(false);
-        canFillExpBar = true;
-        playerMove.SetCanMove(true);
-        playerAttack.SetCanShoot(true);
-        SoundManager.instance.UnMutePlayerSound();
-        SoundManager.instance.UnMutePlayerRunningSound();
-        playerMove.InitJumpValues();
-    }
+    
 
     private void GoToShelterScene()
     {

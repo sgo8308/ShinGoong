@@ -9,7 +9,7 @@ public static class ExportPackage
     public static void export()
     {
         string[] projectContent = new string[] { "Assets", "Packages/Cinemachine","ProjectSettings/TagManager.asset", "ProjectSettings/InputManager.asset", 
-            "ProjectSettings/ProjectSettings.asset", "ProjectSettings/Physics2DSettings.asset","ProjectSettings/PackageManagerSettings.asset" };
+            "ProjectSettings/ProjectSettings.asset", "ProjectSettings/Physics2DSettings.asset","ProjectSettings/PackageManagerSettings.asset", "ProjectSettings/EditorBuildSettings.asset"  };
         AssetDatabase.ExportPackage(projectContent, "Done2.unitypackage", ExportPackageOptions.Interactive | ExportPackageOptions.Recurse | ExportPackageOptions.IncludeDependencies);
         Debug.Log("Project Exported");
     }
