@@ -40,7 +40,7 @@ public class StoreOpener : UIOpener
         if (mainMenuPanel.activeSelf)
             return;
 
-        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.F))
+        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.F) && !storePanel.activeSelf)
         {
             Open();
         }
