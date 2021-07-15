@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -76,7 +78,7 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        if (Mathf.Abs(rigid.velocity.x) < 0.4)
+        if (Mathf.Abs(rigid.velocity.x) < 0.1)
             animator.SetBool("isRunning", false);
         else if (!isJumping && !animator.GetBool("isJumpingDown"))
             animator.SetBool("isRunning", true);

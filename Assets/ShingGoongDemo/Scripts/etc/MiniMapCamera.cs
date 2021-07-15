@@ -32,7 +32,6 @@ public class MiniMapCamera : MonoBehaviour
         if (obj.Length == 1)
         {
             DontDestroyOnLoad(gameObject);
-            UnityEngine.SceneManagement.SceneManager.sceneLoaded += AssignCameraConfiner;
         }
         else
         {
@@ -59,13 +58,6 @@ public class MiniMapCamera : MonoBehaviour
         shelterImageSize = new Vector2(684, 312);
         stage1ImageSize = new Vector2(910, 440);
         bossImageSize = new Vector2(732, 336);
-    }
-
-    void AssignCameraConfiner(Scene scene, LoadSceneMode mode)
-    {
-        CinemachineConfiner cameraConfiner = transform.Find("MiniMapVCam").GetComponent<CinemachineConfiner>();
-        GameObject camConfiner = GameObject.Find("CamConfiner");
-        cameraConfiner.m_BoundingShape2D = camConfiner.GetComponent<PolygonCollider2D>();
     }
 
     void InitializeMiniMap(Scene scene, LoadSceneMode mode)
