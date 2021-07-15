@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Esc키를 눌렀을 때 나오는 메인 메뉴 스크립트
@@ -14,6 +15,8 @@ public class MainMenuUI : UIOpener
     GameObject mainMenuPanel;
 
     GameObject exitStageButton;
+
+    GameObject exitGameButton;
 
     private void Awake()
     {
@@ -35,6 +38,12 @@ public class MainMenuUI : UIOpener
 
         exitStageButton = transform.Find("MainMenuPanel")
                                     .Find("ExitStageButtonHolder").gameObject;
+
+        exitGameButton = transform.Find("MainMenuPanel")
+                                    .Find("ExitGameButtonHolder")
+                                    .Find("ExitGameButton").gameObject;
+
+        exitGameButton.GetComponent<Button>().onClick.AddListener(SceneManager.instance.ExitGame);
     }
 
     void Update()
