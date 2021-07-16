@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 미니맵 카메라에 붙어있는 스크립트.
-/// 
 /// </summary>
 public class MiniMapCamera : MonoBehaviour
 {
@@ -32,6 +31,8 @@ public class MiniMapCamera : MonoBehaviour
         if (obj.Length == 1)
         {
             DontDestroyOnLoad(gameObject);
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += FindPosition;
+            FindPosition();
         }
         else
         {
@@ -42,7 +43,6 @@ public class MiniMapCamera : MonoBehaviour
     void Start()
     {
         miniMapCamera = GetComponent<Camera>();
-        miniMapVCam = transform.Find("MiniMapVCam").GetComponent<CinemachineVirtualCamera>();
         miniMap = GameObject.Find("MainUI").transform
                               .Find("MiniMap").gameObject;
 
@@ -70,7 +70,7 @@ public class MiniMapCamera : MonoBehaviour
                 miniMapCamera.targetTexture = shelterRenderTexture;
                 minimapImage.texture = shelterRenderTexture;
 
-                miniMapVCam.m_Lens.OrthographicSize = 16;
+                miniMapCamera.orthographicSize = 16;
 
                 miniMapTransform.sizeDelta = shelterImageSize;
                 break;
@@ -79,8 +79,7 @@ public class MiniMapCamera : MonoBehaviour
                 miniMapCamera.targetTexture = stage1RenderTexture;
                 minimapImage.texture = stage1RenderTexture;
 
-                miniMapVCam.m_Lens.OrthographicSize = 39;
-
+                miniMapCamera.orthographicSize = 39;
                 miniMapTransform.sizeDelta = stage1ImageSize;
                 break;
 
@@ -88,12 +87,22 @@ public class MiniMapCamera : MonoBehaviour
                 miniMapCamera.targetTexture = bossRenderTexture;
                 minimapImage.texture = bossRenderTexture;
 
-                miniMapVCam.m_Lens.OrthographicSize = 30;
+                miniMapCamera.orthographicSize = 30;
 
                 miniMapTransform.sizeDelta = bossImageSize;
                 break;
             default:
                 break;
         }
+    }
+
+    public void FindPosition(Scene scene, LoadSceneMode mode)
+    {
+        transform.position = GameObject.Find("MiniMapCameraPosition").transform.position;
+    }
+
+    void FindPosition()
+    {
+        transform.position = GameObject.Find("MiniMapCameraPosition").transform.position;
     }
 }

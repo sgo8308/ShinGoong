@@ -16,9 +16,20 @@ public class CameraControl : MonoBehaviour
     void Start()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += GetCameraLimit;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += RevertCameraView;
+
         GetCameraLimit();
         mainCam = Camera.main;
         mainCamPos = mainCam.transform.position;
+    }
+
+    void Update()
+    {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ShelterScene")
+            return;
+
+        if (playerMove.canMove)
+            ZoomOut();
     }
 
     void LateUpdate()
@@ -68,5 +79,37 @@ public class CameraControl : MonoBehaviour
         rightLimX = cl.rightLimitXAxis;
         topLimY = cl.topLimitYAxis;
         botLimY = cl.bottomLimitYAxis;
+    }
+
+    public PlayerMove playerMove;
+    public int maxCamDistance;
+    public int defaultCamDistance;
+
+    private void ZoomOut()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            Camera.main.orthographicSize = maxCamDistance;
+            GetCameraLimitZoomOut();
+        }
+        else 
+        { 
+            Camera.main.orthographicSize = defaultCamDistance;
+            GetCameraLimit();
+        }
+    }
+
+    void GetCameraLimitZoomOut()
+    {
+        CameraLimit cl = GameObject.Find("CameraLimitZoomOut").GetComponent<CameraLimit>();
+        leftLimX = cl.leftLimitXAxis;
+        rightLimX = cl.rightLimitXAxis;
+        topLimY = cl.topLimitYAxis;
+        botLimY = cl.bottomLimitYAxis;
+    }
+
+    private void RevertCameraView(Scene scene, LoadSceneMode mode)
+    {
+        Camera.main.orthographicSize = defaultCamDistance;
     }
 }
