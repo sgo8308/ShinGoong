@@ -19,6 +19,7 @@ public class PlayerAttack : MonoBehaviour
     private GameObject player = null;
     private PlayerMove playerMove;
     private PlayerSkill playerSkill;
+    private Rigidbody2D rigid;
 
     public float arrowSpeed = 50f;    //화살 속도
     public float arrowMaxPower = 1f;    //화살 Max Power
@@ -53,6 +54,7 @@ public class PlayerAttack : MonoBehaviour
         player = GameObject.Find("Player");
         playerMove = player.GetComponent<PlayerMove>();
         playerSkill = player.GetComponent<PlayerSkill>();
+        rigid = gameObject.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         mainCamera = Camera.main;
         arrowDirection = transform.Find("ArrowDirection");
@@ -63,8 +65,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if (!canShoot || playerMove.isJumping || Inventory.instance.GetArrowCount() <= 0 || UIOpener.isOpened)
+        if (!canShoot || playerMove.isJumping || Inventory.instance.GetArrowCount() <= 0 || UIOpener.isOpened || rigid.velocity.y < 0) 
+        {
+            AimCancel();
             return;
+        }
 
         SetArrowDirection();
 

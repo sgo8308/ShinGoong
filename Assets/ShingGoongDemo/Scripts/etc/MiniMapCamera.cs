@@ -1,7 +1,4 @@
-﻿using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class MiniMapCamera : MonoBehaviour
 {
     Camera miniMapCamera;
-    CinemachineVirtualCamera miniMapVCam;
     GameObject miniMap;
     RectTransform miniMapTransform;
     RawImage minimapImage;
