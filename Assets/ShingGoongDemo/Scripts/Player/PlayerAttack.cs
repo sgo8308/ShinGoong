@@ -65,11 +65,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if (!canShoot || playerMove.isJumping || Inventory.instance.GetArrowCount() <= 0 || UIOpener.isOpened || rigid.velocity.y < 0) 
-        {
-            AimCancel();
+        if (!canShoot || playerMove.isJumping || Inventory.instance.GetArrowCount() <= 0 || UIOpener.isOpened)
             return;
-        }
 
         SetArrowDirection();
 
@@ -175,10 +172,15 @@ public class PlayerAttack : MonoBehaviour
                 SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_SHOOT_ARROW);
 
                 Invoke("AimCancel", 0.5f);
+
             }
             else
             {
                 AimCancel();
+
+                playerMove.SetCanMove(true);
+
+                SoundManager.instance.StopPlayerSound();
             }
         }
     }
@@ -399,13 +401,14 @@ public class PlayerAttack : MonoBehaviour
 
         animator.SetBool("isReady", false);
 
-        playerMove.SetCanMove(true);
-
         aiming = false;
         angleChange = false;
 
+        playerMove.SetCanMove(true);
         SoundManager.instance.StopPlayerSound();
     }
+
+
 
     void AimCancel2()
     {
