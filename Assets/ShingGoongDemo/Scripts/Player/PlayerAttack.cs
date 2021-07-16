@@ -600,7 +600,7 @@ public class PlayerAttack : MonoBehaviour
         if (gaugePower >= arrowMaxPower)
         {
             nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().gravityScale = 0; 
-            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 4 / 5;
+            nowFlyingTeleportArrow.GetComponent<Rigidbody2D>().velocity = nowFlyingTeleportArrow.transform.right * nowPowerOfArrow * 1 / 3;
         }
 
         Inventory.instance.UseArrow();

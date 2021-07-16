@@ -21,21 +21,14 @@ public class TeleportArrow : MonoBehaviour
 
     private GameObject teleportPosition;
 
-    private float power;
+
     void Start()
     {
-        var telportArrows = FindObjectsOfType<TeleportArrow>();
-
-        if (telportArrows.Length > 1)
-            Destroy(telportArrows[1].gameObject);
-
-        power = PlayerAttack.nowPowerOfArrow;
-
         zeroVelocity = new Vector2(0, 0);
 
         teleportPosition = transform.Find("TeleportPosition").gameObject;
 
-        Invoke("DestroyThis", 20);
+        Invoke("DestroyThis", 5);
     }
 
     void Update()
@@ -97,9 +90,10 @@ public class TeleportArrow : MonoBehaviour
 
     private void Reflect(Collision2D collision)
     {
+        float power = PlayerAttack.nowPowerOfArrow;
         Vector2 inNormal = collision.contacts[0].normal;              
         Vector2 newVelocity = Vector2.Reflect(transform.right, inNormal);  
-        GetComponent<Rigidbody2D>().velocity = newVelocity * power;   
+        GetComponent<Rigidbody2D>().velocity = newVelocity * power * 1/3;   
     }
 
     private bool isStraightGravityArrow()
