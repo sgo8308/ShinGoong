@@ -21,13 +21,11 @@ public class Arrow : MonoBehaviour
 
     private Vector2 zeroVelocity;
     private PlayerSkill playerSkill;
-    private CameraShake cameraShake;
     protected GameObject bombShotEffect;
 
     protected void Awake()
     {
         playerSkill = GameObject.Find("Player").GetComponent<PlayerSkill>();
-        cameraShake = Camera.main.transform.Find("CameraShake").GetComponent<CameraShake>();
         bombShotEffect = transform.Find("BombShotEffect").gameObject;
     }
 
@@ -78,7 +76,7 @@ public class Arrow : MonoBehaviour
             Monster monster = collision.transform.parent.GetComponent<Monster>();
             RegisterDetachEvent(monster);
             gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
-            cameraShake.StartShake();
+            Camera.main.GetComponent<CameraControl>().StartShake();
 
             PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }
@@ -114,7 +112,7 @@ public class Arrow : MonoBehaviour
             Monster monster = collision.transform.parent.GetComponent<Monster>();
             RegisterDetachEvent(monster);
             gameObject.layer = LAYER_NUM_ARROW_ON_MONSTER;
-            cameraShake.StartShake();
+            Camera.main.GetComponent<CameraControl>().StartShake();
 
             PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }

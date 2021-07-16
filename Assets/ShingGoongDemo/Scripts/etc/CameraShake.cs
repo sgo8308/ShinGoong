@@ -7,41 +7,38 @@ using Cinemachine;
 /// </summary>
 public class CameraShake : MonoBehaviour
 {
-    public float shakeDuration = 0.3f;
-    public float shakeAmplitude = 1f;
-    public float shakeFrequency = 1f;
-    public float shakeElapsedTime = 0f;
+    public float ShakeAmount;
+    float ShakeTime;
+    public float time;
+    Vector3 initialPosition;
 
-    public CinemachineVirtualCamera virtualCamera;
-    private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
+    public void VibrateForTime(float time)
+    {
+        ShakeAmount = time;
+    }
+
 
     private void Start()
     {
-        if (virtualCamera != null)
-            virtualCameraNoise = virtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
+        initialPosition = Camera.main.transform.position;
     }
 
     private void Update()
     {
-        if (virtualCamera != null || virtualCameraNoise != null)
+        if (ShakeTime > 0)
         {
-            if (shakeElapsedTime > 0)
-            {
-                virtualCameraNoise.m_AmplitudeGain = shakeAmplitude;
-                virtualCameraNoise.m_FrequencyGain = shakeFrequency;
-
-                shakeElapsedTime -= Time.deltaTime;
-            }
-            else
-            {
-                virtualCameraNoise.m_AmplitudeGain = 0f;
-                shakeElapsedTime = 0f;
-            }
+            Camera.main.transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
+            ShakeTime -= Time.deltaTime;
+        }
+        else
+        {
+            ShakeTime = 0.0f;
+            Camera.main.transform.position = initialPosition;
         }
     }
 
     public void StartShake() 
     {
-        shakeElapsedTime = shakeDuration;
+        ShakeTime = time;
     }
 }
