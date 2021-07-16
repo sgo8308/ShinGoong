@@ -20,6 +20,7 @@ public class StraightArrow : MonoBehaviour
 
     private Vector2 zeroVelocity;
     private List<Vector2> arrowColList = new List<Vector2>();
+    private CameraShake cameraShake;
     private Rigidbody2D rigid;
     private GameObject gameObjectAlreadyHit;
     private GameObject colliderBefore4Hit;
@@ -27,6 +28,7 @@ public class StraightArrow : MonoBehaviour
 
     protected void Awake()
     {
+        cameraShake = Camera.main.transform.Find("CameraShake").GetComponent<CameraShake>();
         colliderBefore4Hit = transform.Find("ColliderBefore4Hit").gameObject;
         collider4Hit = transform.Find("Collider4Hit").gameObject;
     }
@@ -67,7 +69,7 @@ public class StraightArrow : MonoBehaviour
 
             gameObjectAlreadyHit = rayHit.collider.transform.parent.gameObject;
             gameObjectAlreadyHit.GetComponent<Monster>().OnHit(ORIGINAL_DAMAGE);
-            Camera.main.GetComponent<CameraControl>().StartShake();
+            cameraShake.StartShake();
             PlaySound(NonPlayerSounds.ARROW_PIERCE_MONSTER);
         }
     }

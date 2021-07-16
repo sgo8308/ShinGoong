@@ -13,11 +13,6 @@ public class CameraControl : MonoBehaviour
     public float topLimY; //카메라 위쪽 제한 y 좌표 
     public float botLimY; //카메라 아래쪽 제한 y 좌표 
 
-    public float ShakeAmount;
-    float ShakeTime;
-    public float time;
-    Vector3 initialPosition;
-
     void Start()
     {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += GetCameraLimit;
@@ -26,7 +21,6 @@ public class CameraControl : MonoBehaviour
         GetCameraLimit();
         mainCam = Camera.main;
         mainCamPos = mainCam.transform.position;
-
     }
 
     void Update()
@@ -40,17 +34,7 @@ public class CameraControl : MonoBehaviour
 
     void LateUpdate()
     {
-        if (ShakeTime > 0)
-        {
-            initialPosition = Camera.main.transform.position;
-            Camera.main.transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
-            ShakeTime -= Time.deltaTime;
-        }
-        else
-        {
-            ShakeTime = 0.0f;
-            FollowPlayer();
-        }
+        FollowPlayer();
     }
 
     private void FollowPlayer()
@@ -127,10 +111,5 @@ public class CameraControl : MonoBehaviour
     private void RevertCameraView(Scene scene, LoadSceneMode mode)
     {
         Camera.main.orthographicSize = defaultCamDistance;
-    }
-
-    public void StartShake()
-    {
-        ShakeTime = time;
     }
 }
