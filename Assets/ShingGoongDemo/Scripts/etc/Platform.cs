@@ -11,6 +11,12 @@ public class Platform : MonoBehaviour
     public GameObject bubble;
     static Platform platformNowBubbleOn;
 
+    private void Update()
+    {
+        if (StageManager.instance.stageState == StageState.CLEAR)
+            HideBubble();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "BossScene")
@@ -34,5 +40,10 @@ public class Platform : MonoBehaviour
         
         bubble.SetActive(true);
         platformNowBubbleOn = this;
+    }
+
+    public void HideBubble()
+    {
+         bubble.SetActive(false);
     }
 }

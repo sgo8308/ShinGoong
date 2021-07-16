@@ -42,6 +42,14 @@ public class Arrow : MonoBehaviour
         {
             transform.right = GetComponent<Rigidbody2D>().velocity;  //매 프레임마다 화살의 x축 벡터값을 2d의 속도로 정해준다. 화살촉 방향 조절
         }
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ShelterScene")
+        {
+            if (transform.position.x < -21 || transform.position.x > 11f || transform.position.y > -45.89f)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -250,26 +250,26 @@ public class Player : MonoBehaviour
 
     void Dead()
     {
-        //if (isDead || StageManager.instance.stageState == StageState.CLEAR)
-        //    return;
+        if (isDead || StageManager.instance.stageState == StageState.CLEAR)
+            return;
 
-        //isDead = true;
+        isDead = true;
 
-        //bulletExplosion.SetActive(true);
-        //Invoke("HideBulletExplosion", 0.5f);
-        //Invoke("HidePlayer", 0.7f);
-        //SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
+        bulletExplosion.SetActive(true);
+        Invoke("HideBulletExplosion", 0.5f);
+        Invoke("HidePlayer", 0.7f);
+        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_HIT);
 
-        //animator.enabled = true;
-        //Invoke("StartHitAnimation", 0.1f);
+        animator.enabled = true;
+        Invoke("StartHitAnimation", 0.1f);
 
-        //if (onPlayerDead != null)
-        //    onPlayerDead.Invoke();
+        if (onPlayerDead != null)
+            onPlayerDead.Invoke();
 
-        //playerMove.SetCanMove(false);
-        //playerAttack.SetCanShoot(false);
+        playerMove.SetCanMove(false);
+        playerAttack.SetCanShoot(false);
 
-        //Time.timeScale = 0.4f;
+        Time.timeScale = 0.4f;
     }
 
 

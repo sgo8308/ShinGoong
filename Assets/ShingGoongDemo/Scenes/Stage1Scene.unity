@@ -24243,8 +24243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4fc5bae876b59842919803db81904c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftLimitXAxis: 10.56
-  rightLimitXAxis: 77.62
+  leftLimitXAxis: 9.6
+  rightLimitXAxis: 78.28
   topLimitYAxis: -35.89
   bottomLimitYAxis: -53.55
 --- !u!224 &1006086460
@@ -37396,8 +37396,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4fc5bae876b59842919803db81904c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftLimitXAxis: 30
-  rightLimitXAxis: 58.2
+  leftLimitXAxis: 27.54
+  rightLimitXAxis: 60.67
   topLimitYAxis: -46.1
   bottomLimitYAxis: -47.9
 --- !u!224 &1799939812

@@ -39,6 +39,18 @@ public class StraightArrow : MonoBehaviour
 
         rigid = GetComponent<Rigidbody2D>();
     }
+
+    private void Update()
+    {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ShelterScene")
+        {
+            if (transform.position.x < -21 || transform.position.x > 11f || transform.position.y > -45.89f)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
         if (arrowColList.Count > 2)

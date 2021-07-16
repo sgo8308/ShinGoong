@@ -44,6 +44,14 @@ public class TeleportArrow : MonoBehaviour
         {
             transform.right = GetComponent<Rigidbody2D>().velocity;  
         }
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ShelterScene")
+        {
+            if (transform.position.x < -21 || transform.position.x > 11f || transform.position.y > -45.89f)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

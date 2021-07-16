@@ -191,9 +191,6 @@ public class PlayerMove : MonoBehaviour
             {
                 if (rayHit.distance < 1.8f || rayHit2.distance < 1.8f || rayHit3.distance < 1.8f)
                 {
-                    if (!isLanded)
-                        SoundManager.instance.PlayPlayerSound(PlayerSounds.PLAYER_LAND);
-
                     isLanded = true;
                     isJumping = false;
                     animator.SetBool("isJumpingUp", false);
