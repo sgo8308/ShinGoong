@@ -1,7 +1,7 @@
 # ShinGoong
 
 # 게임 영상
-![shingoong](https://user-images.githubusercontent.com/71138398/153243259-b173a175-1827-4f17-a928-8170f6da9bd3.gif)
+![singoong](https://user-images.githubusercontent.com/71138398/153243839-e3e1cf80-4916-4737-ba2a-62095512dc16.gif)
 
 
 # 게임 소개 
