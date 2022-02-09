@@ -1,7 +1,8 @@
 # ShinGoong
 
-# 게임 이미지
-![신궁 사진](https://user-images.githubusercontent.com/71138398/135059454-e2443d30-a9b7-4064-b8d7-8d41ddaca7c7.PNG)
+# 게임 영상
+![shingoong](https://user-images.githubusercontent.com/71138398/153243259-b173a175-1827-4f17-a928-8170f6da9bd3.gif)
+
 
 # 게임 소개 
 벽에 튕기는 직선 화살과 곡선 화살을 이용해 전략적으로 몬스터를 잡고 스테이지를 깨는 2D 횡스크롤 플랫포머 게임입니다.
